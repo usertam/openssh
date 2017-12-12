@@ -213,6 +213,12 @@ ssh_kex2(char *host, struct sockaddr *hostaddr, u_short port)
 # endif
 #endif
 	kex->kex[KEX_C25519_SHA256] = kexc25519_client;
+	kex->kex[KEX_BCNS15_SHA512] = kexoqs_client;
+	kex->kex[KEX_NEWHOPE_SHA512] = kexoqs_client;
+	kex->kex[KEX_MSRLN16_SHA512] = kexoqs_client;
+	kex->kex[KEX_CLN16_SHA512] = kexoqs_client;
+	kex->kex[KEX_FRODO_SHA512] = kexoqs_client;
+	kex->kex[KEX_KYBER_SHA512] = kexoqs_client;
 	kex->client_version_string=client_version_string;
 	kex->server_version_string=server_version_string;
 	kex->verify_host_key=&verify_host_key_callback;
@@ -665,7 +671,7 @@ userauth_gssapi(Authctxt *authctxt)
 	while (mech < gss_supported->count && !ok) {
 		/* My DER encoding requires length<128 */
 		if (gss_supported->elements[mech].length < 128 &&
-		    ssh_gssapi_check_mechanism(&gssctxt, 
+		    ssh_gssapi_check_mechanism(&gssctxt,
 		    &gss_supported->elements[mech], authctxt->host)) {
 			ok = 1; /* Mechanism works */
 		} else {
@@ -1978,4 +1984,3 @@ authmethods_get(void)
 	buffer_free(&b);
 	return list;
 }
-

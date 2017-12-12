@@ -8,7 +8,7 @@
  */
 
 #include "includes.h"
- 
+
 #include <sys/types.h>
 #include "openbsd-compat/sys-queue.h"
 #include <sys/resource.h>
@@ -266,6 +266,12 @@ keygrab_ssh2(con *c)
 # endif
 #endif
 	c->c_ssh->kex->kex[KEX_C25519_SHA256] = kexc25519_client;
+	c->c_ssh->kex->kex[KEX_BCNS15_SHA512] = kexoqs_client;
+	c->c_ssh->kex->kex[KEX_NEWHOPE_SHA512] = kexoqs_client;
+	c->c_ssh->kex->kex[KEX_MSRLN16_SHA512] = kexoqs_client;
+	c->c_ssh->kex->kex[KEX_CLN16_SHA512] = kexoqs_client;
+	c->c_ssh->kex->kex[KEX_FRODO_SHA512] = kexoqs_client;
+	c->c_ssh->kex->kex[KEX_KYBER_SHA512] = kexoqs_client;
 	ssh_set_verify_host_key_callback(c->c_ssh, key_print_wrapper);
 	/*
 	 * do the key-exchange until an error occurs or until

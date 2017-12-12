@@ -102,6 +102,13 @@ static const struct kexalg kexalgs[] = {
 #if defined(HAVE_EVP_SHA256) || !defined(WITH_OPENSSL)
 	{ KEX_CURVE25519_SHA256, KEX_C25519_SHA256, 0, SSH_DIGEST_SHA256 },
 	{ KEX_CURVE25519_SHA256_OLD, KEX_C25519_SHA256, 0, SSH_DIGEST_SHA256 },
+	{ KEX_OQS_BCNS15_SHA512, KEX_BCNS15_SHA512, 0, SSH_DIGEST_SHA512 },
+	{ KEX_OQS_NEWHOPE_SHA512, KEX_NEWHOPE_SHA512, 0, SSH_DIGEST_SHA512 },
+	{ KEX_OQS_MSRLN16_SHA512, KEX_MSRLN16_SHA512, 0, SSH_DIGEST_SHA512 },
+	{ KEX_OQS_CLN16_SHA512, KEX_CLN16_SHA512, 0, SSH_DIGEST_SHA512 },
+	{ KEX_OQS_FRODO_SHA512, KEX_FRODO_SHA512, 0, SSH_DIGEST_SHA512 },
+	{ KEX_OQS_KYBER_SHA512, KEX_KYBER_SHA512, 0, SSH_DIGEST_SHA512 },
+
 #endif /* HAVE_EVP_SHA256 || !WITH_OPENSSL */
 	{ NULL, -1, -1, -1},
 };
@@ -459,7 +466,11 @@ kex_send_kexinit(struct ssh *ssh)
 		return SSH_ERR_INVALID_FORMAT;
 	if ((cookie = sshbuf_mutable_ptr(kex->my)) == NULL)
 		return SSH_ERR_INTERNAL_ERROR;
+
+
 	arc4random_buf(cookie, KEX_COOKIE_LEN);
+
+	kex->client_random = cookie; //save cookie value so it can be used as random seed
 
 	if ((r = sshpkt_start(ssh, SSH2_MSG_KEXINIT)) != 0 ||
 	    (r = sshpkt_putb(ssh, kex->my)) != 0 ||
