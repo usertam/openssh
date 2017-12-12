@@ -1,14 +1,24 @@
-open-quantum-safe/openssh
-=========================
-This repository contains a fork of OpenSSH that adds quantum-safe cryptographic algorithms and ciphersuites.
+open-quantum-safe/openssh-portable
+==================================
+
+This repository contains a fork of OpenSSH that adds quantum-safe key exchange algorithms using liboqs for prototyping purposes.
+
+This README.md contains information about the modifications to OpenSSH by the Open Quantum Safe project.  For information about OpenSSH,
+([see the original README file for OpenSSH](https://github.com/open-quantum-safe/openssh-portable/blob/master/README).)
 
 Overview
 --------
+
 The **Open Quantum Safe (OQS) project** has the goal of developing and prototyping quantum-resistant cryptography.
 
-**liboqs** is an open source C library for quantum-safe cryptographic algorithms.  liboqs initially focuses on key exchange algorithms.  See more about liboqs at [https://github.com/open-quantum-safe/liboqs/](https://github.com/open-quantum-safe/liboqs/), including a list of supported algorithms.
+**liboqs** is an open source C library for quantum-safe cryptographic algorithms.  See more about liboqs at [https://github.com/open-quantum-safe/liboqs/](https://github.com/open-quantum-safe/liboqs/), including a list of supported algorithms.
 
-OpenSSH is an open-source implementation of the Secure Shell protocol [https://openssh.org/](https://openssh.org/).  ([View the original README file for OpenSSH](https://github.com/dstebila/pq-openssh/blob/master/README).)
+OpenSSH is an open-source implementation of the Secure Shell protocol [https://openssh.org/](https://openssh.org/).
+
+This repository contains a fork of OpenSSH that adds quantum-safe key exchange algorithms using liboqs for prototyping purposes.
+
+See the Limitations section below.
+
 
 Contents
 --------
@@ -28,7 +38,7 @@ open-quantum-safe/openssh currently supports the following key exchange mechanis
 Building and Running
 --------------------
 
-Builds have been tested on macOS 10.12 and Ubunutu 17.4.0
+Builds have been tested on macOS 10.12 and Ubuntu 17.4.0
 
 ### Install dependencies for macOS
 
@@ -37,11 +47,13 @@ You need to install several tools using `brew`:
 	brew install autoconf automake libtool openssl
 
 ### Install dependencies for Ubuntu
+
 You need to install several tools using `apt`:
 
 	sudo apt install autoconf automake libtool openssl
 
 ### Building
+
 First, you will need to download and build `liboqs`:
 
 	git clone https://github.com/open-quantum-safe/liboqs.git
@@ -52,8 +64,8 @@ First, you will need to download and build `liboqs`:
 
 Next, you can build and install OpenSSH:
 
-	git clone --branch ds-dev https://github.com/open-quantum-safe/openssh.git
-	cd pq-openssh
+	git clone --branch ds-dev https://github.com/open-quantum-safe/openssh-portable.git
+	cd openssh-portable
 	aclocal
 	autoheader
 	autoconf
@@ -61,8 +73,8 @@ Next, you can build and install OpenSSH:
 	make
 	make install
 
+### Running
 
-##Running 
 In one terminal, run a server:
 
 	/path/to/install/sbin/sshd -p 2222 -d
@@ -80,18 +92,36 @@ where `LIBOQSALGORITHM` is one of the following:
 	oqs-frodo-sha512@openquantumsafe.org
 	oqs-kyber-sha512@openquantumsafe.org
 
+
+Limitations
+-----------
+
+This fork is developed for the purposes of prototyping and evaluating the use of post-quantum cryptography in SSH, and is not intended for use in production environments to protect the transmission of sensitive information.  
+
+- This fork of OpenSSH has not received the same level of auditing and analysis that OpenSSH has received.  
+- At the time of writing, there are no vulnerabilities or weaknesses known in any of the post-quantum key exchange algorithms used in this fork.  However, it is advisable to wait on deploying post-quantum algorithms until further guidance is provided by the standards community, especially from the NIST Post-Quantum Cryptography project.
+- This fork does not yet contain support for post-quantum authentication.
+- This fork does not yet contain support for hybrid key exchange, which would use traditional algorithms (like elliptic curve Diffie--Hellman) alongside post-quantum algorithms to provide potential resistance to quantum attacks while still maintaining the existing level of security.
+- The message format used in this fork is not standardized, and is subject to unilateral change at any time without regards to backwards compatibility with previous versions of this fork.
+
+
 License
 -------
-pq-openssh is released under the same license as Portable OpenSSH. More information about this license can be found in the LICENSE file.
+
+This fork is released under the same license as Portable OpenSSH. More information about this license can be found in the LICENSE file.
+
 
 Team
 ----
+
 ### Contributors
+
 - Karl Knopf (McMaster University)
 - Douglas Stebila (McMaster University)
 - Mira Belenkiy, Christian Paquin (Microsoft Research)
 
 ### Support
-This repository was developed as part of a NSERC USRA project at McMaster University over the summer 2017 term. As such, funding for this project came from both NSERC and from McMaster University.
 
-Liboqs was developed and published by the Open Quantum Safe project. It is lead by [Michele Mosca](http://faculty.iqc.uwaterloo.ca/mmosca/) (University of Waterloo) and [Douglas Stebila](https://www.douglas.stebila.ca/research/) (McMaster University).
+This repository was developed as part of a NSERC Undergraduate Student Research Award (USRA) project at McMaster University over the summer 2017 term.  As such, funding for this project came from both NSERC and from McMaster University.
+
+liboqs was developed and published by the Open Quantum Safe project. It is lead by [Michele Mosca](http://faculty.iqc.uwaterloo.ca/mmosca/) (University of Waterloo) and [Douglas Stebila](https://www.douglas.stebila.ca/research/) (McMaster University).
