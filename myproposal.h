@@ -70,7 +70,14 @@
 # define KEX_SHA2_METHODS \
 	"diffie-hellman-group-exchange-sha256," \
 	"diffie-hellman-group16-sha512," \
-	"diffie-hellman-group18-sha512,"
+	"diffie-hellman-group18-sha512," \
+	"oqs-bcns15-sha512@openquantumsafe.org," \
+	"oqs-newhope-sha512@openquantumsafe.org,"\
+	"oqs-msrln16-sha512@openquantumsafe.org,"\
+	"oqs-cln16-sha512@openquantumsafe.org,"\
+	"oqs-frodo-sha512@openquantumsafe.org,"\
+	"oqs-kyber-sha512@openquantumsafe.org,"
+
 # define KEX_SHA2_GROUP14 \
 	"diffie-hellman-group14-sha256,"
 #define	SHA2_HMAC_MODES \
@@ -192,4 +199,3 @@
 	KEX_DEFAULT_COMP, \
 	KEX_DEFAULT_LANG, \
 	KEX_DEFAULT_LANG
-

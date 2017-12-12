@@ -30,6 +30,8 @@
 #include "buffer.h" /* XXX for typedef */
 #include "key.h" /* XXX for typedef */
 
+#include <oqs/rand.h>
+
 #ifdef WITH_LEAKMALLOC
 #include "leakmalloc.h"
 #endif
@@ -62,6 +64,13 @@
 #define	KEX_ECDH_SHA2_NISTP521		"ecdh-sha2-nistp521"
 #define	KEX_CURVE25519_SHA256		"curve25519-sha256"
 #define	KEX_CURVE25519_SHA256_OLD	"curve25519-sha256@libssh.org"
+
+#define	KEX_OQS_BCNS15_SHA512		"oqs-bcns15-sha512@openquantumsafe.org"
+#define	KEX_OQS_NEWHOPE_SHA512		"oqs-newhope-sha512@openquantumsafe.org"
+#define KEX_OQS_MSRLN16_SHA512		"oqs-msrln16-sha512@openquantumsafe.org"
+#define KEX_OQS_CLN16_SHA512		"oqs-cln16-sha512@openquantumsafe.org"
+#define KEX_OQS_FRODO_SHA512		"oqs-frodo-sha512@openquantumsafe.org"
+#define KEX_OQS_KYBER_SHA512		"oqs-kyber-sha512@openquantumsafe.org"
 
 #define COMP_NONE	0
 #define COMP_ZLIB	1
@@ -99,6 +108,12 @@ enum kex_exchange {
 	KEX_DH_GEX_SHA256,
 	KEX_ECDH_SHA2,
 	KEX_C25519_SHA256,
+	KEX_BCNS15_SHA512,
+	KEX_NEWHOPE_SHA512,
+	KEX_MSRLN16_SHA512,
+	KEX_CLN16_SHA512,
+	KEX_FRODO_SHA512,
+	KEX_KYBER_SHA512,
 	KEX_MAX
 };
 
@@ -164,6 +179,10 @@ struct kex {
 	const EC_GROUP *ec_group;	/* ECDH */
 	u_char c25519_client_key[CURVE25519_SIZE]; /* 25519 */
 	u_char c25519_client_pubkey[CURVE25519_SIZE]; /* 25519 */
+	void *oqs_client_key;
+	uint8_t *client_random;
+	u_char *oqs_client_pubkey;
+	size_t oqs_client_pubkey_len;
 };
 
 int	 kex_names_valid(const char *);
@@ -196,6 +215,8 @@ int	 kexecdh_client(struct ssh *);
 int	 kexecdh_server(struct ssh *);
 int	 kexc25519_client(struct ssh *);
 int	 kexc25519_server(struct ssh *);
+int	 kexoqs_client(struct ssh *);
+int	 kexoqs_server(struct ssh *);
 
 int	 kex_dh_hash(int, const char *, const char *,
     const u_char *, size_t, const u_char *, size_t, const u_char *, size_t,
@@ -224,6 +245,18 @@ int	kexc25519_shared_key(const u_char key[CURVE25519_SIZE],
     const u_char pub[CURVE25519_SIZE], struct sshbuf *out)
 	__attribute__((__bounded__(__minbytes__, 1, CURVE25519_SIZE)))
 	__attribute__((__bounded__(__minbytes__, 2, CURVE25519_SIZE)));
+
+OQS_RAND *OQS_RAND_arc4random_buf_new();
+int	 kex_oqs_hash(int, const char *, const char *,
+    const u_char *, size_t, const u_char *, size_t,
+    const u_char *, size_t, const u_char *, size_t,
+    const u_char *, size_t, const u_char *, size_t,
+    u_char *, size_t *);
+
+
+uint8_t *get_oqs_kex_mapping(struct kex *);
+
+uint8_t *get_oqs_kex_seedNeed(struct kex *);
 
 #if defined(DEBUG_KEX) || defined(DEBUG_KEXDH) || defined(DEBUG_KEXECDH)
 void	dump_digest(char *, u_char *, int);

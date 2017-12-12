@@ -2255,6 +2255,12 @@ do_ssh2_kex(void)
 # endif
 #endif
 	kex->kex[KEX_C25519_SHA256] = kexc25519_server;
+	kex->kex[KEX_BCNS15_SHA512] = kexoqs_server;
+	kex->kex[KEX_NEWHOPE_SHA512] = kexoqs_server;
+	kex->kex[KEX_MSRLN16_SHA512] = kexoqs_server;
+	kex->kex[KEX_CLN16_SHA512] = kexoqs_server;
+	kex->kex[KEX_FRODO_SHA512] = kexoqs_server;
+	kex->kex[KEX_KYBER_SHA512] = kexoqs_server;
 	kex->server = 1;
 	kex->client_version_string=client_version_string;
 	kex->server_version_string=server_version_string;

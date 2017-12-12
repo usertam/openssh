@@ -2407,6 +2407,67 @@ fi
 
 AC_FUNC_GETPGRP
 
+
+# Check for LibOQS
+with_liboqs=no
+AC_ARG_WITH([liboqs-dir],
+	[  --with-liboqs-dir=PATH     Specify path to LibOQS installation ],
+	[
+		if test "x$withval" != "xno" ; then
+			with_liboqs=yes
+			case "$withval" in
+				# Relative paths
+				./*|../*)	withval="`pwd`/$withval"
+			esac
+			if test -d "$withval/lib"; then
+				if test -n "${need_dash_r}"; then
+					LDFLAGS="-L${withval}/lib -R${withval}/lib ${LDFLAGS}"
+				else
+					LDFLAGS="-L${withval}/lib ${LDFLAGS}"
+				fi
+			elif test -d "$withval/lib64"; then
+				if test -n "${need_dash_r}"; then
+					LDFLAGS="-L${withval}/lib64 -R${withval}/lib64 ${LDFLAGS}"
+				else
+					LDFLAGS="-L${withval}/lib64 ${LDFLAGS}"
+				fi
+			else
+				if test -n "${need_dash_r}"; then
+					LDFLAGS="-L${withval} -R${withval} ${LDFLAGS}"
+				else
+					LDFLAGS="-L${withval} ${LDFLAGS}"
+				fi
+			fi
+			if test -d "$withval/include"; then
+				CPPFLAGS="-I${withval}/include ${CPPFLAGS}"
+			else
+				CPPFLAGS="-I${withval} ${CPPFLAGS}"
+			fi
+		fi
+	]
+) 
+
+if test "x$with_liboqs" = "xyes" ; then
+	dnl Check for LibOQS library
+	AC_DEFINE_UNQUOTED([WITH_OQS], [1], [use LibOQS for key exchange])
+	LIBS="-loqs $LIBS"
+	AC_CHECK_HEADER([oqs/rand.h], ,[AC_MSG_ERROR([*** LibOQS headers missing - please install first or check config.log ***])])
+	AC_TRY_LINK([#include <oqs/rand.h>],
+				[
+					OQS_RAND *rand = OQS_RAND_new(OQS_RAND_alg_urandom_chacha20);
+					if (rand == NULL) {
+						return 1;
+					}				
+				],
+				,
+				[
+					AC_MSG_ERROR([*** Can't find LibOQS liboqs library (see config.log for details) ***])
+				]
+			)
+	dnl End LibOQS library check
+fi
+
+
 # Search for OpenSSL
 saved_CPPFLAGS="$CPPFLAGS"
 saved_LDFLAGS="$LDFLAGS"
