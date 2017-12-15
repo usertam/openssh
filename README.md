@@ -64,7 +64,7 @@ First, you will need to download and build `liboqs`:
 
 Next, you can build and install OpenSSH:
 
-	git clone --branch ds-dev https://github.com/open-quantum-safe/openssh-portable.git
+	git clone https://github.com/open-quantum-safe/openssh-portable.git
 	cd openssh-portable
 	aclocal
 	autoheader
