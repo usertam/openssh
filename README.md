@@ -59,7 +59,7 @@ First, you will need to download and build `liboqs`:
 	git clone --recursive https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
 	autoreconf -i
-	./configure --prefix=/path/to/install
+	./configure --prefix=/path/to/install/liboqs/in
 	make
 	make install
 
@@ -70,7 +70,7 @@ Next, you can build and install OpenSSH:
 	aclocal
 	autoheader
 	autoconf
-	./configure --with-ssl-dir=/usr/local/opt/openssl --with-liboqs-dir=/usr/local/opt/liboqs
+	./configure --with-ssl-dir=/path/to/openssl --with-liboqs-dir=/path/to/install/liboqs/in --prefix=/path/to/install/openssh/in
 	make
 	make install
 
@@ -78,11 +78,11 @@ Next, you can build and install OpenSSH:
 
 In one terminal, run a server:
 
-	/path/to/install/sbin/sshd -p 2222 -d
+	/path/to/install/openssh/in/sbin/sshd -p 2222 -d
 
 In another terminal, run a client:
 
-	/path/to/install/bin/ssh -o 'KexAlgorithms=LIBOQSALGORITHM' -p 2222 localhost
+	/path/to/install/openssh/in/bin/ssh -o 'KexAlgorithms=LIBOQSALGORITHM' -p 2222 localhost
 
 where `LIBOQSALGORITHM` is one of the following:
 
