@@ -44,23 +44,24 @@ Builds have been tested on macOS 10.12 and Ubuntu 17.4.0
 
 You need to install several tools using `brew`:
 
-	brew install autoconf automake libtool openssl
+	brew install autoconf automake cmake libtool openssl
 
 ### Install dependencies for Ubuntu
 
 You need to install several tools using `apt`:
 
-	sudo apt install autoconf automake libtool openssl
+	sudo apt install autoconf automake cmake libtool openssl
 
 ### Building
 
 First, you will need to download and build `liboqs`:
 
-	git clone https://github.com/open-quantum-safe/liboqs.git
+	git clone --recursive https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
 	autoreconf -i
 	./configure --prefix=/path/to/install
 	make
+	make install
 
 Next, you can build and install OpenSSH:
 
