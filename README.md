@@ -34,7 +34,6 @@ open-quantum-safe/openssh currently supports the following key exchange mechanis
 - `kex_sidh_cln16`: key exchange from the supersingular isogeny Diffie-Hellman problem (Costello, Naehrig, Longa, *CRYPTO 2016*, [https://eprint.iacr.org/2016/413](https://eprint.iacr.org/2016/413)), using the implementation of Microsoft Research [https://www.microsoft.com/en-us/research/project/sidh-library/](https://www.microsoft.com/en-us/research/project/sidh-library/)
 - `kex_mlwe_kyber`: Kyber: a CCA-secure module-lattice-based key exchange mechanism (Bos, Ducas, Kiltz, Lepoint, Lyubashevsky, Schwabe, Shanck, Stehlé, *Real World Crypto 2017*, [https://eprint.iacr.org/2017/634](https://eprint.iacr.org/2017/634)), using the reference C implementation of Kyber from [pq-crystals/kyber](https://github.com/pq-crystals/kyber)
 
-
 Building and Running
 --------------------
 
@@ -50,7 +49,7 @@ You need to install several tools using `brew`:
 
 You need to install several tools using `apt`:
 
-	sudo apt install autoconf automake cmake libtool openssl
+	sudo apt install autoconf automake cmake git libtool openssl zlib1g-dev libssl-dev
 
 ### Building
 
@@ -60,7 +59,8 @@ First, you will need to download and build `liboqs`:
 	cd liboqs
 	autoreconf -i
 	./configure --prefix=/path/to/install/liboqs/in --with-pic
-	make clean;make
+	make clean
+	make
 	make install
 
 Next, you can build and install OpenSSH:
@@ -73,6 +73,8 @@ Next, you can build and install OpenSSH:
 	./configure --with-ssl-dir=/path/to/openssl --prefix=/path/to/install/openssh/in --with-cflags=-I<liboqs include header path>  --with-libs=<liboqs.a with absolute path>
 	make
 	make install
+
+(On some platforms such as Ubuntu, you may not need to specify the `--with-ssl-dir` option as it will automatically detect your OpenSSL installation.)
 
 ### Running
 
