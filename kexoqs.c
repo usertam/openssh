@@ -103,9 +103,8 @@ struct oqs_kex_info oqs_kex_mapping[] = {
 	{ KEX_BCNS15_SHA512, OQS_KEX_alg_rlwe_bcns15, 0, NULL},
 	{ KEX_NEWHOPE_SHA512, OQS_KEX_alg_rlwe_newhope, 0, NULL},
 	{ KEX_MSRLN16_SHA512,  OQS_KEX_alg_rlwe_msrln16, 0, NULL},
-	{ KEX_CLN16_SHA512, OQS_KEX_alg_sidh_cln16, 0, NULL},
+	{ KEX_SIKE503_SHA512, OQS_KEX_alg_sike_msr_503, 0, NULL},
 	{ KEX_FRODO_SHA512, OQS_KEX_alg_lwe_frodo, 1, "recommended"},
-	{ KEX_KYBER_SHA512, OQS_KEX_alg_mlwe_kyber, 0, NULL},
 	{0,-1,0,NULL}, // the -1 indicates this is the end of the list
 };
 

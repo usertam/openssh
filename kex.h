@@ -68,9 +68,8 @@
 #define	KEX_OQS_BCNS15_SHA512		"oqs-bcns15-sha512@openquantumsafe.org"
 #define	KEX_OQS_NEWHOPE_SHA512		"oqs-newhope-sha512@openquantumsafe.org"
 #define KEX_OQS_MSRLN16_SHA512		"oqs-msrln16-sha512@openquantumsafe.org"
-#define KEX_OQS_CLN16_SHA512		"oqs-cln16-sha512@openquantumsafe.org"
+#define KEX_OQS_SIKE503_SHA512		"oqs-sike503-sha512@openquantumsafe.org"
 #define KEX_OQS_FRODO_SHA512		"oqs-frodo-sha512@openquantumsafe.org"
-#define KEX_OQS_KYBER_SHA512		"oqs-kyber-sha512@openquantumsafe.org"
 
 #define COMP_NONE	0
 #define COMP_ZLIB	1
@@ -111,9 +110,8 @@ enum kex_exchange {
 	KEX_BCNS15_SHA512,
 	KEX_NEWHOPE_SHA512,
 	KEX_MSRLN16_SHA512,
-	KEX_CLN16_SHA512,
+	KEX_SIKE503_SHA512,
 	KEX_FRODO_SHA512,
-	KEX_KYBER_SHA512,
 	KEX_MAX
 };
 

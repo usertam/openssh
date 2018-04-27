@@ -1627,9 +1627,8 @@ monitor_apply_keystate(struct monitor *pmonitor)
 		kex->kex[KEX_BCNS15_SHA512] = kexoqs_server;
 		kex->kex[KEX_NEWHOPE_SHA512] = kexoqs_server;
 		kex->kex[KEX_MSRLN16_SHA512] = kexoqs_server;
-		kex->kex[KEX_CLN16_SHA512] = kexoqs_server;
+		kex->kex[KEX_SIKE503_SHA512] = kexoqs_server;
 		kex->kex[KEX_FRODO_SHA512] = kexoqs_server;
-		kex->kex[KEX_KYBER_SHA512] = kexoqs_server;
 		kex->load_host_public_key=&get_hostkey_public_by_type;
 		kex->load_host_private_key=&get_hostkey_private_by_type;
 		kex->host_key_index=&get_hostkey_index;
