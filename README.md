@@ -31,8 +31,8 @@ open-quantum-safe/openssh currently supports the following key exchange mechanis
 - `kex_rlwe_newhope`: "NewHope": key exchange from the ring learning with errors problem (Alkim, Ducas, Pöppelmann, Schwabe, *USENIX Security 2016*, [https://eprint.iacr.org/2015/1092](https://eprint.iacr.org/2015/1092)) (using the reference C implementation of NewHope from [https://github.com/tpoeppelmann/newhope](https://github.com/tpoeppelmann/newhope))
 - `kex_rlwe_msrln16`: Microsoft Research implementation of Peikert's ring-LWE key exchange (Longa, Naehrig, *CANS 2016*, [https://eprint.iacr.org/2016/504](https://eprint.iacr.org/2016/504)) (based on the implementation of Alkim, Ducas, Pöppelmann, and Schwabe, with improvements from Longa and Naehrig, see [https://www.microsoft.com/en-us/research/project/lattice-cryptography-library/](https://www.microsoft.com/en-us/research/project/lattice-cryptography-library/))
 - `kex_lwe_frodo`: "Frodo": key exchange from the learning with errors problem (Bos, Costello, Ducas, Mironov, Naehrig, Nikolaenko, Raghunathan, Stebila, *ACM Conference on Computer and Communications Security 2016*, [https://eprint.iacr.org/2016/659](https://eprint.iacr.org/2016/659))
-- `kex_sidh_cln16`: key exchange from the supersingular isogeny Diffie-Hellman problem (Costello, Naehrig, Longa, *CRYPTO 2016*, [https://eprint.iacr.org/2016/413](https://eprint.iacr.org/2016/413)), using the implementation of Microsoft Research [https://www.microsoft.com/en-us/research/project/sidh-library/](https://www.microsoft.com/en-us/research/project/sidh-library/)
-- `kex_mlwe_kyber`: Kyber: a CCA-secure module-lattice-based key exchange mechanism (Bos, Ducas, Kiltz, Lepoint, Lyubashevsky, Schwabe, Shanck, Stehlé, *Real World Crypto 2017*, [https://eprint.iacr.org/2017/634](https://eprint.iacr.org/2017/634)), using the reference C implementation of Kyber from [pq-crystals/kyber](https://github.com/pq-crystals/kyber)
+- `kex_sike503_msr`: key exchange from the supersingular isogeny Diffie-Hellman problem (Costello, Naehrig, Longa, *CRYPTO 2016*, [https://eprint.iacr.org/2016/413](https://eprint.iacr.org/2016/413)), using the implementation of Microsoft Research [https://www.microsoft.com/en-us/research/project/sidh-library/](https://www.microsoft.com/en-us/research/project/sidh-library/)
+
 
 Building and Running
 --------------------
@@ -55,7 +55,7 @@ You need to install several tools using `apt`:
 
 First, you will need to download and build `liboqs`:
 
-	git clone --recursive https://github.com/open-quantum-safe/liboqs.git
+	git clone https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
 	autoreconf -i
 	./configure --prefix=/path/to/install/liboqs/in --with-pic
@@ -91,9 +91,8 @@ where `LIBOQSALGORITHM` is one of the following:
 	oqs-bcns15-sha512@openquantumsafe.org
 	oqs-newhope-sha512@openquantumsafe.org
 	oqs-msrln16-sha512@openquantumsafe.org
-	oqs-cln16-sha512@openquantumsafe.org
+	oqs-sike503-sha512@openquantumsafe.org
 	oqs-frodo-sha512@openquantumsafe.org
-	oqs-kyber-sha512@openquantumsafe.org
 
 
 Limitations

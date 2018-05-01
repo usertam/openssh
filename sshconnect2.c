@@ -216,9 +216,8 @@ ssh_kex2(char *host, struct sockaddr *hostaddr, u_short port)
 	kex->kex[KEX_BCNS15_SHA512] = kexoqs_client;
 	kex->kex[KEX_NEWHOPE_SHA512] = kexoqs_client;
 	kex->kex[KEX_MSRLN16_SHA512] = kexoqs_client;
-	kex->kex[KEX_CLN16_SHA512] = kexoqs_client;
+	kex->kex[KEX_SIKE503_SHA512] = kexoqs_client;
 	kex->kex[KEX_FRODO_SHA512] = kexoqs_client;
-	kex->kex[KEX_KYBER_SHA512] = kexoqs_client;
 	kex->client_version_string=client_version_string;
 	kex->server_version_string=server_version_string;
 	kex->verify_host_key=&verify_host_key_callback;

@@ -114,9 +114,8 @@ ssh_init(struct ssh **sshp, int is_server, struct kex_params *kex_params)
 		ssh->kex->kex[KEX_BCNS15_SHA512] = kexoqs_server;
 		ssh->kex->kex[KEX_NEWHOPE_SHA512] = kexoqs_server;
 		ssh->kex->kex[KEX_MSRLN16_SHA512] = kexoqs_server;
-		ssh->kex->kex[KEX_CLN16_SHA512] = kexoqs_server;
+		ssh->kex->kex[KEX_SIKE503_SHA512] = kexoqs_server;
 		ssh->kex->kex[KEX_FRODO_SHA512] = kexoqs_server;
-		ssh->kex->kex[KEX_KYBER_SHA512] = kexoqs_server;
 		ssh->kex->load_host_public_key=&_ssh_host_public_key;
 		ssh->kex->load_host_private_key=&_ssh_host_private_key;
 		ssh->kex->sign=&_ssh_host_key_sign;
@@ -137,9 +136,8 @@ ssh_init(struct ssh **sshp, int is_server, struct kex_params *kex_params)
 		ssh->kex->kex[KEX_BCNS15_SHA512] = kexoqs_client;
 		ssh->kex->kex[KEX_NEWHOPE_SHA512] = kexoqs_client;
 		ssh->kex->kex[KEX_MSRLN16_SHA512] = kexoqs_client;
-		ssh->kex->kex[KEX_CLN16_SHA512] = kexoqs_client;
+		ssh->kex->kex[KEX_SIKE503_SHA512] = kexoqs_client;
 		ssh->kex->kex[KEX_FRODO_SHA512] = kexoqs_client;
-		ssh->kex->kex[KEX_KYBER_SHA512] = kexoqs_client;
 		ssh->kex->verify_host_key =&_ssh_verify_host_key;
 	}
 	*sshp = ssh;
