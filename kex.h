@@ -30,6 +30,10 @@
 #include "buffer.h" /* XXX for typedef */
 #include "key.h" /* XXX for typedef */
 
+#include "kexoqs.h"
+#include "kexhy.h"
+#include "kexpq.h"
+
 #ifdef WITH_LEAKMALLOC
 #include "leakmalloc.h"
 #endif
@@ -62,6 +66,36 @@
 #define	KEX_ECDH_SHA2_NISTP521		"ecdh-sha2-nistp521"
 #define	KEX_CURVE25519_SHA256		"curve25519-sha256"
 #define	KEX_CURVE25519_SHA256_OLD	"curve25519-sha256@libssh.org"
+
+#if defined(WITH_OQS) && defined(WITH_PQ_KEX)
+
+#define KEX_NEWHOPE_SHA384 PQ_OQS_KEX_SUFFIX("newhope-sha384")
+#define KEX_FRODO_RECOMMENDED_SHA384 PQ_OQS_KEX_SUFFIX("frodo-recommended-sha384")
+#define KEX_SIDH_MSR503_SHA384 PQ_OQS_KEX_SUFFIX("sidh-msr503-sha384")
+#define KEX_SIDH_MSR751_SHA384 PQ_OQS_KEX_SUFFIX("sidh-msr751-sha384")
+#define KEX_SIKE_503_SHA384	PQ_OQS_KEX_SUFFIX("sike-503-sha384")
+#define KEX_SIKE_751_SHA384	PQ_OQS_KEX_SUFFIX("sike-751-sha384")
+#define KEX_NTRU_SHA384	PQ_OQS_KEX_SUFFIX("ntru-sha384")
+#define KEX_BIKE1_L1_SHA384 PQ_OQS_KEX_SUFFIX("bike1-L1-sha384")
+#define KEX_BIKE1_L3_SHA384 PQ_OQS_KEX_SUFFIX("bike1-L3-sha384")
+#define KEX_BIKE1_L5_SHA384 PQ_OQS_KEX_SUFFIX("bike1-L5-sha384")
+
+#endif /* defined(WITH_OQS) && defined(WITH_PQ_KEX) */
+
+#if defined(WITH_OQS) && defined(WITH_HYBRID_KEX)
+
+#define KEX_ECDH_NISTP384_NEWHOPE_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-newhope-sha384")
+#define KEX_ECDH_NISTP384_FRODO_RECOMMENDED_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-frodo-recommended-sha384")
+#define KEX_ECDH_NISTP384_SIDH_MSR503_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-sidh-msr503-sha384")
+#define KEX_ECDH_NISTP384_SIDH_MSR751_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-sidh-msr751-sha384")
+#define KEX_ECDH_NISTP384_SIKE_503_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-sike-503-sha384")
+#define KEX_ECDH_NISTP384_SIKE_751_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-sike-751-sha384")
+#define KEX_ECDH_NISTP384_NTRU_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-ntru-sha384")
+#define KEX_ECDH_NISTP384_BIKE1_L1_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-bike1-L1-sha384")
+#define KEX_ECDH_NISTP384_BIKE1_L3_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-bike1-L3-sha384")
+#define KEX_ECDH_NISTP384_BIKE1_L5_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-bike1-L5-sha384")
+
+#endif /* defined(WITH_OQS) && defined(WITH_HYBRID_KEX) */
 
 #define COMP_NONE	0
 #define COMP_ZLIB	1
@@ -99,6 +133,8 @@ enum kex_exchange {
 	KEX_DH_GEX_SHA256,
 	KEX_ECDH_SHA2,
 	KEX_C25519_SHA256,
+	KEX_HY_ECDH_OQS,
+	KEX_PQ_OQS,
 	KEX_MAX
 };
 
@@ -164,6 +200,12 @@ struct kex {
 	const EC_GROUP *ec_group;	/* ECDH */
 	u_char c25519_client_key[CURVE25519_SIZE]; /* 25519 */
 	u_char c25519_client_pubkey[CURVE25519_SIZE]; /* 25519 */
+#ifdef WITH_HYBRID_KEX
+	HYBRID_KEX_CTX *hybrid_kex_ctx; /* Hybrid key exchange context */
+#endif /* WITH_HYBRID_KEX */
+#ifdef WITH_PQ_KEX
+	PQ_KEX_CTX *pq_kex_ctx;; /* PQ-only key exchange context */
+#endif /* WITH_PQ_KEX */
 };
 
 int	 kex_names_valid(const char *);
