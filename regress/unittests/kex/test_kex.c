@@ -151,7 +151,9 @@ do_kex_with_key(char *kex, int keytype, int bits)
 	server2->kex->kex[KEX_DH_GEX_SHA256] = kexgex_server;
 #ifdef OPENSSL_HAS_ECC
 	server2->kex->kex[KEX_ECDH_SHA2] = kexecdh_server;
+	server2->kex->kex[KEX_HY_ECDH_OQS] = get_hybrid_ecdh_oqs_server_cb();
 #endif
+	server2->kex->kex[KEX_PQ_OQS] = get_pq_oqs_server_cb();
 	server2->kex->kex[KEX_C25519_SHA256] = kexc25519_server;
 	server2->kex->load_host_public_key = server->kex->load_host_public_key;
 	server2->kex->load_host_private_key = server->kex->load_host_private_key;
@@ -194,9 +196,53 @@ kex_tests(void)
 	do_kex("ecdh-sha2-nistp256");
 	do_kex("ecdh-sha2-nistp384");
 	do_kex("ecdh-sha2-nistp521");
-#endif
+#if defined(WITH_OQS) && defined(WITH_HYBRID_KEX)
+#ifdef HAVE_NEWHOPE
+	do_kex(KEX_ECDH_NISTP384_NEWHOPE_SHA384);
+#endif /* HAVE_NEWHOPE */
+#ifdef HAVE_FRODO
+	do_kex(KEX_ECDH_NISTP384_FRODO_RECOMMENDED_SHA384);
+#endif /* HAVE_FRODO */
+#ifdef HAVE_SIDH_SIKE
+	do_kex(KEX_ECDH_NISTP384_SIDH_MSR503_SHA384);
+	do_kex(KEX_ECDH_NISTP384_SIDH_MSR751_SHA384);
+	do_kex(KEX_ECDH_NISTP384_SIKE_503_SHA384);
+	do_kex(KEX_ECDH_NISTP384_SIKE_751_SHA384);
+#endif /* HAVE_SIDH_SIKE */
+#ifdef HAVE_NTRU
+	do_kex(KEX_ECDH_NISTP384_NTRU_SHA384);
+#endif /* HAVE_NTRU */
+#ifdef HAVE_BIKE
+	do_kex(KEX_ECDH_NISTP384_BIKE1_L1_SHA384);
+	do_kex(KEX_ECDH_NISTP384_BIKE1_L3_SHA384);
+	do_kex(KEX_ECDH_NISTP384_BIKE1_L5_SHA384);
+#endif /* HAVE_BIKE */
+#endif /* defined(WITH_OQS) && defined(WITH_HYBRID_KEX) */
+#endif /* OPENSSL_HAS_ECC */
 	do_kex("diffie-hellman-group-exchange-sha256");
 	do_kex("diffie-hellman-group-exchange-sha1");
 	do_kex("diffie-hellman-group14-sha1");
 	do_kex("diffie-hellman-group1-sha1");
+#if defined(WITH_OQS) && defined(WITH_OQ_KEX)
+#ifdef HAVE_NEWHOPE
+	do_kex(KEX_NEWHOPE_SHA384);
+#endif /* HAVE_NEWHOPE */
+#ifdef HAVE_FRODO
+	do_kex(KEX_FRODO_RECOMMENDED_SHA384);
+#endif /* HAVE_FRODO */
+#ifdef HAVE_SIDH_SIKE
+	do_kex(KEX_SIDH_MSR503_SHA384);
+	do_kex(KEX_SIDH_MSR751_SHA384);
+	do_kex(KEX_SIKE_503_SHA384);
+	do_kex(KEX_SIKE_751_SHA384);
+#endif /* HAVE_SIDH_SIKE */
+#ifdef HAVE_NTRU
+	do_kex(KEX_NTRU_SHA384);
+#endif /* HAVE_NTRU */
+#ifdef HAVE_BIKE
+	do_kex(KEX_BIKE1_L1_SHA384X);
+	do_kex(KEX_BIKE1_L3_SHA384);
+	do_kex(KEX_BIKE1_L5_SHA384);
+#endif /* HAVE_BIKE */
+#endif /* defined(WITH_OQS) && defined(WITH_PQ_KEX) */
 }

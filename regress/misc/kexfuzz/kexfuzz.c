@@ -284,8 +284,10 @@ do_kex_with_key(const char *kex, struct sshkey *prvkey, int *c2s, int *s2c,
 	server2->kex->kex[KEX_DH_GEX_SHA256] = kexgex_server;
 # ifdef OPENSSL_HAS_ECC
 	server2->kex->kex[KEX_ECDH_SHA2] = kexecdh_server;
+	server2->kex->kex[KEX_HY_ECDH_OQS] = get_hybrid_ecdh_oqs_server_cb();
 # endif
 #endif
+	server2->kex->kex[KEX_PQ_OQS] = get_pq_oqs_server_cb();
 	server2->kex->kex[KEX_C25519_SHA256] = kexc25519_server;
 	server2->kex->load_host_public_key = server->kex->load_host_public_key;
 	server2->kex->load_host_private_key = server->kex->load_host_private_key;
