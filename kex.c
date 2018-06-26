@@ -77,6 +77,14 @@ struct kexalg {
 	int ec_nid;
 	int hash_alg;
 };
+
+#ifdef WITH_HYBRID_KEX
+#define HYBRID_ECDH_OQS_KEX(X) { X, KEX_HY_ECDH_OQS, NID_secp384r1, SSH_DIGEST_SHA384},
+#endif /* WITH_HYBRID_KEX */
+#ifdef WITH_PQ_KEX
+#define PQ_OQS_KEX(X) { X, KEX_PQ_OQS, 0, SSH_DIGEST_SHA384},
+#endif /* WITH_PQ_KEX */
+
 static const struct kexalg kexalgs[] = {
 #ifdef WITH_OPENSSL
 	{ KEX_DH1, KEX_DH_GRP1_SHA1, 0, SSH_DIGEST_SHA1 },
@@ -93,18 +101,116 @@ static const struct kexalg kexalgs[] = {
 	    NID_X9_62_prime256v1, SSH_DIGEST_SHA256 },
 	{ KEX_ECDH_SHA2_NISTP384, KEX_ECDH_SHA2, NID_secp384r1,
 	    SSH_DIGEST_SHA384 },
+#if defined(WITH_OQS) && defined(WITH_HYBRID_KEX)
+#ifdef HAVE_NEWHOPE
+	HYBRID_ECDH_OQS_KEX(KEX_ECDH_NISTP384_NEWHOPE_SHA384)
+#endif /* HAVE_NEWHOPE */
+#ifdef HAVE_FRODO
+	HYBRID_ECDH_OQS_KEX(KEX_ECDH_NISTP384_FRODO_RECOMMENDED_SHA384)
+#endif /* HAVE_FRODO */
+#ifdef HAVE_SIDH_SIKE
+	HYBRID_ECDH_OQS_KEX(KEX_ECDH_NISTP384_SIDH_MSR503_SHA384)
+	HYBRID_ECDH_OQS_KEX(KEX_ECDH_NISTP384_SIDH_MSR751_SHA384)
+	HYBRID_ECDH_OQS_KEX(KEX_ECDH_NISTP384_SIKE_503_SHA384)
+	HYBRID_ECDH_OQS_KEX(KEX_ECDH_NISTP384_SIKE_751_SHA384)
+#endif /* HAVE_SIDH_SIKE */
+#ifdef HAVE_NTRU
+	HYBRID_ECDH_OQS_KEX(KEX_ECDH_NISTP384_NTRU_SHA384)
+#endif /* HAVE_NTRU */
+#ifdef HAVE_BIKE
+	HYBRID_ECDH_OQS_KEX(KEX_ECDH_NISTP384_BIKE1_L1_SHA384)
+	HYBRID_ECDH_OQS_KEX(KEX_ECDH_NISTP384_BIKE1_L3_SHA384)
+	HYBRID_ECDH_OQS_KEX(KEX_ECDH_NISTP384_BIKE1_L5_SHA384)
+#endif /* HAVE_BIKE */
+#endif /* defined(WITH_OQS) && defined(WITH_HYBRID_KEX) */
 # ifdef OPENSSL_HAS_NISTP521
 	{ KEX_ECDH_SHA2_NISTP521, KEX_ECDH_SHA2, NID_secp521r1,
 	    SSH_DIGEST_SHA512 },
 # endif /* OPENSSL_HAS_NISTP521 */
 #endif /* OPENSSL_HAS_ECC */
 #endif /* WITH_OPENSSL */
+#if defined(WITH_OQS) && defined(WITH_PQ_KEX)
+#ifdef HAVE_NEWHOPE
+	PQ_OQS_KEX(KEX_NEWHOPE_SHA384)
+#endif /* HAVE_NEWHOPE */
+#ifdef HAVE_FRODO
+	PQ_OQS_KEX(KEX_FRODO_RECOMMENDED_SHA384)
+#endif /* HAVE_FRODO */
+#ifdef HAVE_SIDH_SIKE
+	PQ_OQS_KEX(KEX_SIDH_MSR503_SHA384)
+	PQ_OQS_KEX(KEX_SIDH_MSR751_SHA384)
+	PQ_OQS_KEX(KEX_SIKE_503_SHA384)
+	PQ_OQS_KEX(KEX_SIKE_751_SHA384)
+#endif /* HAVE_SIDH_SIKE */
+#ifdef HAVE_NTRU
+	PQ_OQS_KEX(KEX_NTRU_SHA384)
+#endif /* HAVE_NTRU */
+#ifdef HAVE_BIKE
+	PQ_OQS_KEX(KEX_BIKE1_L1_SHA384)
+	PQ_OQS_KEX(KEX_BIKE1_L3_SHA384)
+	PQ_OQS_KEX(KEX_BIKE1_L5_SHA384)
+#endif /* HAVE_BIKE */
+#endif /* defined(WITH_OQS) && defined(WITH_PQ_KEX) */
 #if defined(HAVE_EVP_SHA256) || !defined(WITH_OPENSSL)
 	{ KEX_CURVE25519_SHA256, KEX_C25519_SHA256, 0, SSH_DIGEST_SHA256 },
 	{ KEX_CURVE25519_SHA256_OLD, KEX_C25519_SHA256, 0, SSH_DIGEST_SHA256 },
 #endif /* HAVE_EVP_SHA256 || !WITH_OPENSSL */
 	{ NULL, -1, -1, -1},
 };
+
+#ifdef WITH_HYBRID_KEX
+
+static int
+init_hybrid_kex(HYBRID_KEX_CTX **hybrid_kex_ctx, const struct kexalg *kexalg);
+
+/*
+ * @brief Initialise the hybrid key exchange method context if the negotiated
+ * kex is a hybrid type,
+ *
+ * @return result of intialising hybrid key exchange method
+ * 0 if negotiated kex is _not_ a hybrid type
+ */
+static int
+init_hybrid_kex(HYBRID_KEX_CTX **hybrid_kex_ctx, const struct kexalg *kexalg) {
+
+	switch (kexalg->type) {
+#ifdef WITH_OQS
+		case KEX_HY_ECDH_OQS:
+			return hybrid_ecdh_oqs_init(hybrid_kex_ctx, kexalg->name,
+				kexalg->ec_nid);
+#endif /* WITH_OQS */
+		default:
+			return 0;
+	}
+}
+
+#endif /* WITH_HYBRID_KEX */
+#ifdef WITH_PQ_KEX
+
+static int
+init_pq_kex(PQ_KEX_CTX **pq_kex_ctx, const struct kexalg *kexalg);
+
+/*
+ * @brief Initialise the PQ-only key exchange method context if the negotiated
+ * kex is a PQ-only type,
+ *
+ * @return result of intialising PQ-only key exchange method
+ * 0 if negotiated kex is _not_ a PQ-only type
+ */
+static int
+init_pq_kex(PQ_KEX_CTX **pq_kex_ctx, const struct kexalg *kexalg) {
+
+	switch (kexalg->type) {
+#ifdef WITH_OQS
+		case KEX_PQ_OQS:
+			return pq_oqs_init(pq_kex_ctx, kexalg->name);
+#endif /* WITH_OQS */
+		default:
+			return 0;
+	}
+}
+
+#endif /* WITH_PQ_KEX */
 
 char *
 kex_alg_list(char sep)
@@ -591,7 +697,20 @@ kex_free(struct kex *kex)
 #ifdef OPENSSL_HAS_ECC
 	EC_KEY_free(kex->ec_client_key);
 #endif /* OPENSSL_HAS_ECC */
+/*
+ * Members of the hybrid/pq-only kex structure is freed when the key exchange
+ * finishes (or if an error occurs during key exchange). Therefore,
+ * we do not need to free these here.
+ */
 #endif /* WITH_OPENSSL */
+#ifdef WITH_HYBRID_KEX
+	if (kex->hybrid_kex_ctx != NULL)
+		free(kex->hybrid_kex_ctx);
+#endif /* WITH_HYBRID_KEX */
+#ifdef WITH_PQ_KEX
+	if (kex->pq_kex_ctx != NULL)
+		free(kex->pq_kex_ctx);
+#endif /* WITH_PQ_KEX */
 	for (mode = 0; mode < MODE_MAX; mode++) {
 		kex_free_newkeys(kex->newkeys[mode]);
 		kex->newkeys[mode] = NULL;
@@ -704,6 +823,7 @@ static int
 choose_kex(struct kex *k, char *client, char *server)
 {
 	const struct kexalg *kexalg;
+	int r = 0;
 
 	k->name = match_list(client, server, NULL);
 
@@ -715,6 +835,24 @@ choose_kex(struct kex *k, char *client, char *server)
 	k->kex_type = kexalg->type;
 	k->hash_alg = kexalg->hash_alg;
 	k->ec_nid = kexalg->ec_nid;
+
+	/*
+	 * Specifically handle the case where the negotiated
+	 * key exchange method is either a hybrid type or a PQ-only type.
+	 * If the negotiated key exchange algorithm is not a
+	 * hybrid kex or a PQ-only key, these functions does nothing.
+	 */
+#ifdef WITH_HYBRID_KEX
+	if ((r = init_hybrid_kex(&k->hybrid_kex_ctx ,kexalg)) != 0) {
+		return r;
+	}
+#endif /* WITH_HYBRID_KEX */
+#ifdef WITH_PQ_KEX
+	if ((r = init_pq_kex(&k->pq_kex_ctx, kexalg)) != 0) {
+			return r;
+	}
+#endif /* WITH_PQ_KEX */
+
 	return 0;
 }
 

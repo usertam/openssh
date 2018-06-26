@@ -164,6 +164,7 @@ OpenSSH contains no GPL code.
     Portable OpenSSH additionally includes code from the following copyright
     holders, also under the 2-term BSD license:
 
+	Amazon.com, Inc. or its affiliates
 	Ben Lindstrom
 	Tim Rice
 	Andre Lucas

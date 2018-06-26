@@ -3339,6 +3339,162 @@ else
 	AC_MSG_ERROR([unsupported --with-sandbox])
 fi
 
+# Check for LibOQS
+with_liboqs=no
+AC_ARG_WITH([liboqs-dir],
+	[  --with-liboqs-dir=PATH     Specify path to LibOQS installation ],
+	[
+		if test "x$withval" != "xno" ; then
+			with_liboqs=yes
+			case "$withval" in
+				# Relative paths
+				./*|../*)	withval="`pwd`/$withval"
+			esac
+			if test -d "$withval/lib"; then
+				if test -n "${need_dash_r}"; then
+					LDFLAGS="-L${withval}/lib -R${withval}/lib ${LDFLAGS}"
+				else
+					LDFLAGS="-L${withval}/lib ${LDFLAGS}"
+				fi
+			elif test -d "$withval/lib64"; then
+				if test -n "${need_dash_r}"; then
+					LDFLAGS="-L${withval}/lib64 -R${withval}/lib64 ${LDFLAGS}"
+				else
+					LDFLAGS="-L${withval}/lib64 ${LDFLAGS}"
+				fi
+			else
+				if test -n "${need_dash_r}"; then
+					LDFLAGS="-L${withval} -R${withval} ${LDFLAGS}"
+				else
+					LDFLAGS="-L${withval} ${LDFLAGS}"
+				fi
+			fi
+			if test -d "$withval/include"; then
+				CPPFLAGS="-I${withval}/include ${CPPFLAGS}"
+			else
+				CPPFLAGS="-I${withval} ${CPPFLAGS}"
+			fi
+		fi
+	]
+)
+
+if test "x$with_liboqs" = "xyes" ; then
+	dnl Check for LibOQS library
+	AC_DEFINE_UNQUOTED([WITH_OQS], [1], [use LibOQS for post-quantum and hybrid key exchange])
+	LIBS="-loqs $LIBS"
+	AC_CHECK_HEADER([oqs/rand.h], ,[AC_MSG_ERROR([*** LibOQS headers missing - please install first or check config.log ***])])
+	AC_TRY_LINK([#include <oqs/rand.h>],
+				[
+					OQS_RAND *rand = OQS_RAND_new(OQS_RAND_alg_urandom_chacha20);
+					if (rand == NULL) {
+						return 1;
+					}
+				],
+				,
+				[
+					AC_MSG_ERROR([*** Can't find LibOQS library (see config.log for details) ***])
+				]
+			)
+	dnl End LibOQS library check
+fi
+
+if test "x$with_liboqs" = "xyes" ; then
+	dnl Check which post-quantum schemes that are enabled in LibOQS library
+	AC_MSG_CHECKING([for libOQS NEWHOPE support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/config.h>
+			]], [[
+					#ifndef ENABLE_KEX_RLWE_NEWHOPE
+					#error "NEWHOPE not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_NEWHOPE], [1], [Define to 1 if LibOQS library is compiled with support for NEWHOPE])
+			], [AC_MSG_RESULT([no])
+	])
+	AC_MSG_CHECKING([for libOQS FRODO support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/config.h>
+			]], [[
+					#ifndef ENABLE_KEX_LWE_FRODO
+					#error "FRODO is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_FRODO], [1], [Define to 1 if LibOQS library is compiled with support for FRODO])
+			], [AC_MSG_RESULT([no])
+	])
+	AC_MSG_CHECKING([for libOQS SIDH and SIKE support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/config.h>
+			]], [[
+					#ifndef ENABLE_KEX_SIDH_MSR
+					#error "SIDH and SIKE are not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_SIDH_SIKE], [1], [Define to 1 if LibOQS library is compiled with support for SIDH and SIKE])
+			], [AC_MSG_RESULT([no])
+	])
+	AC_MSG_CHECKING([for libOQS NTRU support])
+	if test "x$SANDBOX_STYLE" = "xnone" ; then
+		AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+					#include <oqs/config.h>
+				]], [[
+						#ifndef ENABLE_KEX_NTRU
+						#error "NTRU is not supported"
+						#endif
+				]])],
+				[ AC_MSG_RESULT([yes])
+					AC_DEFINE([HAVE_NTRU], [1], [Define to 1 if LibOQS library is compiled with support for NTRU])
+				], [AC_MSG_RESULT([no])
+		])
+	else
+		AC_MSG_WARN([libOQS algorithm NTRU has been disabled because sandbox mode is enabled])
+	fi
+	AC_MSG_CHECKING([for libOQS BIKE support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/config.h>
+			]], [[
+					#ifndef ENABLE_KEX_CODE_BIKE
+					#error "BIKE is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_BIKE], [1], [Define to 1 if LibOQS library is compiled with support for BIKE])
+			], [AC_MSG_RESULT([no])
+	])
+	dnl End supported post-quantum schemes LibOQS library check
+fi
+
+# Enable PQ key exchange methods
+AC_ARG_ENABLE([pq-kex],
+	[	--enable-pq-kex			enable post-quantum key exchange methods (requires LibOQS library)],
+	[
+		if test "x$enableval" = "xyes" ; then
+			if test "x$with_liboqs" = "xyes" ; then
+				AC_DEFINE([WITH_PQ_KEX], [1], [Define if post-quantum key exchange methods are supported])
+			else
+				AC_MSG_ERROR([*** Post-quantum key exchange methods requires LibOQS library ***])
+			fi
+		fi
+	]
+)
+
+# Enable Hybrid key exchange methods
+AC_ARG_ENABLE([hybrid-kex],
+	[	--enable-hybrid-kex			enable hybrid key exchange methods (requires LibOQS library)],
+	[
+		if test "x$enableval" = "xyes" ; then
+			if test "x$with_liboqs" = "xyes" ; then
+				AC_DEFINE([WITH_HYBRID_KEX], [1], [Define if hybrid key exchange methods are supported])
+			else
+				AC_MSG_ERROR([*** Hybrid key exchange methods requires LibOQS library ***])
+			fi
+		fi
+	]
+)
+
 # Cheap hack to ensure NEWS-OS libraries are arranged right.
 if test ! -z "$SONY" ; then
   LIBS="$LIBS -liberty";

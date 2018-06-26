@@ -2246,8 +2246,10 @@ do_ssh2_kex(void)
 	kex->kex[KEX_DH_GEX_SHA256] = kexgex_server;
 # ifdef OPENSSL_HAS_ECC
 	kex->kex[KEX_ECDH_SHA2] = kexecdh_server;
+	kex->kex[KEX_HY_ECDH_OQS] = get_hybrid_ecdh_oqs_server_cb();
 # endif
 #endif
+	kex->kex[KEX_PQ_OQS] = get_pq_oqs_server_cb();
 	kex->kex[KEX_C25519_SHA256] = kexc25519_server;
 	kex->server = 1;
 	kex->client_version_string=client_version_string;

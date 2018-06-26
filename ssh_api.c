@@ -108,8 +108,10 @@ ssh_init(struct ssh **sshp, int is_server, struct kex_params *kex_params)
 		ssh->kex->kex[KEX_DH_GEX_SHA256] = kexgex_server;
 # ifdef OPENSSL_HAS_ECC
 		ssh->kex->kex[KEX_ECDH_SHA2] = kexecdh_server;
+		ssh->kex->kex[KEX_HY_ECDH_OQS] = get_hybrid_ecdh_oqs_server_cb();
 # endif
 #endif /* WITH_OPENSSL */
+		ssh->kex->kex[KEX_PQ_OQS] = get_pq_oqs_server_cb();
 		ssh->kex->kex[KEX_C25519_SHA256] = kexc25519_server;
 		ssh->kex->load_host_public_key=&_ssh_host_public_key;
 		ssh->kex->load_host_private_key=&_ssh_host_private_key;
@@ -125,8 +127,10 @@ ssh_init(struct ssh **sshp, int is_server, struct kex_params *kex_params)
 		ssh->kex->kex[KEX_DH_GEX_SHA256] = kexgex_client;
 # ifdef OPENSSL_HAS_ECC
 		ssh->kex->kex[KEX_ECDH_SHA2] = kexecdh_client;
+		ssh->kex->kex[KEX_HY_ECDH_OQS] = get_hybrid_ecdh_oqs_client_cb();
 # endif
 #endif /* WITH_OPENSSL */
+		ssh->kex->kex[KEX_PQ_OQS] = get_pq_oqs_client_cb();
 		ssh->kex->kex[KEX_C25519_SHA256] = kexc25519_client;
 		ssh->kex->verify_host_key =&_ssh_verify_host_key;
 	}
