@@ -86,10 +86,10 @@ First, you must download and build liboqs.  You must use the "master" branch ver
 
 Follow the instructions there to download and build that branch of liboqs.  You will need to specify a path to install liboqs in during configure time; we recommend that you install in a special-purpose directory, rather than the global `/usr` or `/usr/local` directories.  As a summary:
 
-    git clone -b master --single-branch https://github.com/open-quantum-safe/liboqs.git
+	git clone -b master --single-branch https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
 	autoreconf -i
-	./configure --prefix=/path/to/install/liboqs/install
+	./configure --prefix=/path/to/install/liboqs/install --with-pic=yes
 	make
 	make install
 
