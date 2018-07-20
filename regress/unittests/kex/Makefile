@@ -11,6 +11,8 @@ SRCS+=ssherr.c uidswap.c cleanup.c xmalloc.c match.c krl.c fatal.c
 SRCS+=addrmatch.c bitmap.c packet.c dispatch.c canohost.c ssh_api.c
 SRCS+=kex.c kexc25519.c kexc25519c.c kexc25519s.c kexdh.c kexdhc.c kexdhs.c
 SRCS+=kexecdh.c kexecdhc.c kexecdhs.c kexgex.c kexgexc.c kexgexs.c
+SRCS+=kexoqs.c kexhyecdh.c kexhyecdhoqs.c kexhyecdhoqsc.c kexhyecdhoqss.c
+SRCS+=kexpqoqs.c kexpqoqsc.c kexpqoqss.c
 SRCS+=dh.c compat.c
 SRCS+=ed25519.c hash.c ge25519.c fe25519.c sc25519.c verify.c
 SRCS+=cipher-chachapoly.c chacha.c poly1305.c
@@ -26,4 +28,4 @@ run-regress-${PROG}: ${PROG}
 
 .include <bsd.regress.mk>
 
-LDADD+=-lz
+LDADD+=-lz -loqs
