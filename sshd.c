@@ -1,4 +1,4 @@
-/* $OpenBSD: sshd.c,v 1.503 2018/01/23 20:00:58 stsp Exp $ */
+/* $OpenBSD: sshd.c,v 1.506 2018/03/03 03:15:51 djm Exp $ */
 /*
  * Author: Tatu Ylonen <ylo@cs.hut.fi>
  * Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
@@ -119,6 +119,7 @@
 #endif
 #include "monitor_wrap.h"
 #include "ssh-sandbox.h"
+#include "auth-options.h"
 #include "version.h"
 #include "ssherr.h"
 
@@ -232,6 +233,9 @@ static int privsep_chroot = 1;
 /* global authentication context */
 Authctxt *the_authctxt = NULL;
 
+/* global key/cert auth options. XXX move to permanent ssh->authctxt? */
+struct sshauthopt *auth_opts = NULL;
+
 /* sshd_config buffer */
 Buffer cfg;
 
@@ -283,7 +287,6 @@ sighup_handler(int sig)
 	int save_errno = errno;
 
 	received_sighup = 1;
-	signal(SIGHUP, sighup_handler);
 	errno = save_errno;
 }
 
@@ -333,8 +336,6 @@ main_sigchld_handler(int sig)
 	while ((pid = waitpid(-1, &status, WNOHANG)) > 0 ||
 	    (pid < 0 && errno == EINTR))
 		;
-
-	signal(SIGCHLD, main_sigchld_handler);
 	errno = save_errno;
 }
 
@@ -708,6 +709,7 @@ list_hostkey_types(void)
 		case KEY_DSA:
 		case KEY_ECDSA:
 		case KEY_ED25519:
+		case KEY_XMSS:
 			if (buffer_len(&b) > 0)
 				buffer_append(&b, ",", 1);
 			p = key_ssh_name(key);
@@ -729,6 +731,7 @@ list_hostkey_types(void)
 		case KEY_DSA_CERT:
 		case KEY_ECDSA_CERT:
 		case KEY_ED25519_CERT:
+		case KEY_XMSS_CERT:
 			if (buffer_len(&b) > 0)
 				buffer_append(&b, ",", 1);
 			p = key_ssh_name(key);
@@ -755,6 +758,7 @@ get_hostkey_by_type(int type, int nid, int need_private, struct ssh *ssh)
 		case KEY_DSA_CERT:
 		case KEY_ECDSA_CERT:
 		case KEY_ED25519_CERT:
+		case KEY_XMSS_CERT:
 			key = sensitive_data.host_certificates[i];
 			break;
 		default:
@@ -1605,13 +1609,6 @@ main(int ac, char **av)
 	if (getenv("KRB5CCNAME") != NULL)
 		(void) unsetenv("KRB5CCNAME");
 
-#ifdef _UNICOS
-	/* Cray can define user privs drop all privs now!
-	 * Not needed on PRIV_SU systems!
-	 */
-	drop_cray_privs();
-#endif
-
 	sensitive_data.have_ssh2_key = 0;
 
 	/*
@@ -1744,6 +1741,7 @@ main(int ac, char **av)
 		case KEY_DSA:
 		case KEY_ECDSA:
 		case KEY_ED25519:
+		case KEY_XMSS:
 			if (have_agent || key != NULL)
 				sensitive_data.have_ssh2_key = 1;
 			break;
@@ -2072,6 +2070,10 @@ main(int ac, char **av)
 	/* XXX global for cleanup, access from other modules */
 	the_authctxt = authctxt;
 
+	/* Set default key authentication options */
+	if ((auth_opts = sshauthopt_new_with_keys_defaults()) == NULL)
+		fatal("allocation failed");
+
 	/* prepare buffer to collect messages to display to user after login */
 	buffer_init(&loginmsg);
 	auth_debug_reset();
@@ -2128,7 +2130,7 @@ main(int ac, char **av)
 #ifdef USE_PAM
 	if (options.use_pam) {
 		do_pam_setcred(1);
-		do_pam_session();
+		do_pam_session(ssh);
 	}
 #endif
 

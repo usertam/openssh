@@ -1,4 +1,4 @@
-/* $OpenBSD: sshconnect2.c,v 1.267 2018/01/23 05:27:21 djm Exp $ */
+/* $OpenBSD: sshconnect2.c,v 1.270 2018/03/24 19:28:43 markus Exp $ */
 /*
  * Copyright (c) 2000 Markus Friedl.  All rights reserved.
  * Copyright (c) 2008 Damien Miller.  All rights reserved.
@@ -626,8 +626,7 @@ input_userauth_pk_ok(int type, u_int32_t seq, struct ssh *ssh)
 		}
 	}
 done:
-	if (key != NULL)
-		key_free(key);
+	key_free(key);
 	free(pkalg);
 	free(pkblob);
 
@@ -1005,17 +1004,46 @@ key_sign_encode(const struct sshkey *key)
 	return key_ssh_name(key);
 }
 
+/*
+ * Some agents will return ssh-rsa signatures when asked to make a
+ * rsa-sha2-* signature. Check what they actually gave back and warn the
+ * user if the agent has returned an unexpected type.
+ */
+static int
+check_sigtype(const struct sshkey *key, const u_char *sig, size_t len)
+{
+	int r;
+	char *sigtype = NULL;
+	const char *alg = key_sign_encode(key);
+
+	if (sshkey_is_cert(key))
+		return 0;
+	if ((r = sshkey_sigtype(sig, len, &sigtype)) != 0)
+		return r;
+	if (strcmp(sigtype, alg) != 0) {
+		logit("warning: agent returned different signature type %s "
+		    "(expected %s)", sigtype, alg);
+	}
+	free(sigtype);
+	/* Incorrect signature types aren't an error ... yet */
+	return 0;
+}
+
 static int
 identity_sign(struct identity *id, u_char **sigp, size_t *lenp,
     const u_char *data, size_t datalen, u_int compat)
 {
 	struct sshkey *prv;
-	int ret;
+	int r;
 
 	/* the agent supports this key */
-	if (id->key != NULL && id->agent_fd != -1)
-		return ssh_agent_sign(id->agent_fd, id->key, sigp, lenp,
-		    data, datalen, key_sign_encode(id->key), compat);
+	if (id->key != NULL && id->agent_fd != -1) {
+		if ((r = ssh_agent_sign(id->agent_fd, id->key, sigp, lenp,
+		    data, datalen, key_sign_encode(id->key), compat)) != 0 ||
+		    (r = check_sigtype(id->key, *sigp, *lenp)) != 0)
+			return r;
+		return 0;
+	}
 
 	/*
 	 * we have already loaded the private key or
@@ -1034,10 +1062,10 @@ identity_sign(struct identity *id, u_char **sigp, size_t *lenp,
 		   __func__, id->filename);
 		return SSH_ERR_KEY_NOT_FOUND;
 	}
-	ret = sshkey_sign(prv, sigp, lenp, data, datalen,
+	r = sshkey_sign(prv, sigp, lenp, data, datalen,
 	    key_sign_encode(prv), compat);
 	sshkey_free(prv);
-	return (ret);
+	return r;
 }
 
 static int
