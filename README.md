@@ -19,6 +19,8 @@ The **Open Quantum Safe (OQS) project** has the goal of developing and prototypi
 
 **open-quantum-safe/openssh-portable** contains a fork of OpenSSH that adds quantum-safe key exchange algorithms using liboqs for prototyping purposes, specifically adding key exchange methods that use hybrid (post-quantum + traditional elliptic curve) or post-quantum-only algorithms.  The integration should not be considered "production quality".
 
+open-quantum-safe/openssh-portable periodically updated to track the original OpenSSH code (openssh/openssh-portable).  The OQS-master branch of open-quantum-safe/openssh-portable is currently based on **OpenSSH version 7.7** (Git tag V_7_7_P1).
+
 More information on OQS can be found on our website: https://openquantumsafe.org/.
 
 Limitations and security
@@ -82,12 +84,13 @@ You might have to install xcode for zlib dependency:
 
 ### Step 1: Build and install liboqs
 
-First, you must download and build liboqs.  You must use the "master" branch version of liboqs that uses the old key exchange API, located at https://github.com/open-quantum-safe/liboqs/tree/master.
+First, you must download and build liboqs.  Our "master" branch of liboqs is currently (as of July 2018) undergoing an API refactoring, which this openssh-portable has not yet been updated to, but will be during August 2018.  Hence you must use an old version of master branch that uses the old key exchange API.
 
-Follow the instructions there to download and build that branch of liboqs.  You will need to specify a path to install liboqs in during configure time; we recommend that you install in a special-purpose directory, rather than the global `/usr` or `/usr/local` directories.  As a summary:
+Follow the instructions there to download and build that version of liboqs.  You will need to specify a path to install liboqs in during configure time; we recommend that you install in a special-purpose directory, rather than the global `/usr` or `/usr/local` directories.  As a summary:
 
 	git clone -b master --single-branch https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
+	git checkout 7c7dead
 	autoreconf -i
 	./configure --prefix=/path/to/install/liboqs/install --with-pic=yes
 	make
