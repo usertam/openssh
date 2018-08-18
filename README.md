@@ -90,7 +90,7 @@ Follow the instructions there to download and build that version of liboqs.  You
 
 	git clone -b master --single-branch https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
-	git checkout 7c7dead
+	git checkout 068c48ae3718b86926a2d032dea337892d836891
 	autoreconf -i
 	./configure --prefix=/path/to/install/liboqs/install --with-pic=yes
 	make
