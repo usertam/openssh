@@ -56,6 +56,7 @@ open-quantum-safe/openssh currently implements hybrid key exchange methods and P
 - BIKE (only available if liboqs is built with BIKE enabled)
 - FrodoKEM
 - SIKE
+- default (whichever KEM algorithm was set as the default in liboqs at compile time; can be used with liboqs nist-branch to try alternate algorithms not explicitly listed above)
 
 See https://github.com/open-quantum-safe/liboqs/blob/master/README.md for more information about each of the above PQ key encapsulation mechanisms.
 
@@ -103,10 +104,10 @@ Next, you can build and install our fork of OpenSSH:
 
 Notes about `./configure` options:
 
-- `--enable-pq-kex` enables PQ-only key exchange methods. 
+- `--enable-pq-kex` enables PQ-only key exchange methods.
 - `--enable-hybrid-kex` enables hybrid key exchange methods.
 - On some platforms such as Ubuntu, you may not need to specify the `--with-ssl-dir` and `--with-ldflags` options as OpenSSH-configure automatically detect your OpenSSL installation.
-- With OpenSSL installed via brew on macOS, your command might be: 
+- With OpenSSL installed via brew on macOS, your command might be:
 
 		./configure --enable-pq-kex --enable-hybrid-kex --with-ssl-dir=/usr/local/opt/openssl/include --with-ldflags=-L/usr/local/opt/openssl/lib --prefix=/path/to/openssh/install/dir --sysconfdir=/path/to/config/files/dir --with-liboqs-dir=/path/to/install/liboqs/dir
 
@@ -129,23 +130,25 @@ where `LIBOQSALGORITHM` is one of the following:
 
 _Hybrid key exchange methods:_
 
+	ecdh-nistp384-bike1-L1-sha384@openquantumsafe.org
+    ecdh-nistp384-bike1-L3-sha384@openquantumsafe.org
+    ecdh-nistp384-bike1-L5-sha384@openquantumsafe.org
     ecdh-nistp384-frodo-640-aes-sha384@openquantumsafe.org
     ecdh-nistp384-frodo-976-aes-sha384@openquantumsafe.org
     ecdh-nistp384-sike-503-sha384@openquantumsafe.org
     ecdh-nistp384-sike-751-sha384@openquantumsafe.org
-    ecdh-nistp384-bike1-L1-sha384@openquantumsafe.org
-    ecdh-nistp384-bike1-L3-sha384@openquantumsafe.org
-    ecdh-nistp384-bike1-L5-sha384@openquantumsafe.org
+	ecdh-nistp384-oqsdefault-sha384@openquantumsafe.org
 
 _PQ-only key exchange methods:_
 
+	bike1-L1-sha384@openquantumsafe.org
+    bike1-L3-sha384@openquantumsafe.org
+    bike1-L5-sha384@openquantumsafe.org
     frodo-640-aes-sha384@openquantumsafe.org
     frodo-976-aes-sha384@openquantumsafe.org
     sike-503-sha384@openquantumsafe.org
     sike-751-sha384@openquantumsafe.org
-    bike1-L1-sha384@openquantumsafe.org
-    bike1-L3-sha384@openquantumsafe.org
-    bike1-L5-sha384@openquantumsafe.org
+	oqsdefault-sha384@openquantumsafe.org
 
 ### Automated tests
 

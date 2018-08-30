@@ -197,6 +197,7 @@ kex_tests(void)
 	do_kex("ecdh-sha2-nistp384");
 	do_kex("ecdh-sha2-nistp521");
 #if defined(WITH_OQS) && defined(WITH_HYBRID_KEX)
+	do_kex(KEX_ECDH_NISTP384_OQSDEFAULT_SHA384);
 #ifdef HAVE_FRODO
 	do_kex(KEX_ECDH_NISTP384_FRODO_640_AES_SHA384);
 	do_kex(KEX_ECDH_NISTP384_FRODO_976_AES_SHA384);
@@ -217,6 +218,7 @@ kex_tests(void)
 	do_kex("diffie-hellman-group14-sha1");
 	do_kex("diffie-hellman-group1-sha1");
 #if defined(WITH_OQS) && defined(WITH_OQ_KEX)
+	do_kex(KEX_OQSDEFAULT_SHA384);
 #ifdef HAVE_FRODO
 	do_kex(KEX_FRODO_640_AES_SHA384);
 	do_kex(KEX_FRODO_976_AES_SHA384);

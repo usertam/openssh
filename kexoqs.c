@@ -38,6 +38,8 @@
 static const OQS_ALG oqs_alg_mapping[] = {
 /* Hybrid key exchange methods */
 #if defined(OPENSSL_HAS_ECC) && defined(WITH_HYBRID_KEX)
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-oqsdefault-sha384"), OQS_KEM_alg_default,
+	SSH2_MSG_HY_ECDH_OQSDEFAULT_INIT, SSH2_MSG_HY_ECDH_OQSDEFAULT_REPLY},
 #ifdef HAVE_FRODO
 	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-frodo-640-aes-sha384"), OQS_KEM_alg_frodokem_640_aes,
 	SSH2_MSG_HY_ECDH_FRODO_INIT, SSH2_MSG_HY_ECDH_FRODO_REPLY},
@@ -61,6 +63,8 @@ static const OQS_ALG oqs_alg_mapping[] = {
 #endif /* defined(OPENSSL_HAS_ECC) && defined(WITH_HYBRID_KEX) */
 /* PQ-only key exchange methods */
 #ifdef WITH_PQ_KEX
+	{PQ_OQS_KEX_SUFFIX("oqsdefault-sha384"), OQS_KEM_alg_default,
+	SSH2_MSG_PQ_OQSDEFAULT_INIT, SSH2_MSG_PQ_OQSDEFAULT_REPLY},
 #ifdef HAVE_FRODO
 	{PQ_OQS_KEX_SUFFIX("frodo-640-aes-sha384"), OQS_KEM_alg_frodokem_640_aes,
 	SSH2_MSG_PQ_FRODO_INIT, SSH2_MSG_PQ_FRODO_REPLY},

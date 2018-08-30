@@ -59,6 +59,7 @@
 #endif /* defined(WITH_OQS) && defined(WITH_PQ_KEX) */
 
 # define KEX_PQ_METHODS \
+    PQ_OQS_KEX_METHOD("oqsdefault-sha384") \
 	KEX_PQ_METHOD_FRODO \
 	KEX_PQ_METHOD_SIKE \
 	KEX_PQ_METHOD_BIKE
@@ -95,6 +96,7 @@
 #endif /* defined(WITH_OQS) && defined(WITH_HYBRID_KEX) */
 
 # define KEX_HYBRID_METHODS \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-oqsdefault-sha384") \
 	KEX_HYBRID_METHOD_FRODO \
 	KEX_HYBRID_METHOD_SIKE \
 	KEX_HYBRID_METHOD_BIKE
