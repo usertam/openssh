@@ -3482,7 +3482,8 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/config.h>
 			]], [[
-					#ifndef ENABLE_KEM_FRODOKEM
+					#if defined(ENABLE_KEM_FRODOKEM) || (defined(OQS_ENABLE_KEM_frodokem_640_aes) && defined(OQS_ENABLE_KEM_frodokem_976_aes))
+					#else
 					#error "FRODO is not supported"
 					#endif
 			]])],
@@ -3494,7 +3495,8 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/config.h>
 			]], [[
-					#ifndef ENABLE_KEM_SIKE
+					#if defined(ENABLE_KEM_SIKE) || (defined(OQS_ENABLE_KEM_sike_p503) && defined(OQS_ENABLE_KEM_sike_p751))
+					#else
 					#error "SIKE is not supported"
 					#endif
 			]])],
@@ -3506,7 +3508,8 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/config.h>
 			]], [[
-					#ifndef ENABLE_KEM_BIKE
+					#if defined(ENABLE_KEM_BIKE) || (defined(OQS_ENABLE_KEM_bike1_l1) && defined(OQS_ENABLE_KEM_bike1_l3) && defined(OQS_ENABLE_KEM_bike1_l5))
+					#else
 					#error "BIKE is not supported"
 					#endif
 			]])],
