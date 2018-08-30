@@ -51,16 +51,13 @@ Contents
 
 ### Key exchange mechanisms
 
-open-quantum-safe/openssh currently implements hybrid key exchange methods and PQ-only key exchange methods using the the following post-quantum key exchange mechanisms from liboqs:
+open-quantum-safe/openssh currently implements hybrid key exchange methods and PQ-only key exchange methods using the the following post-quantum key encapsulation mechanisms from liboqs:
 
-- `kex_rlwe_newhope`
-- `kex_lwe_frodo`
-- `kex_sidh`
-- `kex_sike`
-- `kex_bike`
-- `kex_ntru`
+- BIKE (only available if liboqs is built with BIKE enabled)
+- FrodoKEM
+- SIKE
 
-See https://github.com/open-quantum-safe/liboqs/blob/master/README.md for more information about each of the above PQ KEX mechanisms.
+See https://github.com/open-quantum-safe/liboqs/blob/master/README.md for more information about each of the above PQ key encapsulation mechanisms.
 
 Building on Linux and macOS
 ---------------------------
@@ -84,13 +81,10 @@ You might have to install xcode for zlib dependency:
 
 ### Step 1: Build and install liboqs
 
-First, you must download and build liboqs.  Our "master" branch of liboqs is currently (as of July 2018) undergoing an API refactoring, which this openssh-portable has not yet been updated to, but will be during August 2018.  Hence you must use an old version of master branch that uses the old key exchange API.
-
-Follow the instructions there to download and build that version of liboqs.  You will need to specify a path to install liboqs in during configure time; we recommend that you install in a special-purpose directory, rather than the global `/usr` or `/usr/local` directories.  As a summary:
+First, you must download and build liboqs.  You will need to specify a path to install liboqs in during configure time; we recommend that you install in a special-purpose directory, rather than the global `/usr` or `/usr/local` directories.  As a summary:
 
 	git clone -b master --single-branch https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
-	git checkout 068c48ae3718b86926a2d032dea337892d836891
 	autoreconf -i
 	./configure --prefix=/path/to/install/liboqs/install --with-pic=yes
 	make
@@ -103,15 +97,18 @@ Next, you can build and install our fork of OpenSSH:
 	git clone https://github.com/open-quantum-safe/openssh-portable.git
 	cd openssh-portable
 	autoreconf
-	./configure --enable-pq-kex --enable-hybrid-kex --with-ssl-dir=/path/to/openssl/include --with-ldflags=-L/path/to/openssl/lib --prefix=/path/to/openssh/install/dir --sysconfdir=/path/to/config/files/dir --with-liboqs-dir=/path/to/install/liboqs/install
+	./configure --enable-pq-kex --enable-hybrid-kex --with-ssl-dir=/path/to/openssl/include --with-ldflags=-L/path/to/openssl/lib --prefix=/path/to/openssh/install/dir --sysconfdir=/path/to/config/files/dir --with-liboqs-dir=/path/to/install/liboqs/dir
 	make
 	make install
 
-(On some platforms such as Ubuntu, you may not need to specify the `--with-ssl-dir` and `--with-ldflags` options as OpenSSH-configure automatically detect your OpenSSL installation.)
+Notes about `./configure` options:
 
-`--enable-pq-kex` enables PQ-only key exchange methods. `--enable-hybrid-kex` enables hybrid key exchange methods.
+- `--enable-pq-kex` enables PQ-only key exchange methods. 
+- `--enable-hybrid-kex` enables hybrid key exchange methods.
+- On some platforms such as Ubuntu, you may not need to specify the `--with-ssl-dir` and `--with-ldflags` options as OpenSSH-configure automatically detect your OpenSSL installation.
+- With OpenSSL installed via brew on macOS, your command might be: 
 
-The configuration script will automatically disable the NTRU based hybrid/PQ-only key exchange method if sandbox mode is not disabled.
+		./configure --enable-pq-kex --enable-hybrid-kex --with-ssl-dir=/usr/local/opt/openssl/include --with-ldflags=-L/usr/local/opt/openssl/lib --prefix=/path/to/openssh/install/dir --sysconfdir=/path/to/config/files/dir --with-liboqs-dir=/path/to/install/liboqs/dir
 
 Running
 -------
@@ -132,11 +129,8 @@ where `LIBOQSALGORITHM` is one of the following:
 
 _Hybrid key exchange methods:_
 
-    ecdh-nistp384-frodo-recommended-sha384@openquantumsafe.org
-    ecdh-nistp384-newhope-sha384@openquantumsafe.org
-    ecdh-nistp384-ntru-sha384@openquantumsafe.org
-    ecdh-nistp384-sidh-msr503-sha384@openquantumsafe.org
-    ecdh-nistp384-sidh-msr751-sha384@openquantumsafe.org
+    ecdh-nistp384-frodo-640-aes-sha384@openquantumsafe.org
+    ecdh-nistp384-frodo-976-aes-sha384@openquantumsafe.org
     ecdh-nistp384-sike-503-sha384@openquantumsafe.org
     ecdh-nistp384-sike-751-sha384@openquantumsafe.org
     ecdh-nistp384-bike1-L1-sha384@openquantumsafe.org
@@ -145,18 +139,13 @@ _Hybrid key exchange methods:_
 
 _PQ-only key exchange methods:_
 
-    frodo-recommended-sha384@openquantumsafe.org
-    newhope-sha384@openquantumsafe.org
-    ntru-sha384@openquantumsafe.org
-    sidh-msr503-sha384@openquantumsafe.org
-    sidh-msr751-sha384@openquantumsafe.org
+    frodo-640-aes-sha384@openquantumsafe.org
+    frodo-976-aes-sha384@openquantumsafe.org
     sike-503-sha384@openquantumsafe.org
     sike-751-sha384@openquantumsafe.org
     bike1-L1-sha384@openquantumsafe.org
     bike1-L3-sha384@openquantumsafe.org
     bike1-L5-sha384@openquantumsafe.org
-
-BIKE based hybrid/PQ-only key exchange methods are only available if the libOQS library has been patched with an appropriate BIKE patch.
 
 ### Automated tests
 
