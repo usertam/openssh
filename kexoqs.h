@@ -38,9 +38,6 @@
 #define PQ_OQS_NAMESPACE_SUFFIX "@openquantumsafe.org"
 #define PQ_OQS_KEX_SUFFIX(X) X PQ_OQS_NAMESPACE_SUFFIX
 
-#define OQS_NO_SEED 0
-#define OQS_NEED_SEED 1
-
 typedef enum oqs_client_or_server {
 	OQS_IS_CLIENT,
 	OQS_IS_SERVER
@@ -52,18 +49,14 @@ typedef enum oqs_client_or_server {
  */
 typedef struct oqs_kex_ctx {
 
-	OQS_KEX *oqs_kex;	/* liboqs key exchange algorithm context */
-	enum OQS_KEX_alg_name oqs_method;	/* liboqs algorithm name */
-	char *oqs_param;	/* Parameter set for algorithm negotiated */
-	void *oqs_local_priv;	/* Local private key */
-	uint8_t *oqs_local_msg;	/* Local message */
+	OQS_KEM *oqs_kem;	/* liboqs KEM algorithm context */
+	char *oqs_method;	/* liboqs algorithm name */
+	uint8_t *oqs_local_priv;	/* Local private key */
+	size_t oqs_local_priv_len;	/* Local private key length */
+	uint8_t *oqs_local_msg;		/* Local message */
 	size_t oqs_local_msg_len;	/* Local message length */
 	uint8_t *oqs_remote_msg;	/* Remote message. */
 	size_t oqs_remote_msg_len;	/* Remote message length */
-	uint8_t *oqs_seed;	/* Seed (if needed) */
-	size_t oqs_seed_len;	/* Seed length (if needed) */
-	u_int oqs_need_seed;	/* Flag to indicate if seed is needed */
-	size_t oqs_need_seed_len;	/* Length of seed needed */
 
 } OQS_KEX_CTX;
 
@@ -74,9 +67,7 @@ typedef struct oqs_kex_ctx {
 typedef struct oqs_alg {
 
 	char *kex_alg; 					/* SSH kex exchange name */
-	enum OQS_KEX_alg_name alg_name; /* liboqs algorithm name */
-	u_int need_seed_length; 		/* Non-zero if seed is needed */
-	char *named_param; 				/* Parameter set for algorithm used */
+	char *alg_name; 				/* liboqs algorithm name */
 	int ssh2_init_msg; 				/* Msg number/name mapping */
 	int ssh2_reply_msg; 			/* Msg number/name mapping */
 

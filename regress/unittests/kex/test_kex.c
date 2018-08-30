@@ -197,21 +197,14 @@ kex_tests(void)
 	do_kex("ecdh-sha2-nistp384");
 	do_kex("ecdh-sha2-nistp521");
 #if defined(WITH_OQS) && defined(WITH_HYBRID_KEX)
-#ifdef HAVE_NEWHOPE
-	do_kex(KEX_ECDH_NISTP384_NEWHOPE_SHA384);
-#endif /* HAVE_NEWHOPE */
 #ifdef HAVE_FRODO
-	do_kex(KEX_ECDH_NISTP384_FRODO_RECOMMENDED_SHA384);
+	do_kex(KEX_ECDH_NISTP384_FRODO_640_AES_SHA384);
+	do_kex(KEX_ECDH_NISTP384_FRODO_976_AES_SHA384);
 #endif /* HAVE_FRODO */
-#ifdef HAVE_SIDH_SIKE
-	do_kex(KEX_ECDH_NISTP384_SIDH_MSR503_SHA384);
-	do_kex(KEX_ECDH_NISTP384_SIDH_MSR751_SHA384);
+#ifdef HAVE_SIKE
 	do_kex(KEX_ECDH_NISTP384_SIKE_503_SHA384);
 	do_kex(KEX_ECDH_NISTP384_SIKE_751_SHA384);
-#endif /* HAVE_SIDH_SIKE */
-#ifdef HAVE_NTRU
-	do_kex(KEX_ECDH_NISTP384_NTRU_SHA384);
-#endif /* HAVE_NTRU */
+#endif /* HAVE_SIKE */
 #ifdef HAVE_BIKE
 	do_kex(KEX_ECDH_NISTP384_BIKE1_L1_SHA384);
 	do_kex(KEX_ECDH_NISTP384_BIKE1_L3_SHA384);
@@ -224,21 +217,14 @@ kex_tests(void)
 	do_kex("diffie-hellman-group14-sha1");
 	do_kex("diffie-hellman-group1-sha1");
 #if defined(WITH_OQS) && defined(WITH_OQ_KEX)
-#ifdef HAVE_NEWHOPE
-	do_kex(KEX_NEWHOPE_SHA384);
-#endif /* HAVE_NEWHOPE */
 #ifdef HAVE_FRODO
-	do_kex(KEX_FRODO_RECOMMENDED_SHA384);
+	do_kex(KEX_FRODO_640_AES_SHA384);
+	do_kex(KEX_FRODO_976_AES_SHA384);
 #endif /* HAVE_FRODO */
-#ifdef HAVE_SIDH_SIKE
-	do_kex(KEX_SIDH_MSR503_SHA384);
-	do_kex(KEX_SIDH_MSR751_SHA384);
+#ifdef HAVE_SIKE
 	do_kex(KEX_SIKE_503_SHA384);
 	do_kex(KEX_SIKE_751_SHA384);
-#endif /* HAVE_SIDH_SIKE */
-#ifdef HAVE_NTRU
-	do_kex(KEX_NTRU_SHA384);
-#endif /* HAVE_NTRU */
+#endif /* HAVE_SIKE */
 #ifdef HAVE_BIKE
 	do_kex(KEX_BIKE1_L1_SHA384X);
 	do_kex(KEX_BIKE1_L3_SHA384);

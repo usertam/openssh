@@ -332,7 +332,6 @@ input_pq_oqs_reply(int type, u_int32_t seq, struct ssh *ssh) {
 		kex->my,
 		kex->peer,
 		server_host_key_blob, server_host_key_blob_len,
-		oqs_kex_ctx->oqs_seed, oqs_kex_ctx->oqs_seed_len,
 		oqs_kex_ctx->oqs_local_msg, oqs_kex_ctx->oqs_local_msg_len,
 		oqs_kex_ctx->oqs_remote_msg, oqs_kex_ctx->oqs_remote_msg_len,
 		oqs_shared_secret, oqs_shared_secret_len,

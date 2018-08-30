@@ -114,7 +114,6 @@ pq_oqs_hash (
 	const struct sshbuf *ckexinit,
 	const struct sshbuf *skexinit,
 	const u_char *serverhostkeyblob, size_t serverhostkeyblob_len,
-	const uint8_t *oqs_seed, size_t oqs_seed_len,
 	const uint8_t *oqs_client_public, size_t oqs_client_public_len,
 	const uint8_t *oqs_server_public, size_t oqs_server_public_len,
 	const u_char *oqs_shared_secret, size_t oqs_shared_secret_len,
@@ -143,10 +142,6 @@ pq_oqs_hash (
 	    (r = sshbuf_putb(hash_buf, skexinit)) != 0 ||
 	    (r = sshbuf_put_string(hash_buf, serverhostkeyblob, serverhostkeyblob_len)) != 0)
 		goto out;
-	if ((oqs_seed_len > 0) && (oqs_seed != NULL)) {
-		if ((r = sshbuf_put_string(hash_buf, oqs_seed, oqs_seed_len)) != 0)
-			goto out;
-	}
 	if ((r = sshbuf_put_string(hash_buf, oqs_client_public,
 		oqs_client_public_len)) != 0 ||
 	    (r = sshbuf_put_string(hash_buf, oqs_server_public,

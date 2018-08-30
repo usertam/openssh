@@ -88,7 +88,6 @@ int hybrid_ecdh_oqs_hash (
 	const EC_GROUP *ecdh_group,
 	const EC_POINT *ecdh_client_public,
 	const EC_POINT *ecdh_server_public,
-	const uint8_t *oqs_seed, size_t oqs_seed_len,
 	const uint8_t *oqs_client_public, size_t oqs_client_public_len,
 	const uint8_t *oqs_server_public, size_t oqs_server_public_len,
 	const u_char *shared_secret, size_t shared_secret_len,

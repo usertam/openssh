@@ -30,29 +30,19 @@
 
 #if defined(WITH_OQS) && defined(WITH_PQ_KEX)
 #define PQ_OQS_KEX_METHOD(X) PQ_OQS_KEX_SUFFIX(X) ","
-#ifdef HAVE_NTRU
-# define KEX_PQ_METHOD_NTRU PQ_OQS_KEX_METHOD("ntru-sha384")
-#else
-# define KEX_PQ_METHOD_NTRU ""
-#endif
-#ifdef HAVE_NEWHOPE
-# define KEX_PQ_METHOD_NEWHOPE PQ_OQS_KEX_METHOD("newhope-sha384")
-#else
-# define KEX_PQ_METHOD_NEWHOPE ""
-#endif
 #ifdef HAVE_FRODO
-# define KEX_PQ_METHOD_FRODO PQ_OQS_KEX_METHOD("frodo-recommended-sha384")
+# define KEX_PQ_METHOD_FRODO \
+    PQ_OQS_KEX_METHOD("frodo-640-aes-sha384") \
+	PQ_OQS_KEX_METHOD("frodo-976-aes-sha384")
 #else
 # define KEX_PQ_METHOD_FRODO ""
 #endif
-#ifdef HAVE_SIDH_SIKE
-# define KEX_PQ_METHOD_SIDH_SIKE \
-	PQ_OQS_KEX_METHOD("sidh-msr503-sha384") \
-	PQ_OQS_KEX_METHOD("sidh-msr751-sha384") \
+#ifdef HAVE_SIKE
+# define KEX_PQ_METHOD_SIKE \
 	PQ_OQS_KEX_METHOD("sike-503-sha384") \
 	PQ_OQS_KEX_METHOD("sike-751-sha384")
 #else
-# define KEX_PQ_METHOD_SIDH_SIKE ""
+# define KEX_PQ_METHOD_SIKE ""
 #endif
 #ifdef HAVE_BIKE
 # define KEX_PQ_METHOD_BIKE \
@@ -63,46 +53,32 @@
 # define KEX_PQ_METHOD_BIKE ""
 #endif
 #else /* defined(WITH_OQS) && defined(WITH_PQ_KEX) */
-# define KEX_PQ_METHOD_NTRU ""
-# define KEX_PQ_METHOD_NEWHOPE ""
 # define KEX_PQ_METHOD_FRODO ""
-# define KEX_PQ_METHOD_SIDH_SIKE ""
+# define KEX_PQ_METHOD_SIKE ""
 # define KEX_PQ_METHOD_BIKE ""
 #endif /* defined(WITH_OQS) && defined(WITH_PQ_KEX) */
 
 # define KEX_PQ_METHODS \
-	KEX_PQ_METHOD_NTRU \
-	KEX_PQ_METHOD_NEWHOPE \
 	KEX_PQ_METHOD_FRODO \
-	KEX_PQ_METHOD_SIDH_SIKE \
+	KEX_PQ_METHOD_SIKE \
 	KEX_PQ_METHOD_BIKE
 
 #ifdef OPENSSL_HAS_ECC
 #if defined(WITH_OQS) && defined(WITH_HYBRID_KEX)
 #define HYBRID_ECDH_OQS_METHOD(X) HYBRID_ECDH_OQS_KEX_SUFFIX(X) ","
-#ifdef HAVE_NTRU
-# define KEX_HYBRID_METHOD_NTRU HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-ntru-sha384")
-#else
-# define KEX_HYBRID_METHOD_NTRU ""
-#endif
-#ifdef HAVE_NEWHOPE
-# define KEX_HYBRID_METHOD_NEWHOPE HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-newhope-sha384")
-#else
-# define KEX_HYBRID_METHOD_NEWHOPE ""
-#endif
 #ifdef HAVE_FRODO
-# define KEX_HYBRID_METHOD_FRODO HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-frodo-recommended-sha384")
+# define KEX_HYBRID_METHOD_FRODO \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-frodo-640-aes-sha384") \
+	HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-frodo-976-aes-sha384")
 #else
 # define KEX_HYBRID_METHOD_FRODO ""
 #endif
-#ifdef HAVE_SIDH_SIKE
-# define KEX_HYBRID_METHOD_SIDH_SIKE \
-	HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-msr503-sha384") \
-	HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-msr751-sha384") \
+#ifdef HAVE_SIKE
+# define KEX_HYBRID_METHOD_SIKE \
 	HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-503-sha384") \
 	HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-751-sha384")
 #else
-# define KEX_HYBRID_METHOD_SIDH_SIKE ""
+# define KEX_HYBRID_METHOD_SIKE ""
 #endif
 #ifdef HAVE_BIKE
 # define KEX_HYBRID_METHOD_BIKE \
@@ -113,18 +89,14 @@
 # define KEX_HYBRID_METHOD_BIKE ""
 #endif
 #else /* defined(WITH_OQS) && defined(WITH_HYBRID_KEX) */
-# define KEX_HYBRID_METHOD_NTRU ""
-# define KEX_HYBRID_METHOD_NEWHOPE ""
 # define KEX_HYBRID_METHOD_FRODO ""
-# define KEX_HYBRID_METHOD_SIDH_SIKE ""
+# define KEX_HYBRID_METHOD_SIKE ""
 # define KEX_HYBRID_METHOD_BIKE ""
 #endif /* defined(WITH_OQS) && defined(WITH_HYBRID_KEX) */
 
 # define KEX_HYBRID_METHODS \
-	KEX_HYBRID_METHOD_NTRU \
-	KEX_HYBRID_METHOD_NEWHOPE \
 	KEX_HYBRID_METHOD_FRODO \
-	KEX_HYBRID_METHOD_SIDH_SIKE \
+	KEX_HYBRID_METHOD_SIKE \
 	KEX_HYBRID_METHOD_BIKE
 
 #ifdef OPENSSL_HAS_NISTP521
@@ -292,4 +264,3 @@
 	KEX_DEFAULT_COMP, \
 	KEX_DEFAULT_LANG, \
 	KEX_DEFAULT_LANG
-
