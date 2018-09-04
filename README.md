@@ -51,16 +51,14 @@ Contents
 
 ### Key exchange mechanisms
 
-open-quantum-safe/openssh currently implements hybrid key exchange methods and PQ-only key exchange methods using the the following post-quantum key exchange mechanisms from liboqs:
+open-quantum-safe/openssh currently implements hybrid key exchange methods and PQ-only key exchange methods using the the following post-quantum key encapsulation mechanisms from liboqs:
 
-- `kex_rlwe_newhope`
-- `kex_lwe_frodo`
-- `kex_sidh`
-- `kex_sike`
-- `kex_bike`
-- `kex_ntru`
+- BIKE (only available if liboqs is built with BIKE enabled)
+- FrodoKEM
+- SIKE
+- oqsdefault (see the "oqsdefault KEM" section below)
 
-See https://github.com/open-quantum-safe/liboqs/blob/master/README.md for more information about each of the above PQ KEX mechanisms.
+See https://github.com/open-quantum-safe/liboqs/blob/master/README.md for more information about each of the above PQ key encapsulation mechanisms.
 
 Building on Linux and macOS
 ---------------------------
@@ -84,17 +82,22 @@ You might have to install xcode for zlib dependency:
 
 ### Step 1: Build and install liboqs
 
-First, you must download and build liboqs.  Our "master" branch of liboqs is currently (as of July 2018) undergoing an API refactoring, which this openssh-portable has not yet been updated to, but will be during August 2018.  Hence you must use an old version of master branch that uses the old key exchange API.
-
-Follow the instructions there to download and build that version of liboqs.  You will need to specify a path to install liboqs in during configure time; we recommend that you install in a special-purpose directory, rather than the global `/usr` or `/usr/local` directories.  As a summary:
+First, you must download and build liboqs.  You will need to specify a path to install liboqs in during configure time; we recommend that you install in a special-purpose directory, rather than the global `/usr` or `/usr/local` directories.  As a summary:
 
 	git clone -b master --single-branch https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
-	git checkout 068c48ae3718b86926a2d032dea337892d836891
 	autoreconf -i
-	./configure --prefix=/path/to/install/liboqs/install --with-pic=yes
+	./configure --prefix=<path-to-install-liboqs> --with-pic=yes
 	make
 	make install
+
+Alternatively, you can compile OpenSSH against liboqs nist-branch using the following instructions:
+
+	git clone -b nist-branch --single-branch https://github.com/open-quantum-safe/liboqs.git
+	cd liboqs
+	make
+	make install PREFIX=<path-to-install-liboqs>
+	rm <path-to-install-liboqs>/lib/liboqs.so
 
 ### Step 2: Build fork of OpenSSH
 
@@ -103,15 +106,19 @@ Next, you can build and install our fork of OpenSSH:
 	git clone https://github.com/open-quantum-safe/openssh-portable.git
 	cd openssh-portable
 	autoreconf
-	./configure --enable-pq-kex --enable-hybrid-kex --with-ssl-dir=/path/to/openssl/include --with-ldflags=-L/path/to/openssl/lib --prefix=/path/to/openssh/install/dir --sysconfdir=/path/to/config/files/dir --with-liboqs-dir=/path/to/install/liboqs/install
+	./configure --enable-pq-kex --enable-hybrid-kex --with-ssl-dir=<path-to-openssl>/include --with-ldflags=-L<path-to-openssl>/lib --prefix=<path-to-install-openssh> --sysconfdir=<path-to-install-openssh> --with-liboqs-dir=<path-to-liboqs>
 	make
 	make install
 
-(On some platforms such as Ubuntu, you may not need to specify the `--with-ssl-dir` and `--with-ldflags` options as OpenSSH-configure automatically detect your OpenSSL installation.)
+Notes about `./configure` options:
 
-`--enable-pq-kex` enables PQ-only key exchange methods. `--enable-hybrid-kex` enables hybrid key exchange methods.
+- `--enable-pq-kex` enables PQ-only key exchange methods.
+- `--enable-hybrid-kex` enables hybrid key exchange methods.
+- On some platforms such as Ubuntu, you may not need to specify the `--with-ssl-dir` and `--with-ldflags` options as OpenSSH-configure automatically detect your OpenSSL installation.
+- We recommend that you install this fork of OpenSSH in a non-system directory (i.e., not `/usr` or `/usr/local`)
+- With OpenSSL installed via brew on macOS, your command might be:
 
-The configuration script will automatically disable the NTRU based hybrid/PQ-only key exchange method if sandbox mode is not disabled.
+		./configure --enable-pq-kex --enable-hybrid-kex --with-ssl-dir=/usr/local/opt/openssl/include --with-ldflags=-L/usr/local/opt/openssl/lib --prefix=<path-to-install-openssh> --sysconfdir=<path-to-install-openssh> --with-liboqs-dir=<path-to-liboqs>
 
 Running
 -------
@@ -120,49 +127,71 @@ Running
 
 In one terminal, run a server:
 
-	/path/to/install/openssh/in/sbin/sshd -p 2222 -d
+	<path-to-openssh>/sbin/sshd -p 2222 -d
 
 The server automatically supports all available hybrid and PQ-only key exchange methods.
 
 In another terminal, run a client:
 
-	/path/to/install/openssh/in/bin/ssh -l <username> -o 'KexAlgorithms=LIBOQSALGORITHM' -p 2222 localhost
+	<path-to-openssh>/bin/ssh -l <username> -o 'KexAlgorithms=LIBOQSALGORITHM' -p 2222 localhost
 
 where `LIBOQSALGORITHM` is one of the following:
 
 _Hybrid key exchange methods:_
 
-    ecdh-nistp384-frodo-recommended-sha384@openquantumsafe.org
-    ecdh-nistp384-newhope-sha384@openquantumsafe.org
-    ecdh-nistp384-ntru-sha384@openquantumsafe.org
-    ecdh-nistp384-sidh-msr503-sha384@openquantumsafe.org
-    ecdh-nistp384-sidh-msr751-sha384@openquantumsafe.org
-    ecdh-nistp384-sike-503-sha384@openquantumsafe.org
-    ecdh-nistp384-sike-751-sha384@openquantumsafe.org
-    ecdh-nistp384-bike1-L1-sha384@openquantumsafe.org
-    ecdh-nistp384-bike1-L3-sha384@openquantumsafe.org
-    ecdh-nistp384-bike1-L5-sha384@openquantumsafe.org
+	ecdh-nistp384-bike1-L1-sha384@openquantumsafe.org
+	ecdh-nistp384-bike1-L3-sha384@openquantumsafe.org
+	ecdh-nistp384-bike1-L5-sha384@openquantumsafe.org
+	ecdh-nistp384-frodo-640-aes-sha384@openquantumsafe.org
+	ecdh-nistp384-frodo-976-aes-sha384@openquantumsafe.org
+	ecdh-nistp384-sike-503-sha384@openquantumsafe.org
+	ecdh-nistp384-sike-751-sha384@openquantumsafe.org
+	ecdh-nistp384-oqsdefault-sha384@openquantumsafe.org
 
 _PQ-only key exchange methods:_
 
-    frodo-recommended-sha384@openquantumsafe.org
-    newhope-sha384@openquantumsafe.org
-    ntru-sha384@openquantumsafe.org
-    sidh-msr503-sha384@openquantumsafe.org
-    sidh-msr751-sha384@openquantumsafe.org
-    sike-503-sha384@openquantumsafe.org
-    sike-751-sha384@openquantumsafe.org
-    bike1-L1-sha384@openquantumsafe.org
-    bike1-L3-sha384@openquantumsafe.org
-    bike1-L5-sha384@openquantumsafe.org
-
-BIKE based hybrid/PQ-only key exchange methods are only available if the libOQS library has been patched with an appropriate BIKE patch.
+	bike1-L1-sha384@openquantumsafe.org
+	bike1-L3-sha384@openquantumsafe.org
+	bike1-L5-sha384@openquantumsafe.org
+	frodo-640-aes-sha384@openquantumsafe.org
+	frodo-976-aes-sha384@openquantumsafe.org
+	sike-503-sha384@openquantumsafe.org
+	sike-751-sha384@openquantumsafe.org
+	oqsdefault-sha384@openquantumsafe.org
 
 ### Automated tests
 
 To test the build, run:
 
-    make tests
+	make tests
+	
+oqsdefault KEM
+--------------
+
+liboqs can be configured at compile-time to use any of its algorithms as its "default" algorithm.  If OpenSSH is told to use `oqsdefault`, then it will use whichever KEM algorithm was set as the default in liboqs at compile time.  
+
+The purpose of this option is as follows.  liboqs master branch and liboqs nist-branch contain different subsets of algorithms.  We will make most algorithms from liboqs master branch available as a named key exchange method in OpenSSH.  However, there are significantly more algorithms supported in liboqs nist-branch than liboqs master branch, and we will not be explicitly making each nist-branch algorithm available as a named key exchange method in OpenSSH.  It is still possible to prototype KEMs from liboqs master branch or liboqs nist-branch that were not made available as named key exchange methods in OpenSSH using the `oqsdefault` key exchange method in OpenSSH by changing the default mapping in liboqs and then recompiling.
+
+1. Recompile liboqs with your preferred default algorithm:
+	- For liboqs master branch:
+		- `cd liboqs`
+		- Edit `src/kem/kem.h` and change `#define OQS_KEM_DEFAULT` to map to your preferred algorithm
+		- `make clean`
+		- `make -j8`
+		- `make install`
+	- For liboqs nist-branch:	
+		- `cd liboqs`
+		- `make clean`
+		- `make -j8 KEM_DEFAULT=newhope_1024_cca_kem` (or whichever algorithm you prefer)
+		- `make install PREFIX=<path-to-install-liboqs>`
+		- `rm <path-to-install-liboqs>/lib/liboqs.so`
+2. Recompile OpenSSH against the newly build liboqs:
+	- `cd openssh-portable`
+	- `make clean`
+	- `make -j8`
+	- `make install`
+3. Run `ssh` with `ecdh-nistp384-oqsdefault-sha384@openquantumsafe.org ` or `oqsdefault-sha384@openquantumsafe.org` for the `KexAlgorithms` option
+
 
 License
 -------
@@ -183,4 +212,12 @@ The Open Quantum Safe project is lead by [Michele Mosca](http://faculty.iqc.uwat
 
 Contributors to this fork of OpenSSH include:
 
-- Torben Hansen (Amazon AND Royal Holloway, University of London)
+- Eric Crockett (Amazon Web Services)
+- Torben Hansen (Amazon Web Services and Royal Holloway, University of London)
+- Douglas Stebila (University of Waterloo)
+
+Contributors to an earlier OQS fork of OpenSSH included:
+
+- Mira Belenkiy (Microsoft Research)
+- Karl Knopf (McMaster University)
+- Christian Paquin (Microsoft Research)

@@ -306,7 +306,6 @@ input_hybrid_ecdh_oqs_reply(int type, u_int32_t seq, struct ssh *ssh) {
 		hybrid_kex_ctx->ecdh_group,
 		hybrid_kex_ctx->ecdh_local_public,
 		hybrid_kex_ctx->ecdh_remote_public,
-		oqs_kex_ctx->oqs_seed, oqs_kex_ctx->oqs_seed_len,
 		oqs_kex_ctx->oqs_local_msg, oqs_kex_ctx->oqs_local_msg_len,
 		oqs_kex_ctx->oqs_remote_msg, oqs_kex_ctx->oqs_remote_msg_len,
 		shared_secret, shared_secret_len,

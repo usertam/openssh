@@ -3460,11 +3460,11 @@ if test "x$with_liboqs" = "xyes" ; then
 	dnl Check for LibOQS library
 	AC_DEFINE_UNQUOTED([WITH_OQS], [1], [use LibOQS for post-quantum and hybrid key exchange])
 	LIBS="-loqs $LIBS"
-	AC_CHECK_HEADER([oqs/rand.h], ,[AC_MSG_ERROR([*** LibOQS headers missing - please install first or check config.log ***])])
-	AC_TRY_LINK([#include <oqs/rand.h>],
+	AC_CHECK_HEADER([oqs/kem.h], ,[AC_MSG_ERROR([*** LibOQS headers missing - please install first or check config.log ***])])
+	AC_TRY_LINK([#include <oqs/kem.h>],
 				[
-					OQS_RAND *rand = OQS_RAND_new(OQS_RAND_alg_urandom_chacha20);
-					if (rand == NULL) {
+					char *alg = OQS_KEM_alg_identifier(0);
+					if (alg == NULL) {
 						return 1;
 					}
 				],
@@ -3478,23 +3478,12 @@ fi
 
 if test "x$with_liboqs" = "xyes" ; then
 	dnl Check which post-quantum schemes that are enabled in LibOQS library
-	AC_MSG_CHECKING([for libOQS NEWHOPE support])
-	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-				#include <oqs/config.h>
-			]], [[
-					#ifndef ENABLE_KEX_RLWE_NEWHOPE
-					#error "NEWHOPE not supported"
-					#endif
-			]])],
-			[ AC_MSG_RESULT([yes])
-				AC_DEFINE([HAVE_NEWHOPE], [1], [Define to 1 if LibOQS library is compiled with support for NEWHOPE])
-			], [AC_MSG_RESULT([no])
-	])
 	AC_MSG_CHECKING([for libOQS FRODO support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/config.h>
 			]], [[
-					#ifndef ENABLE_KEX_LWE_FRODO
+					#if defined(ENABLE_KEM_FRODOKEM) || (defined(OQS_ENABLE_KEM_frodokem_640_aes) && defined(OQS_ENABLE_KEM_frodokem_976_aes))
+					#else
 					#error "FRODO is not supported"
 					#endif
 			]])],
@@ -3502,39 +3491,25 @@ if test "x$with_liboqs" = "xyes" ; then
 				AC_DEFINE([HAVE_FRODO], [1], [Define to 1 if LibOQS library is compiled with support for FRODO])
 			], [AC_MSG_RESULT([no])
 	])
-	AC_MSG_CHECKING([for libOQS SIDH and SIKE support])
+	AC_MSG_CHECKING([for libOQS SIKE support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/config.h>
 			]], [[
-					#ifndef ENABLE_KEX_SIDH_MSR
-					#error "SIDH and SIKE are not supported"
+					#if defined(ENABLE_KEM_SIKE) || (defined(OQS_ENABLE_KEM_sike_p503) && defined(OQS_ENABLE_KEM_sike_p751))
+					#else
+					#error "SIKE is not supported"
 					#endif
 			]])],
 			[ AC_MSG_RESULT([yes])
-				AC_DEFINE([HAVE_SIDH_SIKE], [1], [Define to 1 if LibOQS library is compiled with support for SIDH and SIKE])
+				AC_DEFINE([HAVE_SIKE], [1], [Define to 1 if LibOQS library is compiled with support for SIKE])
 			], [AC_MSG_RESULT([no])
 	])
-	AC_MSG_CHECKING([for libOQS NTRU support])
-	if test "x$SANDBOX_STYLE" = "xnone" ; then
-		AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-					#include <oqs/config.h>
-				]], [[
-						#ifndef ENABLE_KEX_NTRU
-						#error "NTRU is not supported"
-						#endif
-				]])],
-				[ AC_MSG_RESULT([yes])
-					AC_DEFINE([HAVE_NTRU], [1], [Define to 1 if LibOQS library is compiled with support for NTRU])
-				], [AC_MSG_RESULT([no])
-		])
-	else
-		AC_MSG_WARN([libOQS algorithm NTRU has been disabled because sandbox mode is enabled])
-	fi
 	AC_MSG_CHECKING([for libOQS BIKE support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/config.h>
 			]], [[
-					#ifndef ENABLE_KEX_CODE_BIKE
+					#if defined(ENABLE_KEM_BIKE) || (defined(OQS_ENABLE_KEM_bike1_l1) && defined(OQS_ENABLE_KEM_bike1_l3) && defined(OQS_ENABLE_KEM_bike1_l5))
+					#else
 					#error "BIKE is not supported"
 					#endif
 			]])],

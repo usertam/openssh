@@ -88,7 +88,6 @@ int hybrid_ecdh_oqs_hash (
 	const EC_GROUP *ecdh_group,
 	const EC_POINT *ecdh_client_public,
 	const EC_POINT *ecdh_server_public,
-	const uint8_t *oqs_seed, size_t oqs_seed_len,
 	const uint8_t *oqs_client_public, size_t oqs_client_public_len,
 	const uint8_t *oqs_server_public, size_t oqs_server_public_len,
 	const u_char *shared_secret, size_t shared_secret_len,
@@ -96,7 +95,7 @@ int hybrid_ecdh_oqs_hash (
 /* Shared functions */
 int hybrid_ecdh_oqs_init(HYBRID_KEX_CTX **hybrid_kex_ctx,
 	char *hybrid_kex_name, int ec_nid);
-int hybrid_ecdh_oqs_free(HYBRID_KEX_CTX *hybrid_kex_ctx);
+void hybrid_ecdh_oqs_free(HYBRID_KEX_CTX *hybrid_kex_ctx);
 int hybrid_ecdh_oqs_combine_shared_secrets(u_char *ecdh_shared_secret,
 	size_t ecdh_shared_secret_len, u_char *oqs_shared_secret,
 	size_t oqs_shared_secret_len, u_char **combined_shared_secret,

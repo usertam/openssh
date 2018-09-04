@@ -96,11 +96,12 @@ out:
 /*
  * @brief Free memory allocated hybrid key exchange ecdh+liboqs
  */
-int
+void
 hybrid_ecdh_oqs_free(HYBRID_KEX_CTX *hybrid_kex_ctx) {
 
-	if (hybrid_kex_ctx != NULL)
+	if (hybrid_kex_ctx != NULL) {
 		hybrid_ecdh_free(hybrid_kex_ctx);
+	}
 	if (hybrid_kex_ctx->oqs_kex_ctx != NULL) {
 		oqs_free(hybrid_kex_ctx->oqs_kex_ctx);
 		free(hybrid_kex_ctx->oqs_kex_ctx);
@@ -170,7 +171,6 @@ hybrid_ecdh_oqs_hash (
 	const EC_GROUP *ecdh_group,
 	const EC_POINT *ecdh_client_public,
 	const EC_POINT *ecdh_server_public,
-	const uint8_t *oqs_seed, size_t oqs_seed_len,
 	const uint8_t *oqs_client_public, size_t oqs_client_public_len,
 	const uint8_t *oqs_server_public, size_t oqs_server_public_len,
 	const u_char *shared_secret, size_t shared_secret_len,
@@ -200,10 +200,6 @@ hybrid_ecdh_oqs_hash (
 	    (r = sshbuf_put_string(hash_buf, serverhostkeyblob, serverhostkeyblob_len)) != 0 ||
 	    (r = sshbuf_put_ec(hash_buf, ecdh_client_public, ecdh_group)) != 0)
 		goto out;
-	if ((oqs_seed_len > 0) && (oqs_seed != NULL)) {
-		if ((r = sshbuf_put_string(hash_buf, oqs_seed, oqs_seed_len)) != 0)
-			goto out;
-	}
 	if ((r = sshbuf_put_string(hash_buf, oqs_client_public,
 		oqs_client_public_len)) != 0 ||
 	    (r = sshbuf_put_ec(hash_buf, ecdh_server_public, ecdh_group)) != 0 ||
