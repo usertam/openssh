@@ -96,7 +96,7 @@ out:
 /*
  * @brief Free memory allocated hybrid key exchange ecdh+liboqs
  */
-int
+void
 hybrid_ecdh_oqs_free(HYBRID_KEX_CTX *hybrid_kex_ctx) {
 
 	if (hybrid_kex_ctx != NULL) {
@@ -107,9 +107,6 @@ hybrid_ecdh_oqs_free(HYBRID_KEX_CTX *hybrid_kex_ctx) {
 		free(hybrid_kex_ctx->oqs_kex_ctx);
 		hybrid_kex_ctx->oqs_kex_ctx = NULL;
 	}
-
-	return 0;
-
 }
 
 /*

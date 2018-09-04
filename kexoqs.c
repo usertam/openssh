@@ -285,13 +285,13 @@ oqs_client_shared_secret(OQS_KEX_CTX *oqs_kex_ctx,
 	uint8_t *tmp_oqs_shared_secret = NULL;
 	int r = 0;
 
-	if ((tmp_oqs_shared_secret = malloc(oqs_kex_ctx->oqs_kem->length_shared_secret)) == NULL) {
-		r = SSH_ERR_ALLOC_FAIL;
+	if (oqs_kex_ctx->oqs_remote_msg_len != oqs_kex_ctx->oqs_kem->length_ciphertext) {
+		r = SSH_ERR_INVALID_FORMAT;
 		goto out;
 	}
 
-	if (oqs_kex_ctx->oqs_remote_msg_len != oqs_kex_ctx->oqs_kem->length_ciphertext) {
-		r = SSH_ERR_INVALID_FORMAT;
+	if ((tmp_oqs_shared_secret = malloc(oqs_kex_ctx->oqs_kem->length_shared_secret)) == NULL) {
+		r = SSH_ERR_ALLOC_FAIL;
 		goto out;
 	}
 
@@ -325,20 +325,11 @@ oqs_server_gen_msg_and_ss(OQS_KEX_CTX *oqs_kex_ctx,
 	u_char **oqs_shared_secret, size_t *oqs_shared_secret_len) {
 
 	OQS_KEM *oqs_kem = NULL;
-	uint8_t *tmp_oqs_shared_secret = NULL;
+	uint8_t *tmp_oqs_shared_secret = NULL, *tmp_oqs_local_msg = NULL;
 	int r = 0;
 
 	if ((oqs_kem = OQS_KEM_new(oqs_kex_ctx->oqs_method)) == NULL) {
 		r = SSH_ERR_INTERNAL_ERROR;
-		goto out;
-	}
-
-	if ((oqs_kex_ctx->oqs_local_msg = malloc(oqs_kem->length_ciphertext)) == NULL) {
-		r = SSH_ERR_ALLOC_FAIL;
-		goto out;
-	}
-	if ((tmp_oqs_shared_secret = malloc(oqs_kem->length_shared_secret)) == NULL) {
-		r = SSH_ERR_ALLOC_FAIL;
 		goto out;
 	}
 
@@ -347,7 +338,16 @@ oqs_server_gen_msg_and_ss(OQS_KEX_CTX *oqs_kex_ctx,
 		goto out;
 	}
 
-	if (OQS_KEM_encaps(oqs_kem, oqs_kex_ctx->oqs_local_msg, tmp_oqs_shared_secret,
+	if ((tmp_oqs_local_msg = malloc(oqs_kem->length_ciphertext)) == NULL) {
+		r = SSH_ERR_ALLOC_FAIL;
+		goto out;
+	}
+	if ((tmp_oqs_shared_secret = malloc(oqs_kem->length_shared_secret)) == NULL) {
+		r = SSH_ERR_ALLOC_FAIL;
+		goto out;
+	}
+
+	if (OQS_KEM_encaps(oqs_kem, tmp_oqs_local_msg, tmp_oqs_shared_secret,
 		oqs_kex_ctx->oqs_remote_msg) != OQS_SUCCESS) {
 				r = SSH_ERR_INTERNAL_ERROR;
 		goto out;
@@ -355,6 +355,7 @@ oqs_server_gen_msg_and_ss(OQS_KEX_CTX *oqs_kex_ctx,
 
 	*oqs_shared_secret = (u_char *) tmp_oqs_shared_secret;
 	*oqs_shared_secret_len = oqs_kem->length_shared_secret;
+	oqs_kex_ctx->oqs_local_msg = tmp_oqs_local_msg;
 	oqs_kex_ctx->oqs_local_msg_len = oqs_kem->length_ciphertext;
 
 	tmp_oqs_shared_secret = NULL;
@@ -366,8 +367,7 @@ out:
 	if (tmp_oqs_shared_secret != NULL) {
 		explicit_bzero(tmp_oqs_shared_secret, oqs_kem->length_shared_secret);
 		free(tmp_oqs_shared_secret);
-		free(oqs_kex_ctx->oqs_local_msg);
-		oqs_kex_ctx->oqs_local_msg = NULL;
+		free(tmp_oqs_local_msg);
 	}
 
 	return r;
