@@ -69,7 +69,7 @@
 
 #if defined(WITH_OQS) && defined(WITH_PQ_KEX)
 
-#define KEX_OQSDEFAULT_SHA384 PQ_OQS_KEX_SUFFIX("oqsdefault")
+#define KEX_OQSDEFAULT_SHA384 PQ_OQS_KEX_SUFFIX("oqsdefault-sha384")
 #define KEX_FRODO_640_AES_SHA384 PQ_OQS_KEX_SUFFIX("frodo-640-aes-sha384")
 #define KEX_FRODO_976_AES_SHA384 PQ_OQS_KEX_SUFFIX("frodo-976-aes-sha384")
 #define KEX_SIKE_503_SHA384	PQ_OQS_KEX_SUFFIX("sike-503-sha384")
