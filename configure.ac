@@ -3517,6 +3517,19 @@ if test "x$with_liboqs" = "xyes" ; then
 				AC_DEFINE([HAVE_BIKE], [1], [Define to 1 if LibOQS library is compiled with support for BIKE])
 			], [AC_MSG_RESULT([no])
 	])
+	AC_MSG_CHECKING([for libOQS NewHope support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/config.h>
+			]], [[
+					#if defined(ENABLE_KEM_NEWHOPE) || (defined(OQS_ENABLE_KEM_newhope_1024_cca_kem) && defined(OQS_ENABLE_KEM_newhope_512_cca_kem))
+					#else
+					#error "NewHope is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_NEWHOPE], [1], [Define to 1 if LibOQS library is compiled with support for NewHope])
+			], [AC_MSG_RESULT([no])
+	])
 	dnl End supported post-quantum schemes LibOQS library check
 fi
 

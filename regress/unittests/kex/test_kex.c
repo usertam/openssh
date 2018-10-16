@@ -211,6 +211,10 @@ kex_tests(void)
 	do_kex(KEX_ECDH_NISTP384_BIKE1_L3_SHA384);
 	do_kex(KEX_ECDH_NISTP384_BIKE1_L5_SHA384);
 #endif /* HAVE_BIKE */
+#ifdef HAVE_NEWHOPE
+	do_kex(KEX_ECDH_NISTP384_NEWHOPE_512_SHA384);
+	do_kex(KEX_ECDH_NISTP384_NEWHOPE_1024_SHA384);
+#endif /* HAVE_NEWHOPE */
 #endif /* defined(WITH_OQS) && defined(WITH_HYBRID_KEX) */
 #endif /* OPENSSL_HAS_ECC */
 	do_kex("diffie-hellman-group-exchange-sha256");
@@ -232,5 +236,9 @@ kex_tests(void)
 	do_kex(KEX_BIKE1_L3_SHA384);
 	do_kex(KEX_BIKE1_L5_SHA384);
 #endif /* HAVE_BIKE */
+#ifdef HAVE_NEWHOPE
+	do_kex(KEX_NEWHOPE_512_SHA384);
+	do_kex(KEX_NEWHOPE_1024_SHA384);
+#endif /* HAVE_NEWHOPE */
 #endif /* defined(WITH_OQS) && defined(WITH_PQ_KEX) */
 }
