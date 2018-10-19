@@ -87,9 +87,10 @@ First, you must download and build liboqs.  You will need to specify a path to i
 	git clone -b master --single-branch https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
 	autoreconf -i
-	./configure --prefix=<path-to-install-liboqs> --with-pic=yes --enable-shared
+	./configure --prefix=<path-to-install-liboqs> --with-pic=yes --enable-shared=no
 	make -j
 	make install
+	rm -rf <path-to-install-liboqs>/lib/liboqs.so*
 
 Alternatively, you can compile OpenSSH against liboqs nist-branch using the following instructions:
 
@@ -97,7 +98,7 @@ Alternatively, you can compile OpenSSH against liboqs nist-branch using the foll
 	cd liboqs
 	make
 	make install PREFIX=<path-to-install-liboqs>
-	rm <path-to-install-liboqs>/lib/liboqs.so
+	rm <path-to-install-liboqs>/lib/liboqs.so*
 
 ### Step 2: Build fork of OpenSSH
 
@@ -110,11 +111,23 @@ Next, you can build and install our fork of OpenSSH:
 	make -j
 	make install
 
-Notes about `./configure` options:
+On Linux:
+
+- You may need to create the privilege separation directory:
+
+	sudo mkdir -p -m 0755 /var/empty
+
+- You may need to create the privilege separation user:
+
+	sudo groupadd sshd
+	sudo useradd -g sshd -c 'sshd privsep' -d /var/empty -s /bin/false sshd
+
+Notes about building OpenSSH:
 
 - `--enable-pq-kex` enables PQ-only key exchange methods.
 - `--enable-hybrid-kex` enables hybrid key exchange methods.
 - On some platforms such as Ubuntu, you may not need to specify the `--with-ssl-dir` and `--with-ldflags` options as OpenSSH-configure automatically detect your OpenSSL installation.
+- If you do not use `--enable-shared=no` when building liboqs master, you may encounter problems with shared libraries when building/installing/running OpenSSH.  These can be resolved by judiciously setting `LD_LIBRARY_PATH`, but it is easier to simply build liboqs master with *only* static libraries for OpenSSH to link against.
 - We recommend that you install this fork of OpenSSH in a non-system directory (i.e., not `/usr` or `/usr/local`)
 - With OpenSSL installed via brew on macOS, your command might be:
 
@@ -127,9 +140,9 @@ Running
 
 In one terminal, run a server:
 
-	<path-to-openssh>/sbin/sshd -p 2222 -d
+	sudo <path-to-openssh>/sbin/sshd -p 2222 -d
 
-The server automatically supports all available hybrid and PQ-only key exchange methods.
+The server automatically supports all available hybrid and PQ-only key exchange methods.  `sudo` is required on Linux so that sshd can read the shadow password file.
 
 In another terminal, run a client:
 
