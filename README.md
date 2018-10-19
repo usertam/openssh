@@ -115,12 +115,12 @@ On Linux:
 
 - You may need to create the privilege separation directory:
 
-	sudo mkdir -p -m 0755 /var/empty
+		sudo mkdir -p -m 0755 /var/empty
 
 - You may need to create the privilege separation user:
 
-	sudo groupadd sshd
-	sudo useradd -g sshd -c 'sshd privsep' -d /var/empty -s /bin/false sshd
+		sudo groupadd sshd
+		sudo useradd -g sshd -c 'sshd privsep' -d /var/empty -s /bin/false sshd
 
 Notes about building OpenSSH:
 
