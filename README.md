@@ -87,8 +87,8 @@ First, you must download and build liboqs.  You will need to specify a path to i
 	git clone -b master --single-branch https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
 	autoreconf -i
-	./configure --prefix=<path-to-install-liboqs> --with-pic=yes
-	make
+	./configure --prefix=<path-to-install-liboqs> --with-pic=yes --enable-shared
+	make -j
 	make install
 
 Alternatively, you can compile OpenSSH against liboqs nist-branch using the following instructions:
@@ -107,7 +107,7 @@ Next, you can build and install our fork of OpenSSH:
 	cd openssh-portable
 	autoreconf
 	./configure --enable-pq-kex --enable-hybrid-kex --with-ssl-dir=<path-to-openssl>/include --with-ldflags=-L<path-to-openssl>/lib --prefix=<path-to-install-openssh> --sysconfdir=<path-to-install-openssh> --with-liboqs-dir=<path-to-liboqs>
-	make
+	make -j
 	make install
 
 Notes about `./configure` options:
@@ -164,7 +164,7 @@ _PQ-only key exchange methods:_
 To test the build, run:
 
 	make tests
-	
+
 oqsdefault KEM
 --------------
 
@@ -179,7 +179,7 @@ The purpose of this option is as follows.  liboqs master branch and liboqs nist-
 		- `make clean`
 		- `make -j8`
 		- `make install`
-	- For liboqs nist-branch:	
+	- For liboqs nist-branch:
 		- `cd liboqs`
 		- `make clean`
 		- `make -j8 KEM_DEFAULT=newhope_1024_cca_kem` (or whichever algorithm you prefer)
