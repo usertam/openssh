@@ -91,7 +91,7 @@ First, you must download and build liboqs.  You will need to specify a path to i
 	./configure --prefix=<path-to-install-liboqs> --with-pic=yes --enable-shared=no
 	make -j
 	make install
-	rm -rf <path-to-install-liboqs>/lib/liboqs.so*
+	rm -f <path-to-install-liboqs>/lib/liboqs.so*
 
 Alternatively, you can compile OpenSSH against liboqs nist-branch using the following instructions:
 
@@ -99,7 +99,7 @@ Alternatively, you can compile OpenSSH against liboqs nist-branch using the foll
 	cd liboqs
 	make
 	make install PREFIX=<path-to-install-liboqs>
-	rm <path-to-install-liboqs>/lib/liboqs.so*
+	rm -f <path-to-install-liboqs>/lib/liboqs.so*
 
 ### Step 2: Build fork of OpenSSH
 
