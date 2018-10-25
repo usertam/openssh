@@ -60,6 +60,12 @@ static const OQS_ALG oqs_alg_mapping[] = {
 	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-bike1-L5-sha384"), OQS_KEM_alg_bike1_l5,
 	SSH2_MSG_HY_ECDH_BIKE_INIT, SSH2_MSG_HY_ECDH_BIKE_REPLY},
 #endif /* HAVE_BIKE */
+#ifdef HAVE_NEWHOPE
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-newhope-1024-sha384"), OQS_KEM_alg_newhope_1024_cca_kem,
+	SSH2_MSG_HY_ECDH_NEWHOPE_INIT, SSH2_MSG_HY_ECDH_NEWHOPE_REPLY},
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-newhope-512-sha384"), OQS_KEM_alg_newhope_512_cca_kem,
+	SSH2_MSG_HY_ECDH_NEWHOPE_INIT, SSH2_MSG_HY_ECDH_NEWHOPE_REPLY},
+#endif /* HAVE_NEWHOPE */
 #endif /* defined(OPENSSL_HAS_ECC) && defined(WITH_HYBRID_KEX) */
 /* PQ-only key exchange methods */
 #ifdef WITH_PQ_KEX
@@ -85,6 +91,12 @@ static const OQS_ALG oqs_alg_mapping[] = {
 	{PQ_OQS_KEX_SUFFIX("bike1-L5-sha384"), OQS_KEM_alg_bike1_l5,
 		SSH2_MSG_PQ_BIKE_INIT, SSH2_MSG_PQ_BIKE_REPLY},
 #endif /* HAVE_BIKE */
+#ifdef HAVE_NEWHOPE
+	{PQ_OQS_KEX_SUFFIX("newhope-1024-sha384"), OQS_KEM_alg_newhope_1024_cca_kem,
+		SSH2_MSG_PQ_NEWHOPE_INIT, SSH2_MSG_PQ_NEWHOPE_REPLY},
+	{PQ_OQS_KEX_SUFFIX("newhope-512-sha384"), OQS_KEM_alg_newhope_512_cca_kem,
+		SSH2_MSG_PQ_NEWHOPE_INIT, SSH2_MSG_PQ_NEWHOPE_REPLY},
+#endif /* HAVE_NEWHOPE */
 #endif /* WITH_PQ_KEX */
 	{NULL,NULL,0,0} /* End of list */
 };

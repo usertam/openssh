@@ -26,9 +26,9 @@ More information on OQS can be found on our website: https://openquantumsafe.org
 Limitations and security
 ------------------------
 
-liboqs is designed for prototyping and evaluating quantum-resistant cryptography.  Security of proposed quantum-resistant algorithms may rapidly change as research advances, and may ultimately be completely insecure against either classical or quantum computers.  
+liboqs is designed for prototyping and evaluating quantum-resistant cryptography.  Security of proposed quantum-resistant algorithms may rapidly change as research advances, and may ultimately be completely insecure against either classical or quantum computers.
 
-We believe that the NIST Post-Quantum Cryptography standardization project is currently the best avenue to identifying potentially quantum-resistant algorithms.  liboqs does not intend to "pick winners", and we strongly recommend that applications and protocols rely on the outcomes of the NIST standardization project when deploying post-quantum cryptography.  
+We believe that the NIST Post-Quantum Cryptography standardization project is currently the best avenue to identifying potentially quantum-resistant algorithms.  liboqs does not intend to "pick winners", and we strongly recommend that applications and protocols rely on the outcomes of the NIST standardization project when deploying post-quantum cryptography.
 
 We acknowledge that some parties may want to begin deploying post-quantum cryptography prior to the conclusion of the NIST standardization project.  We strongly recommend that any attempts to do make use of so-called **hybrid cryptography**, in which post-quantum public-key algorithms are used alongside traditional public key algorithms (like RSA or elliptic curves) so that the solution is at least no less secure than existing traditional cryptography.
 
@@ -38,7 +38,7 @@ The integration of liboqs into our fork of OpenSSH is currently at an experiment
 
 The OQS fork of OpenSSH is not endorsed by with the OpenSSH project.
 
-This fork is developed for the purposes of prototyping and evaluating the use of post-quantum cryptography in SSH, and is not intended for use in production environments to protect the transmission of sensitive information.  
+This fork is developed for the purposes of prototyping and evaluating the use of post-quantum cryptography in SSH, and is not intended for use in production environments to protect the transmission of sensitive information.
 
 At the time of writing, there are no vulnerabilities or weaknesses known in any of the post-quantum key exchange algorithms used in this fork.  However, it is advisable to wait on deploying post-quantum algorithms until further guidance is provided by the standards community, especially from the NIST Post-Quantum Cryptography project.
 
@@ -56,6 +56,7 @@ open-quantum-safe/openssh currently implements hybrid key exchange methods and P
 - BIKE (only available if liboqs is built with BIKE enabled)
 - FrodoKEM
 - SIKE
+- NewHope
 - oqsdefault (see the "oqsdefault KEM" section below)
 
 See https://github.com/open-quantum-safe/liboqs/blob/master/README.md for more information about each of the above PQ key encapsulation mechanisms.
@@ -159,6 +160,8 @@ _Hybrid key exchange methods:_
 	ecdh-nistp384-frodo-976-aes-sha384@openquantumsafe.org
 	ecdh-nistp384-sike-503-sha384@openquantumsafe.org
 	ecdh-nistp384-sike-751-sha384@openquantumsafe.org
+	ecdh-nistp384-newhope-512-sha384@openquantumsafe.org
+	ecdh-nistp384-newhope-1024-sha384@openquantumsafe.org
 	ecdh-nistp384-oqsdefault-sha384@openquantumsafe.org
 
 _PQ-only key exchange methods:_
@@ -170,6 +173,8 @@ _PQ-only key exchange methods:_
 	frodo-976-aes-sha384@openquantumsafe.org
 	sike-503-sha384@openquantumsafe.org
 	sike-751-sha384@openquantumsafe.org
+	newhope-512-sha384@openquantumsafe.org
+	newhope-1024-sha384@openquantumsafe.org
 	oqsdefault-sha384@openquantumsafe.org
 
 ### Automated tests
@@ -181,7 +186,7 @@ To test the build, run:
 oqsdefault KEM
 --------------
 
-liboqs can be configured at compile-time to use any of its algorithms as its "default" algorithm.  If OpenSSH is told to use `oqsdefault`, then it will use whichever KEM algorithm was set as the default in liboqs at compile time.  
+liboqs can be configured at compile-time to use any of its algorithms as its "default" algorithm.  If OpenSSH is told to use `oqsdefault`, then it will use whichever KEM algorithm was set as the default in liboqs at compile time.
 
 The purpose of this option is as follows.  liboqs master branch and liboqs nist-branch contain different subsets of algorithms.  We will make most algorithms from liboqs master branch available as a named key exchange method in OpenSSH.  However, there are significantly more algorithms supported in liboqs nist-branch than liboqs master branch, and we will not be explicitly making each nist-branch algorithm available as a named key exchange method in OpenSSH.  It is still possible to prototype KEMs from liboqs master branch or liboqs nist-branch that were not made available as named key exchange methods in OpenSSH using the `oqsdefault` key exchange method in OpenSSH by changing the default mapping in liboqs and then recompiling.
 
@@ -219,7 +224,7 @@ This repository contains an experimental (pre-draft) IETF draft for hybrid key e
 Team
 ----
 
-The Open Quantum Safe project is lead by [Michele Mosca](http://faculty.iqc.uwaterloo.ca/mmosca/) (University of Waterloo) and [Douglas Stebila](https://www.douglas.stebila.ca/research/) (McMaster University).
+The Open Quantum Safe project is led by [Michele Mosca](http://faculty.iqc.uwaterloo.ca/mmosca/) (University of Waterloo) and [Douglas Stebila](https://www.douglas.stebila.ca/research/) (University of Waterloo).
 
 ### Contributors
 
@@ -228,6 +233,7 @@ Contributors to this fork of OpenSSH include:
 - Eric Crockett (Amazon Web Services)
 - Torben Hansen (Amazon Web Services and Royal Holloway, University of London)
 - Douglas Stebila (University of Waterloo)
+- Ben Davies (University of Waterloo)
 
 Contributors to an earlier OQS fork of OpenSSH included:
 
