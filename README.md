@@ -114,22 +114,22 @@ Next, you can build and install our fork of OpenSSH:
 For Ubuntu 16.04 and MacOS, try the following:
 
 	./configure --enable-pq-kex --enable-hybrid-kex      \
-				--with-ssl-dir=<path-to-openssl>/include \
-				--with-ldflags=-L<path-to-openssl>/lib   \
-				--prefix=$OPENSSH_INSTALL                \
-				--sysconfdir=$OPENSSH_INSTALL            \
-				--with-liboqs-dir=$LIBOQS_INSTALL
+	            --with-ssl-dir=<path-to-openssl>/include \
+	            --with-ldflags=-L<path-to-openssl>/lib   \
+	            --prefix=$OPENSSH_INSTALL                \
+	            --sysconfdir=$OPENSSH_INSTALL            \
+	            --with-liboqs-dir=$LIBOQS_INSTALL
 	make -j
 	make install
 
-On Ubuntu 18.04, some modifications are required due to the openssl version:
+On Ubuntu 18.04, some modifications are required due to the default openssl version:
 
 	apt install openssl1.0 libssl1.0-dev  # WARNING: removes existing libssl dev pkg!
 	./configure --enable-pq-kex --enable-hybrid-kex \
-				--with-ldflags=-L/usr/lib/ssl1.0    \
-				--prefix=$OPENSSH_INSTALL           \
-				--sysconfdir=$OPENSSH_INSTALL       \
-				--with-liboqs-dir=$LIBOQS_INSTALL
+	            --with-ldflags=-L/usr/lib/ssl1.0    \
+	            --prefix=$OPENSSH_INSTALL           \
+	            --sysconfdir=$OPENSSH_INSTALL       \
+	            --with-liboqs-dir=$LIBOQS_INSTALL
 	make -j
 	make install
 
