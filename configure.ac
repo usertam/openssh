@@ -3480,7 +3480,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	dnl Check which post-quantum schemes that are enabled in LibOQS library
 	AC_MSG_CHECKING([for libOQS FRODO support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-				#include <oqs/config.h>
+				#include <oqs/oqs.h>
 			]], [[
 					#if defined(ENABLE_KEM_FRODOKEM) || (defined(OQS_ENABLE_KEM_frodokem_640_aes) && defined(OQS_ENABLE_KEM_frodokem_976_aes))
 					#else
@@ -3493,7 +3493,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	])
 	AC_MSG_CHECKING([for libOQS SIKE support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-				#include <oqs/config.h>
+				#include <oqs/oqs.h>
 			]], [[
 					#if defined(ENABLE_KEM_SIKE) || (defined(OQS_ENABLE_KEM_sike_p503) && defined(OQS_ENABLE_KEM_sike_p751))
 					#else
@@ -3506,7 +3506,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	])
 	AC_MSG_CHECKING([for libOQS BIKE support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-				#include <oqs/config.h>
+				#include <oqs/oqs.h>
 			]], [[
 					#if defined(ENABLE_KEM_BIKE) || (defined(OQS_ENABLE_KEM_bike1_l1) && defined(OQS_ENABLE_KEM_bike1_l3) && defined(OQS_ENABLE_KEM_bike1_l5))
 					#else
@@ -3519,7 +3519,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	])
 	AC_MSG_CHECKING([for libOQS NewHope support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-				#include <oqs/config.h>
+				#include <oqs/oqs.h>
 			]], [[
 					#if defined(ENABLE_KEM_NEWHOPE) || (defined(OQS_ENABLE_KEM_newhope_1024_cca_kem) && defined(OQS_ENABLE_KEM_newhope_512_cca_kem))
 					#else
