@@ -1,5 +1,5 @@
-open-quantum-safe/openssh-portable OQS-master snapshot 2018-11
-==============================================================
+OQS-openssh snapshot 2018-11 release candidate 1
+================================================
 
 About
 -----
