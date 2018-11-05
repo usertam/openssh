@@ -78,7 +78,7 @@ You might have to install xcode for zlib dependency:
 
 **On Ubuntu**: You need to install several tools using `apt`:
 
-	sudo apt install autoconf automake git libtool openssl zlib1g-dev libssl-dev
+	sudo apt install make autoconf automake git libtool openssl zlib1g-dev libssl-dev
 
 
 ### Step 1: Build and install liboqs
@@ -105,10 +105,31 @@ Alternatively, you can compile OpenSSH against liboqs nist-branch using the foll
 
 Next, you can build and install our fork of OpenSSH:
 
+	export LIBOQS_INSTALL= TODO: your-install-location
+	export OPENSSH_INSTALL= TODO: another-install-location
 	git clone https://github.com/open-quantum-safe/openssh-portable.git
 	cd openssh-portable
 	autoreconf
-	./configure --enable-pq-kex --enable-hybrid-kex --with-ssl-dir=<path-to-openssl>/include --with-ldflags=-L<path-to-openssl>/lib --prefix=<path-to-install-openssh> --sysconfdir=<path-to-install-openssh> --with-liboqs-dir=<path-to-liboqs>
+
+For Ubuntu 16.04 and MacOS, try the following:
+
+	./configure --enable-pq-kex --enable-hybrid-kex      \
+	            --with-ssl-dir=<path-to-openssl>/include \
+	            --with-ldflags=-L<path-to-openssl>/lib   \
+	            --prefix=$OPENSSH_INSTALL                \
+	            --sysconfdir=$OPENSSH_INSTALL            \
+	            --with-liboqs-dir=$LIBOQS_INSTALL
+	make -j
+	make install
+
+On Ubuntu 18.04, some modifications are required due to the default openssl version:
+
+	apt install openssl1.0 libssl1.0-dev  # WARNING: removes existing libssl dev pkg!
+	./configure --enable-pq-kex --enable-hybrid-kex \
+	            --with-ldflags=-L/usr/lib/ssl1.0    \
+	            --prefix=$OPENSSH_INSTALL           \
+	            --sysconfdir=$OPENSSH_INSTALL       \
+	            --with-liboqs-dir=$LIBOQS_INSTALL
 	make -j
 	make install
 
