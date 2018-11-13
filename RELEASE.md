@@ -1,5 +1,5 @@
-OQS-openssh snapshot 2018-11 release candidate 1
-================================================
+OQS-openssh snapshot 2018-11
+============================
 
 About
 -----
@@ -18,8 +18,7 @@ This branch of our fork of OpenSSH can be used with the following versions of li
 Release notes
 =============
 
-**This is a release candidate for the OQS fork of OpenSSH, not a final release.**. 
-This snapshot of the OQS fork of OpenSSH was released on TODO.  Its release page on Github is TODO.
+This snapshot of the OQS fork of OpenSSH was released on November 13, 2018.  Its release page on Github is https://github.com/open-quantum-safe/openssh-portable/releases/tag/OQS-OpenSSH-snapshot-2018-11.
 
 What's New
 ----------
