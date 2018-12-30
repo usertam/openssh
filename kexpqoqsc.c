@@ -27,6 +27,7 @@
 #if defined(WITH_OQS) && defined(WITH_PQ_KEX)
 
 #include <signal.h>
+#include <string.h>
 
 #include "sshkey.h"
 #include "digest.h"
@@ -92,64 +93,6 @@ pq_oqs_c2s_serialise(struct ssh *ssh, PQ_KEX_CTX *pq_kex_ctx) {
 }
 
 /*
- * @brief Extracts host key from incoming packet and
- * verifies it
- */
-static int
-pq_oqs_server_hostkey(struct ssh *ssh,
-	struct sshkey **server_host_key, u_char **server_host_key_blob,
-	size_t *server_host_key_blob_len) {
-
-	struct kex *kex = NULL;
-	struct sshkey *tmp_server_host_key = NULL;
-	u_char *tmp_server_host_key_blob = NULL;
-	size_t tmp_server_host_key_blob_len = 0;
-	int r = 0;
-
-	kex = ssh->kex;
-
-	/* If we can't verify the host key then abort */
-	if (kex->verify_host_key == NULL) {
-		r = SSH_ERR_INVALID_ARGUMENT;
-		goto out;
-	}
-
-	/* Extract host key from packet */
-	if ((r = sshpkt_get_string(ssh, &tmp_server_host_key_blob,
-		&tmp_server_host_key_blob_len)) != 0 ||
-		(r = sshkey_from_blob(tmp_server_host_key_blob,
-		tmp_server_host_key_blob_len, &tmp_server_host_key)) != 0)
-		goto out;
-	if (tmp_server_host_key->type != kex->hostkey_type ||
-	    (kex->hostkey_type == KEY_ECDSA &&
-	    tmp_server_host_key->ecdsa_nid != kex->hostkey_nid)) {
-		r = SSH_ERR_KEY_TYPE_MISMATCH;
-		goto out;
-	}
-
-	/* Verify host key */
-	if (kex->verify_host_key(tmp_server_host_key, ssh) == -1) {
-		r = SSH_ERR_SIGNATURE_INVALID;
-		goto out;
-	}
-
-	*server_host_key = tmp_server_host_key;
-	*server_host_key_blob = tmp_server_host_key_blob;
-	*server_host_key_blob_len = tmp_server_host_key_blob_len;
-
-	tmp_server_host_key = NULL;
-	tmp_server_host_key_blob = NULL;
-
-out:
-	if (tmp_server_host_key_blob != NULL)
-		free(tmp_server_host_key_blob);
-	if (tmp_server_host_key != NULL)
-		sshkey_free(tmp_server_host_key);
-
-	return r;
-}
-
-/*
  * @brief Verifies host key
  */
 static int
@@ -193,13 +136,10 @@ pq_oqs_deserialise_hostkey(struct ssh *ssh,
 	struct sshkey **server_host_key, u_char **server_host_key_blob,
 	size_t *server_host_key_blob_len) {
 
-	struct kex *kex = NULL;
 	struct sshkey *tmp_server_host_key = NULL;
 	u_char *tmp_server_host_key_blob = NULL;
 	size_t tmp_server_host_key_blob_len = 0;
 	int r = 0;
-
-	kex = ssh->kex;
 
 	/* Extract host key from packet */
 	if ((r = sshpkt_get_string(ssh, &tmp_server_host_key_blob,
@@ -273,7 +213,7 @@ pq_oqs_client(struct ssh *ssh) {
 
 out:
 	if (r != 0)
-		pq_oqs_free(oqs_kex_ctx);
+		pq_oqs_free(pq_kex_ctx);
 
 	return r;
 }

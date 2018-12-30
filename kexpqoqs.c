@@ -93,7 +93,7 @@ out:
 /*
  * @brief Free memory allocated PQ-only key exchange liboqs
  */
-int
+void
 pq_oqs_free(PQ_KEX_CTX *pq_kex_ctx) {
 
 	if (pq_kex_ctx->oqs_kex_ctx != NULL) {

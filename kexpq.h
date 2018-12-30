@@ -65,7 +65,7 @@ int pq_oqs_hash (
 	u_char *hash, size_t *hash_len);
 /* Shared functions */
 int pq_oqs_init(PQ_KEX_CTX **pq_kex_ctx, char *pq_kex_name);
-int pq_oqs_free(PQ_KEX_CTX *pq_kex_ctx);
+void pq_oqs_free(PQ_KEX_CTX *pq_kex_ctx);
 /* Client specific function */
 int  pq_oqs_client(struct ssh *);
 /* Server specific function */
