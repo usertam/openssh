@@ -27,6 +27,7 @@
 #if defined(WITH_OQS) && defined(WITH_PQ_KEX)
 
 #include <signal.h>
+#include <string.h>
 
 #include "sshkey.h"
 #include "digest.h"

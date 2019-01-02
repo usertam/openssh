@@ -26,6 +26,8 @@
 
 #ifdef WITH_OQS
 
+#include <string.h>
+
 #include "ssherr.h"
 #include "packet.h"
 #include "ssh2.h"
@@ -262,13 +264,8 @@ int
 oqs_deserialise(struct ssh *ssh, OQS_KEX_CTX *oqs_kex_ctx,
 	enum oqs_client_or_server client_or_server) {
 
-	int r = 0;
-
-	r = sshpkt_get_string(ssh, &(oqs_kex_ctx->oqs_remote_msg),
+	return sshpkt_get_string(ssh, &(oqs_kex_ctx->oqs_remote_msg),
 		&(oqs_kex_ctx->oqs_remote_msg_len));
-
-out:
-	return r;
 }
 
 /*
@@ -278,13 +275,8 @@ int
 oqs_serialise(struct ssh *ssh, OQS_KEX_CTX *oqs_kex_ctx,
 	enum oqs_client_or_server client_or_server) {
 
-	int r = 0;
-
-	r = sshpkt_put_string(ssh, oqs_kex_ctx->oqs_local_msg,
+	return sshpkt_put_string(ssh, oqs_kex_ctx->oqs_local_msg,
 		oqs_kex_ctx->oqs_local_msg_len);
-
-out:
-	return r;
 }
 
 /*

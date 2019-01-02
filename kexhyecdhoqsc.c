@@ -28,6 +28,7 @@
 
 #include <openssl/ecdh.h>
 #include <signal.h>
+#include <string.h>
 
 #include "sshkey.h"
 #include "digest.h"
@@ -142,13 +143,10 @@ hybrid_ecdh_oqs_deserialise_hostkey(struct ssh *ssh,
 	struct sshkey **server_host_key, u_char **server_host_key_blob,
 	size_t *server_host_key_blob_len) {
 
-	struct kex *kex = NULL;
 	struct sshkey *tmp_server_host_key = NULL;
 	u_char *tmp_server_host_key_blob = NULL;
 	size_t tmp_server_host_key_blob_len = 0;
 	int r = 0;
-
-	kex = ssh->kex;
 
 	/* Extract host key from packet */
 	if ((r = sshpkt_get_string(ssh, &tmp_server_host_key_blob,

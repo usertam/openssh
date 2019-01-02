@@ -28,6 +28,7 @@
 
 #include <openssl/ecdh.h>
 #include <signal.h>
+#include <string.h>
 
 #include "sshkey.h"
 #include "digest.h"
@@ -37,6 +38,7 @@
 #include "dispatch.h"
 #include "packet.h"
 #include "sshbuf.h"
+#include "log.h"
 
 /* Server private */
 static int

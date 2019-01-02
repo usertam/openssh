@@ -26,6 +26,8 @@
 
 #if defined(OPENSSL_HAS_ECC) && defined(WITH_OQS) && defined(WITH_HYBRID_KEX)
 
+#include <string.h>
+
 #include "ssherr.h"
 #include "digest.h"
 #include "ssh2.h"
