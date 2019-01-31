@@ -114,7 +114,7 @@ typedef int (*hybrid_func_cb)(struct ssh *);
 static inline hybrid_func_cb
 get_hybrid_ecdh_oqs_client_cb() {
 
-#if defined(WITH_OQS) && defined(WITH_HYBRID_KEX)
+#if defined(OPENSSL_HAS_ECC) && defined(WITH_OQS) && defined(WITH_HYBRID_KEX)
     return hybrid_ecdh_oqs_client;
 #else
     return NULL;
@@ -124,7 +124,7 @@ get_hybrid_ecdh_oqs_client_cb() {
 static inline hybrid_func_cb
 get_hybrid_ecdh_oqs_server_cb() {
 
-#if defined(WITH_OQS) && defined(WITH_HYBRID_KEX)
+#if defined(OPENSSL_HAS_ECC) && defined(WITH_OQS) && defined(WITH_HYBRID_KEX)
     return hybrid_ecdh_oqs_server;
 #else
     return NULL;

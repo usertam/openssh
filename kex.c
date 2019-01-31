@@ -170,11 +170,11 @@ static int
 init_hybrid_kex(HYBRID_KEX_CTX **hybrid_kex_ctx, const struct kexalg *kexalg) {
 
 	switch (kexalg->type) {
-#ifdef WITH_OQS
+#if defined(OPENSSL_HAS_ECC) && defined(WITH_OQS)
 		case KEX_HY_ECDH_OQS:
 			return hybrid_ecdh_oqs_init(hybrid_kex_ctx, kexalg->name,
 				kexalg->ec_nid);
-#endif /* WITH_OQS */
+#endif /* OPENSSL_HAS_ECC && WITH_OQS */
 		default:
 			return 0;
 	}
