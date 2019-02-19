@@ -171,7 +171,7 @@ main(int argc, char **argv)
 {
 	struct sshbuf *b;
 	Options options;
-#define NUM_KEYTYPES 9
+#define NUM_KEYTYPES 10 /* ADD_MORE_OQS_SIG_HERE: update this value */
 	struct sshkey *keys[NUM_KEYTYPES], *key = NULL;
 	struct passwd *pw;
 	int r, key_fd[NUM_KEYTYPES], i, found, version = 2, fd;
