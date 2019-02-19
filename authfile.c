@@ -48,6 +48,7 @@
 #include "sshbuf.h"
 #include "ssherr.h"
 #include "krl.h"
+#include "oqs-utils.h"
 
 #define MAX_KEY_FILE_SIZE	(1024 * 1024)
 
@@ -403,6 +404,7 @@ sshkey_load_private_cert(int type, const char *filename, const char *passphrase,
 #endif /* WITH_OPENSSL */
 	case KEY_ED25519:
 	case KEY_XMSS:
+	CASE_KEY_OQS:
 	case KEY_UNSPEC:
 		break;
 	default:

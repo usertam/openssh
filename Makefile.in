@@ -81,6 +81,7 @@ LIBOPENSSH_OBJS=\
 	sshbuf-getput-crypto.o \
 	krl.o \
 	bitmap.o \
+	ssh-oqs.o \
 	${XMSS_OBJS}
 
 LIBSSH_OBJS=${LIBOPENSSH_OBJS} \

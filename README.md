@@ -19,7 +19,7 @@ More information on OQS can be found on our website: [https://openquantumsafe.or
 Contents
 --------
 
-This branch ([OQS-master](https://github.com/open-quantum-safe/openssh-portable/tree/OQS-master)) integrates post-quantum key exchange from liboqs in SSH 2 in OpenSSH v7.7 portable 1.  
+This branch ([OQS-master](https://github.com/open-quantum-safe/openssh-portable/tree/OQS-master)) integrates post-quantum key exchange and authentication from liboqs in SSH 2 in OpenSSH v7.7 portable 1.
 
 ### Key exchange mechanisms
 
@@ -29,6 +29,14 @@ The following key exchange / key encapsulation methods from liboqs are supported
 - `frodo-640-aes`, `frodo-976-aes`
 - `newhope-512`, `newhope-1024`
 - `sike-503`, `sike-751`
+- `oqsdefault`
+
+### Authentication mechanisms
+
+The following signature methods from liboqs are supported (assuming they have been enabled in liboqs):
+
+- `qteslaI`, `qteslaIIIspeed`, `qteslaIIIsize`
+- `picnicL1FS`
 - `oqsdefault`
 
 Limitations and security
@@ -157,24 +165,54 @@ Notes about building OpenSSH:
 Running
 -------
 
-### Client/server demo
+The following instructions explain how to run a quantum-safe SSH connection (with both key exchange and authentication).
+
+### Generating post-quantum authentication keys
+
+To setup post-quantum authentication, the server and optionally the client need to generate post-quantum keys. The process
+is illustrated using test key files. In what follows, `<SIG>` is one of the signature algorithms listed in the Contents
+section above.
+
+The server generates its key files with the right permissions, and then generates its key pair:
+
+	mkdir ~/ssh_server/
+	chmod 700 ~/ssh_server/
+	touch ~/ssh_server/authorized_keys
+	chmod 600 ~/ssh_server/authorized_keys
+	<path-to-openssh>/bin/ssh-keygen -t <SIG> -f ~/ssh_server/id_<SIG>
+
+To enable client-side public-key authentication, the client generates its key pair:
+
+	<path-to-openssh>/bin/ssh-keygen -t <SIG> -f ~/ssh_client/<SIG>
+
+The server then adds the client's public key to its authorized keys
+
+	cat ~/ssh_client/id_<SIG>.pub >> ~/ssh_server/authorized_keys
+
+### Running key exchange
+
+In what follows, `<KEX>` and `<SIG>` are one of the key exchange and signature algorithms listed in the Contents section above, respectively. The `-o` options can instead be added to the server/client configuration file.
 
 In one terminal, run a server:
 
-	sudo <path-to-openssh>/sbin/sshd -p 2222 -d
+	sudo <path-to-openssh>/sbin/sshd -p 2222 -d [-o AuthorizedKeysFile=~/ssh_server/authorized_keys -o HostKeyAlgorithms=<LIBOQS_SIG_ALGORITHM> -o PubkeyAcceptedKeyTypes=<LIBOQS_SIG_ALGORITHM> -h ~/ssh_server/id_<SIG>]
 
-The server automatically supports all available hybrid and PQ-only key exchange methods.  `sudo` is required on Linux so that sshd can read the shadow password file.
+where `<LIBOQS_SIG_ALGORITHM>` is `ssh-<SIG>@openssh.com` all in lowercase.
+
+The server automatically supports all available hybrid and PQ-only key exchange methods.  `sudo` is required on Linux so that sshd can read the shadow password file. The arguments between `[...]` are for post-quantum authentication and can be omitted to use classical authentication.
 
 In another terminal, run a client:
 
-	<path-to-openssh>/bin/ssh -l <username> -o 'KexAlgorithms=LIBOQSALGORITHM' -p 2222 localhost
+	<path-to-openssh>/bin/ssh -l <username> -o 'KexAlgorithms=<LIBOQS_ALGORITHM_KEX>' -p 2222 localhost [-o HostKeyAlgorithms=<LIBOQS_SIG_ALGORITHM> -o PubkeyAcceptedKeyTypes=<LIBOQS_SIG_ALGORITHM> -o StrictHostKeyChecking=no -i ~/ssh_client/id_<SIG>]
 
-where `LIBOQSALGORITHM` is either:
+where `<LIBOQS_KEX_ALGORITHM>` is either:
 
-- `X-sha384@openquantumsafe.org` (for post-quantum-only key exchange)
-- `ecdh-nistp384-X-sha384@openquantumsafe.org` (for hybrid post-quantum and elliptic curve key exchange)
+- `<KEX>-sha384@openquantumsafe.org` (for post-quantum-only key exchange)
+- `ecdh-nistp384-<KEX>-sha384@openquantumsafe.org` (for hybrid post-quantum and elliptic curve key exchange)
 
-where `X` is one of the algorithms listed in the Contents section above.
+and where `<LIBOQS_SIG_ALGORITHM>` is `ssh-<SIG>@openssh.com` all in lowercase.
+
+The `StrictHostKeyChecking` option is used to allow trusting the newly generated server key; alternatively, the key could be added manually to the client's trusted keys. The arguments between `[...]` are for post-quantum authentication and can be omitted to use classical authentication.
 
 ### Automated tests
 
@@ -182,17 +220,18 @@ To test the build, run:
 
 	make tests
 
-oqsdefault KEM
+oqsdefault alg
 --------------
 
-liboqs can be configured at compile-time to use any of its algorithms as its "default" algorithm.  If OpenSSH is told to use `oqsdefault`, then it will use whichever KEM algorithm was set as the default in liboqs at compile time.
+liboqs can be configured at compile-time to use any of its algorithms as its "default" algorithm.  If OpenSSH is told to use `oqsdefault`, then it will use whichever KEM or signature algorithm was set as the default in liboqs at compile time.
 
-The purpose of this option is as follows.  liboqs master branch and liboqs nist-branch contain different subsets of algorithms.  We will make most algorithms from liboqs master branch available as a named key exchange method in OpenSSH.  However, there are significantly more algorithms supported in liboqs nist-branch than liboqs master branch, and we will not be explicitly making each nist-branch algorithm available as a named key exchange method in OpenSSH.  It is still possible to prototype KEMs from liboqs master branch or liboqs nist-branch that were not made available as named key exchange methods in OpenSSH using the `oqsdefault` key exchange method in OpenSSH by changing the default mapping in liboqs and then recompiling.
+The purpose of this option is as follows.  liboqs master branch and liboqs nist-branch contain different subsets of algorithms.  We will make most algorithms from liboqs master branch available as a named key exchange or signature method in OpenSSH.  However, there are significantly more algorithms supported in liboqs nist-branch than liboqs master branch, and we will not be explicitly making each nist-branch algorithm available as a named method in OpenSSH.  It is still possible to test with algorithms from liboqs master branch or liboqs nist-branch that were not made available as named methods in OpenSSH using the `oqsdefault` method in OpenSSH by changing the default mapping in liboqs and then recompiling.
 
 1. Recompile liboqs with your preferred default algorithm:
 	- For liboqs master branch:
 		- `cd liboqs`
-		- Edit `src/kem/kem.h` and change `#define OQS_KEM_DEFAULT` to map to your preferred algorithm
+		- For KEX: edit `src/kem/kem.h` and change `#define OQS_KEM_DEFAULT` to map to your preferred algorithm
+		- For signature: edit `src/sig/sig.h` and change `#define OQS_SIG_DEFAULT` to map to your preferred algorithm
 		- `make clean`
 		- `make -j`
 		- `make install`
@@ -206,7 +245,7 @@ The purpose of this option is as follows.  liboqs master branch and liboqs nist-
 	- `make clean`
 	- `make -j`
 	- `make install`
-3. Run `ssh` with `ecdh-nistp384-oqsdefault-sha384@openquantumsafe.org ` or `oqsdefault-sha384@openquantumsafe.org` for the `KexAlgorithms` option.
+3. Run `ssh` with `ecdh-nistp384-oqsdefault-sha384@openquantumsafe.org ` or `oqsdefault-sha384@openquantumsafe.org` for the `KexAlgorithms` option, or +++
 
 License
 -------
@@ -245,3 +284,9 @@ Financial support for the development of Open Quantum Safe has been provided by 
 We'd like to make a special acknowledgement to the companies who have dedicated programmer time to contribute source code to OQS, including Amazon Web Services, evolutionQ, and Microsoft Research.  
 
 Research projects which developed specific components of OQS have been supported by various research grants, including funding from the Natural Sciences and Engineering Research Council of Canada (NSERC); see the source papers for funding acknowledgments.
+
+### OQS TODO
+
+- Add hybrid auth
+- Add certified PQ keys (?)
+- Add PQ info to doc (man pages)

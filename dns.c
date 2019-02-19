@@ -25,6 +25,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/* FIXMEOQS: enable PQ DNS auth? */
+
 #include "includes.h"
 
 #include <sys/types.h>

@@ -24,6 +24,10 @@
 #include "openbsd-compat/openssl-compat.h"
 #endif
 
+#ifdef WITH_OQS
+#include <oqs/oqs.h>
+#endif
+
 #include <errno.h>
 #include <fcntl.h>
 #include <netdb.h>
@@ -279,6 +283,22 @@ ask_filename(struct passwd *pw, const char *prompt)
 		case KEY_XMSS_CERT:
 			name = _PATH_SSH_CLIENT_ID_XMSS;
 			break;
+		case KEY_OQSDEFAULT:
+			name = _PATH_SSH_CLIENT_ID_OQSDEFAULT;
+			break;
+		case KEY_QTESLA_I:
+			name = _PATH_SSH_CLIENT_ID_QTESLA_I;
+			break;
+		case KEY_QTESLA_III_SPEED:
+			name = _PATH_SSH_CLIENT_ID_QTESLA_III_SPEED;
+			break;
+		case KEY_QTESLA_III_SIZE:
+			name = _PATH_SSH_CLIENT_ID_QTESLA_III_SIZE;
+			break;
+		case KEY_PICNIC_L1FS:
+			name = _PATH_SSH_CLIENT_ID_PICNIC_L1FS;
+			break;
+		/* ADD_MORE_OQS_SIG_HERE */
 		default:
 			fatal("bad key type");
 		}
@@ -976,6 +996,14 @@ do_gen_all_hostkeys(struct passwd *pw)
 #ifdef WITH_XMSS
 		{ "xmss", "XMSS",_PATH_HOST_XMSS_KEY_FILE },
 #endif /* WITH_XMSS */
+#ifdef WITH_OQS
+		{ "oqsdefault", "OQSDEFAULT", _PATH_HOST_OQSDEFAULT_KEY_FILE },
+		{ "qteslaI", "QTESLAI", _PATH_HOST_QTESLA_I_KEY_FILE },
+		{ "qteslaIIIspeed", "QTESLAIIISPEED",_PATH_HOST_QTESLA_III_SPEED_KEY_FILE },
+		{ "qteslaIIIsize", "QTESLAIIISIZE",_PATH_HOST_QTESLA_III_SIZE_KEY_FILE },
+		{ "picnicL1FS", "PICNICL1FS",_PATH_HOST_PICNIC_L1FS_KEY_FILE },
+		/* ADD_MORE_OQS_SIG_HERE */
+#endif /* WITH_XMSS */
 		{ NULL, NULL, NULL }
 	};
 
@@ -1462,6 +1490,7 @@ do_change_comment(struct passwd *pw)
 		}
 	}
 
+	// FIXMEOQS: should we add the OQS key types here?
 	if (private->type != KEY_ED25519 && private->type != KEY_XMSS &&
 	    !use_new_format) {
 		error("Comments are only supported for keys stored in "
@@ -2288,7 +2317,10 @@ static void
 usage(void)
 {
 	fprintf(stderr,
-	    "usage: ssh-keygen [-q] [-b bits] [-t dsa | ecdsa | ed25519 | rsa]\n"
+	    "usage: ssh-keygen [-q] [-b bits] [-t dsa | ecdsa | ed25519 | rsa | \n"
+#ifdef WITH_OQS
+	    "                   oqsdefault, picnicL1FS, qteslaI, qteslaIIIsize, qteslaIIIspeed]\n"
+#endif
 	    "                  [-N new_passphrase] [-C comment] [-f output_keyfile]\n"
 	    "       ssh-keygen -p [-P old_passphrase] [-N new_passphrase] [-f keyfile]\n"
 	    "       ssh-keygen -i [-m key_format] [-f input_keyfile]\n"
@@ -2660,6 +2692,18 @@ main(int argc, char **argv)
 			    _PATH_HOST_ED25519_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
 			    _PATH_HOST_XMSS_KEY_FILE, rr_hostname);
+			n += do_print_resource_record(pw,
+			    _PATH_HOST_OQSDEFAULT_KEY_FILE, rr_hostname);
+			n += do_print_resource_record(pw,
+			    _PATH_HOST_QTESLA_I_KEY_FILE, rr_hostname);
+			n += do_print_resource_record(pw,
+			    _PATH_HOST_QTESLA_III_SPEED_KEY_FILE, rr_hostname);
+			n += do_print_resource_record(pw,
+			    _PATH_HOST_QTESLA_III_SIZE_KEY_FILE, rr_hostname);
+			n += do_print_resource_record(pw,
+			    _PATH_HOST_PICNIC_L1FS_KEY_FILE, rr_hostname);
+			/* ADD_MORE_OQS_SIG_HERE */
+
 			if (n == 0)
 				fatal("no keys found.");
 			exit(0);

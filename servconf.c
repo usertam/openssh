@@ -257,6 +257,19 @@ fill_default_server_options(ServerOptions *options)
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_XMSS_KEY_FILE);
 #endif /* WITH_XMSS */
+#ifdef WITH_OQS
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_OQSDEFAULT_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_QTESLA_I_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_QTESLA_III_SPEED_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_QTESLA_III_SIZE_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_PICNIC_L1FS_KEY_FILE);
+		/* ADD_MORE_OQS_SIG_HERE */
+#endif /* WITH_OQS */
 	}
 	/* No certificates by default */
 	if (options->num_ports == 0)

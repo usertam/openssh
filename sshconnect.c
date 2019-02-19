@@ -1476,6 +1476,12 @@ show_other_keys(struct hostkeys *hostkeys, struct sshkey *key)
 		KEY_ECDSA,
 		KEY_ED25519,
 		KEY_XMSS,
+		KEY_OQSDEFAULT,
+		KEY_QTESLA_I,
+		KEY_QTESLA_III_SPEED,
+		KEY_QTESLA_III_SIZE,
+		KEY_PICNIC_L1FS,
+		/* ADD_MORE_OQS_SIG_HERE */
 		-1
 	};
 	int i, ret = 0;
