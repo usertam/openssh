@@ -10,7 +10,7 @@ Overview
 
 The **Open Quantum Safe (OQS) project** has the goal of developing and prototyping quantum-resistant cryptography.
 
-**liboqs** is an open source C library for quantum-resistant cryptographic algorithms.  See more about liboqs at [https://github.com/open-quantum-safe/liboqs/](https://github.com/open-quantum-safe/liboqs/), including a list of supported algorithms. OpenSSL can use either the [master](https://github.com/open-quantum-safe/liboqs/tree/master) or the [nist](https://github.com/open-quantum-safe/liboqs/tree/nist-branch) branch of liboqs; the former is recommended for normal uses of OpenSSH as included mechanisms follow a stricter set of requirements, the latter contains more algorithms and is better suited for experimentation.
+**liboqs** is an open source C library for quantum-resistant cryptographic algorithms.  See more about liboqs at [https://github.com/open-quantum-safe/liboqs/](https://github.com/open-quantum-safe/liboqs/), including a list of supported algorithms. OpenSSH can use either the [master](https://github.com/open-quantum-safe/liboqs/tree/master) or the [nist](https://github.com/open-quantum-safe/liboqs/tree/nist-branch) branch of liboqs for key exchange mechanisms, but the master branch is required for signature mechanisms. The master branch is recommended for normal uses of OpenSSH as included mechanisms follow a stricter set of requirements; the nist branch contains more algorithms and is better suited for experimentation.
 
 **open-quantum-safe/openssh-portable** contains a fork of OpenSSH that adds quantum-safe key exchange algorithms using liboqs for prototyping purposes, specifically adding key exchange methods that use hybrid (post-quantum + traditional elliptic curve) or post-quantum-only algorithms.  The integration should not be considered "production quality".  The OQS-master branch of open-quantum-safe/openssh-portable is currently based on **OpenSSH version 7.7** (Git tag V_7_7_P1).
 
@@ -33,11 +33,13 @@ The following key exchange / key encapsulation methods from liboqs are supported
 
 ### Authentication mechanisms
 
-The following signature methods from liboqs are supported (assuming they have been enabled in liboqs):
+The following signature methods from liboqs's master branch are supported (assuming they have been enabled in liboqs):
 
 - `qteslaI`, `qteslaIIIspeed`, `qteslaIIIsize`
 - `picnicL1FS`
 - `oqsdefault`
+
+The liboqs's nist branch uses a different signature API that hasn't yet been integrated.
 
 Limitations and security
 ------------------------
@@ -48,7 +50,7 @@ We believe that the NIST Post-Quantum Cryptography standardization project is cu
 
 We acknowledge that some parties may want to begin deploying post-quantum cryptography prior to the conclusion of the NIST standardization project.  We strongly recommend that any attempts to do make use of so-called **hybrid cryptography**, in which post-quantum public-key algorithms are used alongside traditional public key algorithms (like RSA or elliptic curves) so that the solution is at least no less secure than existing traditional cryptography.
 
-liboqs is provided "as is", without warranty of any kind.  See [LICENSE.txt](https://github.com/open-quantum-safe/liboqs/blob/ds-nist-branch/LICENSE.txt) for the full disclaimer.
+liboqs is provided "as is", without warranty of any kind.  See [LICENSE.txt](https://github.com/open-quantum-safe/liboqs/blob/nist-branch/LICENSE.txt) for the full disclaimer.
 
 The integration of liboqs into our fork of OpenSSH is currently at an experimental stage.  This fork of OpenSSH has not received the same level of auditing and analysis that OpenSSH has received.  At this stage, we do not recommend relying on it in any production environment or to protect any sensitive data.
 
@@ -103,7 +105,7 @@ For **macOS**, you need to install the following packages using brew (or a packa
 	
 ### Step 1: Build and install liboqs
 
-You can use the either the [master](https://github.com/open-quantum-safe/liboqs/tree/master) or the [nist](https://github.com/open-quantum-safe/liboqs/tree/nist-branch) branch of liboqs with the OQS-master branch of OpenSSH. Each branch support a different set of KEX/KEM mechanisms (see above).
+You can use the either the [master](https://github.com/open-quantum-safe/liboqs/tree/master) or the [nist](https://github.com/open-quantum-safe/liboqs/tree/nist-branch) branch of liboqs with the OQS-master branch of OpenSSH for key exchange mechanisms (each branch support a different set, see above), but the master branch is required for signature mechanisms.
 
 You will need to specify a path to install liboqs in during configure time; we recommend that you install in a special-purpose directory, rather than the global `/usr` or `/usr/local` directories.
 
@@ -210,7 +212,7 @@ where `<LIBOQS_KEX_ALGORITHM>` is either:
 - `<KEX>-sha384@openquantumsafe.org` (for post-quantum-only key exchange)
 - `ecdh-nistp384-<KEX>-sha384@openquantumsafe.org` (for hybrid post-quantum and elliptic curve key exchange)
 
-and where `<LIBOQS_SIG_ALGORITHM>` is `ssh-<SIG>@openssh.com` all in lowercase.
+and where `<LIBOQS_SIG_ALGORITHM>` is `ssh-<SIG>@openquantumsafe.org` all in lowercase.
 
 The `StrictHostKeyChecking` option is used to allow trusting the newly generated server key; alternatively, the key could be added manually to the client's trusted keys. The arguments between `[...]` are for post-quantum authentication and can be omitted to use classical authentication.
 
@@ -225,7 +227,7 @@ oqsdefault alg
 
 liboqs can be configured at compile-time to use any of its algorithms as its "default" algorithm.  If OpenSSH is told to use `oqsdefault`, then it will use whichever KEM or signature algorithm was set as the default in liboqs at compile time.
 
-The purpose of this option is as follows.  liboqs master branch and liboqs nist-branch contain different subsets of algorithms.  We will make most algorithms from liboqs master branch available as a named key exchange or signature method in OpenSSH.  However, there are significantly more algorithms supported in liboqs nist-branch than liboqs master branch, and we will not be explicitly making each nist-branch algorithm available as a named method in OpenSSH.  It is still possible to test with algorithms from liboqs master branch or liboqs nist-branch that were not made available as named methods in OpenSSH using the `oqsdefault` method in OpenSSH by changing the default mapping in liboqs and then recompiling.
+The purpose of this option is as follows.  The liboqs master and nist branches contain different subsets of algorithms; and the master branch is needed to enable PQC authentication.  We will make most algorithms from liboqs master branch available as a named key exchange or signature method in OpenSSH.  However, there are significantly more algorithms supported in the nist branch than in the master one, and we will not be explicitly making each nist branch algorithm available as a named method in OpenSSH.  It is still possible to test with algorithms not made available as named methods in OpenSSH using the `oqsdefault` method in OpenSSH by changing the default mapping in liboqs and then recompiling the library.
 
 1. Recompile liboqs with your preferred default algorithm:
 	- For liboqs master branch:
@@ -245,7 +247,7 @@ The purpose of this option is as follows.  liboqs master branch and liboqs nist-
 	- `make clean`
 	- `make -j`
 	- `make install`
-3. Run `ssh` with `ecdh-nistp384-oqsdefault-sha384@openquantumsafe.org ` or `oqsdefault-sha384@openquantumsafe.org` for the `KexAlgorithms` option, or +++
+3. Run `ssh` with `oqsdefault` replacing the `<KEX>` and/or `<SIG>` value in the Running section above.
 
 License
 -------
