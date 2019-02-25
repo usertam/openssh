@@ -257,7 +257,7 @@ fill_default_server_options(ServerOptions *options)
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_XMSS_KEY_FILE);
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_OQSDEFAULT_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
@@ -269,7 +269,7 @@ fill_default_server_options(ServerOptions *options)
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_PICNIC_L1FS_KEY_FILE);
 		/* ADD_MORE_OQS_SIG_HERE */
-#endif /* WITH_OQS */
+#endif /* WITH_PQ_AUTH */
 	}
 	/* No certificates by default */
 	if (options->num_ports == 0)
