@@ -188,6 +188,7 @@ The server generates its key files with the right permissions, and then generate
 
 To enable client-side public-key authentication, the client generates its key pair:
 
+	mkdir ~/ssh_client/
 	<path-to-openssh>/bin/ssh-keygen -t <SIG> -f ~/ssh_client/<SIG>
 
 The server then adds the client's public key to its authorized keys
@@ -200,7 +201,12 @@ In what follows, `<KEX>` and `<SIG>` are one of the key exchange and signature a
 
 In one terminal, run a server:
 
-	sudo <path-to-openssh>/sbin/sshd -p 2222 -d [-o AuthorizedKeysFile=~/ssh_server/authorized_keys -o HostKeyAlgorithms=<LIBOQS_SIG_ALGORITHM> -o PubkeyAcceptedKeyTypes=<LIBOQS_SIG_ALGORITHM> -h ~/ssh_server/id_<SIG>]
+	sudo <path-to-openssh>/sbin/sshd -p 2222 -d             \
+	    -o KexAlgorithms=<LIBOQS_ALGORITHM_KEX>             \
+	    [-o AuthorizedKeysFile=<absolute-path-to>/ssh_server/authorized_keys \
+	     -o HostKeyAlgorithms=<LIBOQS_SIG_ALGORITHM>        \
+	     -o PubkeyAcceptedKeyTypes=<LIBOQS_SIG_ALGORITHM>   \
+	     -h <absolute-path-to>/ssh_server/id_<SIG>]
 
 where `<LIBOQS_SIG_ALGORITHM>` is `ssh-<SIG>@openssh.com` all in lowercase.
 
@@ -208,7 +214,13 @@ The server automatically supports all available hybrid and PQ-only key exchange 
 
 In another terminal, run a client:
 
-	<path-to-openssh>/bin/ssh -l <username> -o 'KexAlgorithms=<LIBOQS_ALGORITHM_KEX>' -p 2222 localhost [-o HostKeyAlgorithms=<LIBOQS_SIG_ALGORITHM> -o PubkeyAcceptedKeyTypes=<LIBOQS_SIG_ALGORITHM> -o StrictHostKeyChecking=no -i ~/ssh_client/id_<SIG>]
+	<path-to-openssh>/bin/ssh -l <username>              \
+	    -p 2222 localhost                                \
+	    -o KexAlgorithms=<LIBOQS_ALGORITHM_KEX>          \
+	   [-o HostKeyAlgorithms=<LIBOQS_SIG_ALGORITHM>      \
+	    -o PubkeyAcceptedKeyTypes=<LIBOQS_SIG_ALGORITHM> \
+	    -o StrictHostKeyChecking=no                      \
+	    -i ~/ssh_client/id_<SIG>]
 
 where `<LIBOQS_KEX_ALGORITHM>` is either:
 
