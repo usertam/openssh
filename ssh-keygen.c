@@ -24,7 +24,7 @@
 #include "openbsd-compat/openssl-compat.h"
 #endif
 
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 #include <oqs/oqs.h>
 #endif
 
@@ -996,14 +996,14 @@ do_gen_all_hostkeys(struct passwd *pw)
 #ifdef WITH_XMSS
 		{ "xmss", "XMSS",_PATH_HOST_XMSS_KEY_FILE },
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 		{ "oqsdefault", "OQSDEFAULT", _PATH_HOST_OQSDEFAULT_KEY_FILE },
 		{ "qteslaI", "QTESLAI", _PATH_HOST_QTESLA_I_KEY_FILE },
 		{ "qteslaIIIspeed", "QTESLAIIISPEED",_PATH_HOST_QTESLA_III_SPEED_KEY_FILE },
 		{ "qteslaIIIsize", "QTESLAIIISIZE",_PATH_HOST_QTESLA_III_SIZE_KEY_FILE },
 		{ "picnicL1FS", "PICNICL1FS",_PATH_HOST_PICNIC_L1FS_KEY_FILE },
 		/* ADD_MORE_OQS_SIG_HERE */
-#endif /* WITH_XMSS */
+#endif /* WITH_PQ_AUTH */
 		{ NULL, NULL, NULL }
 	};
 
@@ -2318,7 +2318,7 @@ usage(void)
 {
 	fprintf(stderr,
 	    "usage: ssh-keygen [-q] [-b bits] [-t dsa | ecdsa | ed25519 | rsa | \n"
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	    "                   oqsdefault, picnicL1FS, qteslaI, qteslaIIIsize, qteslaIIIspeed]\n"
 #endif
 	    "                  [-N new_passphrase] [-C comment] [-f output_keyfile]\n"

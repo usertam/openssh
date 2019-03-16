@@ -99,14 +99,14 @@ static const struct keytype keytypes[] = {
 	{ "ssh-xmss-cert-v01@openssh.com", "XMSS-CERT",
 	    KEY_XMSS_CERT, 0, 1, 0 },
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	{ "ssh-oqsdefault@openquantumsafe.org", "OQSDEFAULT", KEY_OQSDEFAULT, 0, 0, 0 },
 	{ "ssh-qteslai@openquantumsafe.org", "QTESLAI", KEY_QTESLA_I, 0, 0, 0 },
 	{ "ssh-qteslaiiispeed@openquantumsafe.org", "QTESLAIIISPEED", KEY_QTESLA_III_SPEED, 0, 0, 0 },
 	{ "ssh-qteslaiiisize@openquantumsafe.org", "QTESLAIIISIZE", KEY_QTESLA_III_SIZE, 0, 0, 0 },
 	{ "ssh-picnicl1fs@openquantumsafe.org", "PICNICL1FS", KEY_PICNIC_L1FS, 0, 0, 0 },
 	/* ADD_MORE_OQS_SIG_HERE */
-#endif /* WITH_OQS */
+#endif /* WITH_PQ_AUTH */
 #ifdef WITH_OPENSSL
 	{ "ssh-rsa", "RSA", KEY_RSA, 0, 0, 0 },
 	{ "rsa-sha2-256", "RSA", KEY_RSA, 0, 0, 1 },
@@ -297,11 +297,11 @@ sshkey_size(const struct sshkey *k)
 	case KEY_XMSS:
 	case KEY_XMSS_CERT:
 		return 256;	/* XXX */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		return (k->oqs_sig == NULL ? 0 : k->oqs_sig->length_public_key);
 		/* OQS note: currently returning the public key length if initialized. OK? */
-#endif
+#endif /* WITH_PQ_AUTH */
 	}
 	return 0;
 }
@@ -315,9 +315,9 @@ sshkey_type_is_valid_ca(int type)
 	case KEY_ECDSA:
 	case KEY_ED25519:
 	case KEY_XMSS:
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
-#endif
+#endif /* WITH_PQ_AUTH */
 		return 1;
 	default:
 		return 0;
@@ -536,13 +536,13 @@ sshkey_new(int type)
 	case KEY_XMSS_CERT:
 		/* no need to prealloc */
 		break;
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		if ((k->oqs_sig = OQS_SIG_new(get_oqs_alg_name(type))) == NULL) {
 			return NULL;
 		}
 		break;
-#endif
+#endif /* WITH_PQ_AUTH */
 	case KEY_UNSPEC:
 		break;
 	default:
@@ -593,10 +593,10 @@ sshkey_add_private(struct sshkey *k)
 	case KEY_XMSS_CERT:
 		/* no need to prealloc */
 		break;
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		break;
-#endif
+#endif /* WITH_PQ_AUTH */
 	case KEY_UNSPEC:
 		break;
 	default:
@@ -665,7 +665,7 @@ sshkey_free(struct sshkey *k)
 		k->xmss_filename = NULL;
 		break;
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		if (k->oqs_sig) {
 			freezero(k->oqs_sk, k->oqs_sig->length_secret_key);
@@ -673,7 +673,7 @@ sshkey_free(struct sshkey *k)
 			OQS_SIG_free(k->oqs_sig);
 		}
 		break;
-#endif
+#endif /* WITH_PQ_AUTH */
 	case KEY_UNSPEC:
 		break;
 	default:
@@ -760,11 +760,11 @@ sshkey_equal_public(const struct sshkey *a, const struct sshkey *b)
 		    sshkey_xmss_pklen(a) == sshkey_xmss_pklen(b) &&
 		    memcmp(a->xmss_pk, b->xmss_pk, sshkey_xmss_pklen(a)) == 0;
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		return a->oqs_pk != NULL && b->oqs_pk != NULL &&
 		    memcmp(a->oqs_pk, b->oqs_pk, a->oqs_sig->length_public_key) == 0;
-#endif
+#endif /* WITH_PQ_AUTH */
 	default:
 		return 0;
 	}
@@ -869,7 +869,7 @@ to_blob_buf(const struct sshkey *key, struct sshbuf *b, int force_plain,
 			return ret;
 		break;
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		if (key->oqs_pk == NULL)
 			return SSH_ERR_INVALID_ARGUMENT;
@@ -878,7 +878,7 @@ to_blob_buf(const struct sshkey *key, struct sshbuf *b, int force_plain,
 		    key->oqs_pk, key->oqs_sig->length_public_key)) != 0)
 			return ret;
 		break;
-#endif
+#endif /* WITH_PQ_AUTH */
 
 	default:
 		return SSH_ERR_KEY_TYPE_UNKNOWN;
@@ -1317,9 +1317,9 @@ sshkey_read(struct sshkey *ret, char **cpp)
 	case KEY_XMSS:
 	case KEY_XMSS_CERT:
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
-#endif
+#endif /* WITH_PQ_AUTH */
 		break; /* ok */
 	default:
 		return SSH_ERR_INVALID_ARGUMENT;
@@ -1445,7 +1445,7 @@ sshkey_read(struct sshkey *ret, char **cpp)
 #endif
 		break;
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		if (ret->oqs_sig) {
 			OQS_SIG_free(ret->oqs_sig);
@@ -1461,7 +1461,7 @@ sshkey_read(struct sshkey *ret, char **cpp)
 		/* XXX */
 #endif
 		break;
-#endif /* WITH_OQS */
+#endif /* WITH_PQ_AUTH */
 	default:
 		sshkey_free(k);
 		return SSH_ERR_INTERNAL_ERROR;
@@ -1723,11 +1723,11 @@ sshkey_generate(int type, u_int bits, struct sshkey **keyp)
 		ret = sshkey_xmss_generate_private_key(k, bits);
 		break;
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		ret = sshkey_oqs_generate_private_key(k, type);
 		break;
-#endif /* WITH_OQS */
+#endif /* WITH_PQ_AUTH */
 #ifdef WITH_OPENSSL
 	case KEY_DSA:
 		ret = dsa_generate_private_key(bits, &k->dsa);
@@ -1894,7 +1894,7 @@ sshkey_from_private(const struct sshkey *k, struct sshkey **pkp)
 		}
 		break;
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		if ((n = sshkey_new(k->type)) == NULL)
 			return SSH_ERR_ALLOC_FAIL;
@@ -1906,7 +1906,7 @@ sshkey_from_private(const struct sshkey *k, struct sshkey **pkp)
 			memcpy(n->oqs_pk, k->oqs_pk, k->oqs_sig->length_public_key);
 		}
 		break;
-#endif /* WITH_OQS */
+#endif /* WITH_PQ_AUTH */
 	default:
 		return SSH_ERR_KEY_TYPE_UNKNOWN;
 	}
@@ -2365,10 +2365,10 @@ sshkey_sign(const struct sshkey *key,
 	case KEY_XMSS_CERT:
 		return ssh_xmss_sign(key, sigp, lenp, data, datalen, compat);
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		return ssh_oqs_sign(key, sigp, lenp, data, datalen, compat);
-#endif /* WITH_OQS */
+#endif /* WITH_PQ_AUTH */
 	default:
 		return SSH_ERR_KEY_TYPE_UNKNOWN;
 	}
@@ -2407,10 +2407,10 @@ sshkey_verify(const struct sshkey *key,
 	case KEY_XMSS_CERT:
 		return ssh_xmss_verify(key, sig, siglen, data, dlen, compat);
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		return ssh_oqs_verify(key, sig, siglen, data, dlen, compat);
-#endif /* WITH_OQS */
+#endif /* WITH_PQ_AUTH */
 	default:
 		return SSH_ERR_KEY_TYPE_UNKNOWN;
 	}
@@ -2520,7 +2520,7 @@ sshkey_demote(const struct sshkey *k, struct sshkey **dkp)
 		}
 		break;
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		if (k->oqs_pk != NULL) {
 			if ((pk->oqs_sig = OQS_SIG_new(get_oqs_alg_name(k->type))) == NULL ||
@@ -2531,7 +2531,7 @@ sshkey_demote(const struct sshkey *k, struct sshkey **dkp)
 			memcpy(pk->oqs_pk, k->oqs_pk, k->oqs_sig->length_public_key);
 		}
 		break;
-#endif /* WITH_OQS */
+#endif /* WITH_PQ_AUTH */
 	default:
 		ret = SSH_ERR_KEY_TYPE_UNKNOWN;
  fail:
@@ -2938,7 +2938,7 @@ sshkey_private_serialize_opt(const struct sshkey *key, struct sshbuf *b,
 			goto out;
 		break;
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		if ((r = sshbuf_put_string(b, key->oqs_pk,
 		    key->oqs_sig->length_public_key)) != 0 ||
@@ -2946,7 +2946,7 @@ sshkey_private_serialize_opt(const struct sshkey *key, struct sshbuf *b,
 		    key->oqs_sig->length_secret_key)) != 0)
 			goto out;
 		break;
-#endif /* WITH_OQS */
+#endif /* WITH_PQ_AUTH */
 
 	default:
 		r = SSH_ERR_INVALID_ARGUMENT;
@@ -3166,7 +3166,7 @@ sshkey_private_deserialize(struct sshbuf *buf, struct sshkey **kp)
 			goto out;
 		break;
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
 		if ((k = sshkey_new_private(type)) == NULL) {
 			r = SSH_ERR_ALLOC_FAIL;
@@ -3183,7 +3183,7 @@ sshkey_private_deserialize(struct sshbuf *buf, struct sshkey **kp)
 		k->oqs_sk = oqs_sk;
 		oqs_pk = oqs_sk = NULL;
 		break;
-#endif /* WITH_OQS */
+#endif /* WITH_PQ_AUTH */
 
 	default:
 		r = SSH_ERR_KEY_TYPE_UNKNOWN;
@@ -3219,10 +3219,10 @@ sshkey_private_deserialize(struct sshbuf *buf, struct sshkey **kp)
 	free(xmss_name);
 	freezero(xmss_pk, pklen);
 	freezero(xmss_sk, sklen);
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	freezero(oqs_pk, pklen);
 	freezero(oqs_sk, sklen);
-#endif
+#endif /* WITH_PQ_AUTH */
 	return r;
 }
 
@@ -3842,9 +3842,9 @@ sshkey_private_to_fileblob(struct sshkey *key, struct sshbuf *blob,
 #ifdef WITH_XMSS
 	case KEY_XMSS:
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
-#endif /* WITH_OQS */
+#endif /* WITH_PQ_AUTH */
 		return sshkey_private_to_blob2(key, blob, passphrase,
 		    comment, new_format_cipher, new_format_rounds);
 	default:
@@ -4031,9 +4031,9 @@ sshkey_parse_private_fileblob_type(struct sshbuf *blob, int type,
 #ifdef WITH_XMSS
 	case KEY_XMSS:
 #endif /* WITH_XMSS */
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
-#endif /* WITH_OQS */
+#endif /* WITH_PQ_AUTH */
 		return sshkey_parse_private2(blob, type, passphrase,
 		    keyp, commentp);
 	case KEY_UNSPEC:

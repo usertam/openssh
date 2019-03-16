@@ -5,7 +5,7 @@
 
 #include "ssherr.h"
 #include "ssh-oqs.h"
-#ifdef WITH_OQS
+#ifdef WITH_PQ_AUTH
 
 #define IS_OQS_KEY_TYPE(type) ((type) == KEY_OQSDEFAULT || \
 			       (type) == KEY_PICNIC_L1FS || \
@@ -179,4 +179,4 @@ ssh_oqs_verify(const struct sshkey *key,
 }
 
 
-#endif /* WITH_OQS */
+#endif /* WITH_PQ_AUTH */

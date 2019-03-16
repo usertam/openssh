@@ -114,7 +114,7 @@ For the **master branch** of liboqs:
 	git clone -b master --single-branch https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
 	autoreconf -i
-    ./configure --prefix=<path-to-openssl-dir>/oqs --with-pic=yes --enable-shared=no --enable-openssl --with-openssl-dir=<path-to-system-openssl-dir>
+	./configure --prefix=<path-to-openssl-dir>/oqs --with-pic=yes --enable-shared=no --enable-openssl --with-openssl-dir=<path-to-system-openssl-dir>
 	make -j
 	make install
 	rm -f <path-to-install-liboqs>/lib/liboqs.so*
@@ -141,6 +141,7 @@ Next, you can build and install our fork of OpenSSH:
 For Ubuntu 16.04 and macOS, try the following:
 
 	./configure --enable-pq-kex --enable-hybrid-kex      \
+	            --enable-pq-auth                         \
 	            --with-ssl-dir=<path-to-openssl>/include \
 	            --with-ldflags=-L<path-to-openssl>/lib   \
 	            --prefix=$OPENSSH_INSTALL                \
@@ -152,6 +153,7 @@ For Ubuntu 16.04 and macOS, try the following:
 On Ubuntu 18.04, some modifications are required due to the default openssl version:
 
 	./configure --enable-pq-kex --enable-hybrid-kex \
+	            --enable-pq-auth                    \
 	            --with-ldflags=-L/usr/lib/ssl1.0    \
 	            --prefix=$OPENSSH_INSTALL           \
 	            --sysconfdir=$OPENSSH_INSTALL       \
@@ -163,6 +165,7 @@ Notes about building OpenSSH:
 
 - `--enable-pq-kex` enables PQ-only key exchange methods.
 - `--enable-hybrid-kex` enables hybrid key exchange methods.
+- `--enable-pq-auth` enables PQ-only authentication methods, requires the liboqs master branch.
 
 Running
 -------
