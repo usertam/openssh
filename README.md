@@ -205,7 +205,7 @@ In one terminal, run a server:
 	     -o PubkeyAcceptedKeyTypes=<LIBOQS_SIG_ALGORITHM>   \
 	     -h <absolute-path-to>/ssh_server/id_<SIG>]
 
-where `<LIBOQS_SIG_ALGORITHM>` is `ssh-<SIG>@openssh.com` all in lowercase.
+where `<LIBOQS_SIG_ALGORITHM>` is `ssh-<SIG>@openquantumsafe.org` all in lowercase.
 
 The server automatically supports all available hybrid and PQ-only key exchange methods.  `sudo` is required on Linux so that sshd can read the shadow password file. The arguments between `[...]` are for post-quantum authentication and can be omitted to use classical authentication.
 
