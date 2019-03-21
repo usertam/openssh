@@ -1425,6 +1425,22 @@ main(int ac, char **av)
 		    _PATH_HOST_QTESLA_III_SIZE_KEY_FILE, "", NULL, NULL);
 		sensitive_data.keys[14] = key_load_private_type(KEY_PICNIC_L1FS,
 		    _PATH_HOST_PICNIC_L1FS_KEY_FILE, "", NULL, NULL);
+		sensitive_data.keys[11] = key_load_private_type(KEY_RSA3072_OQSDEFAULT,
+		    _PATH_HOST_RSA3072_OQSDEFAULT_KEY_FILE, "", NULL, NULL);
+		sensitive_data.keys[11] = key_load_private_type(KEY_P256_OQSDEFAULT,
+		    _PATH_HOST_P256_OQSDEFAULT_KEY_FILE, "", NULL, NULL);
+		sensitive_data.keys[11] = key_load_private_type(KEY_RSA3072_QTESLA_I,
+		    _PATH_HOST_RSA3072_QTESLA_I_KEY_FILE, "", NULL, NULL);
+		sensitive_data.keys[11] = key_load_private_type(KEY_P256_QTESLA_I,
+		    _PATH_HOST_P256_QTESLA_I_KEY_FILE, "", NULL, NULL);
+		sensitive_data.keys[12] = key_load_private_type(KEY_P384_QTESLA_III_SPEED,
+		    _PATH_HOST_P384_QTESLA_III_SPEED_KEY_FILE, "", NULL, NULL);
+		sensitive_data.keys[13] = key_load_private_type(KEY_P384_QTESLA_III_SIZE,
+		    _PATH_HOST_P384_QTESLA_III_SIZE_KEY_FILE, "", NULL, NULL);
+		sensitive_data.keys[14] = key_load_private_type(KEY_RSA3072_PICNIC_L1FS,
+		    _PATH_HOST_RSA3072_PICNIC_L1FS_KEY_FILE, "", NULL, NULL);
+		sensitive_data.keys[14] = key_load_private_type(KEY_P256_PICNIC_L1FS,
+		    _PATH_HOST_P256_PICNIC_L1FS_KEY_FILE, "", NULL, NULL);
 		/* ADD_MORE_OQS_SIG_HERE */
 		PRIV_END;
 

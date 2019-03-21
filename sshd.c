@@ -713,6 +713,7 @@ list_hostkey_types(void)
 		case KEY_ED25519:
 		case KEY_XMSS:
 		CASE_KEY_OQS:
+		CASE_KEY_HYBRID:
 			if (buffer_len(&b) > 0)
 				buffer_append(&b, ",", 1);
 			p = key_ssh_name(key);
@@ -754,7 +755,6 @@ get_hostkey_by_type(int type, int nid, int need_private, struct ssh *ssh)
 {
 	u_int i;
 	struct sshkey *key;
-
 	for (i = 0; i < options.num_host_key_files; i++) {
 		switch (type) {
 		case KEY_RSA_CERT:
@@ -771,7 +771,7 @@ get_hostkey_by_type(int type, int nid, int need_private, struct ssh *ssh)
 			break;
 		}
 		if (key != NULL && key->type == type &&
-		    (key->type != KEY_ECDSA || key->ecdsa_nid == nid))
+		    ((key->type != KEY_ECDSA && !IS_ECDSA_HYBRID(key->type)) || key->ecdsa_nid == nid))
 			return need_private ?
 			    sensitive_data.host_keys[i] : key;
 	}
@@ -1746,6 +1746,7 @@ main(int ac, char **av)
 		case KEY_ED25519:
 		case KEY_XMSS:
 		CASE_KEY_OQS:
+		CASE_KEY_HYBRID:
 			if (have_agent || key != NULL)
 				sensitive_data.have_ssh2_key = 1;
 			break;

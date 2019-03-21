@@ -3,7 +3,7 @@ open-quantum-safe/openssh-portable
 
 **OpenSSH** is an open-source implementation of the Secure Shell protocol https://openssh.org/.  ([View the original README file for OpenSSH](https://github.com/open-quantum-safe/openssh-portable/blob/OQS-master/README).)
 
-This repository contains a fork of OpenSSH that adds quantum-resistant key exchange algorithms using liboqs for prototyping purposes.
+This repository contains a fork of OpenSSH that adds quantum-resistant key exchange and signature algorithms using liboqs for prototyping purposes.
 
 Overview
 --------
@@ -33,11 +33,17 @@ The following key exchange / key encapsulation methods from liboqs are supported
 
 ### Authentication mechanisms
 
-The following signature methods from liboqs's master branch are supported (assuming they have been enabled in liboqs):
+The following signature methods from liboqs's master branch are supported (assuming they have been enabled in liboqs and that the `pq-auth` configuration option has been enabled; see below):
 
-- `qteslaI`, `qteslaIIIspeed`, `qteslaIIIsize`
-- `picnicL1FS`
+- `qteslai`, `qteslaiiispeed`, `qteslaiiisize`
+- `picnicl1fs`
 - `oqsdefault`
+
+In addition to the PQ-only signature methods, the following hybrid methods are supported combining a PQ scheme with either RSA3072 or ECDSA using NIST's P256 curve for L1 schemes, and with ECDSA using NIST's P384 curve for L3 schemes (assuming the PQ schemes have been enabled in liboqs and that the `hybrid-auth` configuration option has been enabled; see below):
+
+- `rsa3072-qteslai`, `p256-qteslai`, `p384-qteslaiiispeed`, `p384-qteslaiiisize`
+- `rsa3072-picnicl1fs`, `p256-picnicl1fs`
+- `rsa3072-oqsdefault`, `p256-oqsdefault`
 
 The liboqs's nist branch uses a different signature API that hasn't yet been integrated.
 
@@ -59,8 +65,6 @@ The OQS fork of OpenSSH is not endorsed by with the OpenSSH project.
 This fork is developed for the purposes of prototyping and evaluating the use of post-quantum cryptography in SSH, and is not intended for use in production environments to protect the transmission of sensitive information.
 
 At the time of writing, there are no vulnerabilities or weaknesses known in any of the post-quantum key exchange algorithms used in this fork.  However, it is advisable to wait on deploying post-quantum algorithms until further guidance is provided by the standards community, especially from the NIST Post-Quantum Cryptography project.
-
-This fork does not yet contain support for post-quantum authentication.
 
 Lifecycle for open-quantum-safe/openssh-portable OQS-master branch
 ------------------------------------------------------------------
@@ -141,7 +145,7 @@ Next, you can build and install our fork of OpenSSH:
 For Ubuntu 16.04 and macOS, try the following:
 
 	./configure --enable-pq-kex --enable-hybrid-kex      \
-	            --enable-pq-auth                         \
+	            --enable-pq-auth --enable-hybrid-auth    \
 	            --with-ssl-dir=<path-to-openssl>/include \
 	            --with-ldflags=-L<path-to-openssl>/lib   \
 	            --prefix=$OPENSSH_INSTALL                \
@@ -152,11 +156,11 @@ For Ubuntu 16.04 and macOS, try the following:
 
 On Ubuntu 18.04, some modifications are required due to the default openssl version:
 
-	./configure --enable-pq-kex --enable-hybrid-kex \
-	            --enable-pq-auth                    \
-	            --with-ldflags=-L/usr/lib/ssl1.0    \
-	            --prefix=$OPENSSH_INSTALL           \
-	            --sysconfdir=$OPENSSH_INSTALL       \
+	./configure --enable-pq-kex --enable-hybrid-kex   \
+	            --enable-pq-auth --enable-hybrid-auth \
+	            --with-ldflags=-L/usr/lib/ssl1.0      \
+	            --prefix=$OPENSSH_INSTALL             \
+	            --sysconfdir=$OPENSSH_INSTALL         \
 	            --with-liboqs-dir=$LIBOQS_INSTALL
 	make -j
 	make install
@@ -166,6 +170,7 @@ Notes about building OpenSSH:
 - `--enable-pq-kex` enables PQ-only key exchange methods.
 - `--enable-hybrid-kex` enables hybrid key exchange methods.
 - `--enable-pq-auth` enables PQ-only authentication methods, requires the liboqs master branch.
+- `--enable-hybrid-auth` enables hybrid authentication methods, requires the liboqs master branch.
 
 Running
 -------
@@ -184,12 +189,12 @@ The server generates its key files with the right permissions, and then generate
 	chmod 700 ~/ssh_server/
 	touch ~/ssh_server/authorized_keys
 	chmod 600 ~/ssh_server/authorized_keys
-	<path-to-openssh>/bin/ssh-keygen -t <SIG> -f ~/ssh_server/id_<SIG>
+	<path-to-openssh>/bin/ssh-keygen -t ssh-<SIG> -f ~/ssh_server/id_<SIG>
 
 To enable client-side public-key authentication, the client generates its key pair:
 
 	mkdir ~/ssh_client/
-	<path-to-openssh>/bin/ssh-keygen -t <SIG> -f ~/ssh_client/<SIG>
+	<path-to-openssh>/bin/ssh-keygen -t ssh-<SIG> -f ~/ssh_client/id_<SIG>
 
 The server then adds the client's public key to its authorized keys
 
@@ -197,7 +202,7 @@ The server then adds the client's public key to its authorized keys
 
 ### Running key exchange
 
-In what follows, `<KEX>` and `<SIG>` are one of the key exchange and signature algorithms listed in the Contents section above, respectively. The `-o` options can instead be added to the server/client configuration file.
+In what follows, `<KEX>` and `<SIG>` are one of the key exchange and signature (PQ-only or hybrid) algorithms listed in the Contents section above, respectively. The `-o` options can instead be added to the server/client configuration file.
 
 In one terminal, run a server:
 
@@ -208,7 +213,7 @@ In one terminal, run a server:
 	     -o PubkeyAcceptedKeyTypes=<LIBOQS_SIG_ALGORITHM>   \
 	     -h <absolute-path-to>/ssh_server/id_<SIG>]
 
-where `<LIBOQS_SIG_ALGORITHM>` is `ssh-<SIG>@openssh.com` all in lowercase.
+where `<LIBOQS_SIG_ALGORITHM>` is `ssh-<SIG>` all in lowercase.
 
 The server automatically supports all available hybrid and PQ-only key exchange methods.  `sudo` is required on Linux so that sshd can read the shadow password file. The arguments between `[...]` are for post-quantum authentication and can be omitted to use classical authentication.
 
@@ -227,7 +232,7 @@ where `<LIBOQS_KEX_ALGORITHM>` is either:
 - `<KEX>-sha384@openquantumsafe.org` (for post-quantum-only key exchange)
 - `ecdh-nistp384-<KEX>-sha384@openquantumsafe.org` (for hybrid post-quantum and elliptic curve key exchange)
 
-and where `<LIBOQS_SIG_ALGORITHM>` is `ssh-<SIG>@openquantumsafe.org` all in lowercase.
+and where `<LIBOQS_SIG_ALGORITHM>` is `ssh-<SIG>` all in lowercase.
 
 The `StrictHostKeyChecking` option is used to allow trusting the newly generated server key; alternatively, the key could be added manually to the client's trusted keys. The arguments between `[...]` are for post-quantum authentication and can be omitted to use classical authentication.
 
@@ -304,6 +309,5 @@ Research projects which developed specific components of OQS have been supported
 
 ### OQS TODO
 
-- Add hybrid auth
 - Add certified PQ keys (?)
 - Add PQ info to doc (man pages)

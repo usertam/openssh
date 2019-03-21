@@ -171,7 +171,7 @@ main(int argc, char **argv)
 {
 	struct sshbuf *b;
 	Options options;
-#define NUM_KEYTYPES 10 /* ADD_MORE_OQS_SIG_HERE: update this value */
+#define NUM_KEYTYPES 18 /* ADD_MORE_OQS_SIG_HERE: update this value */
 	struct sshkey *keys[NUM_KEYTYPES], *key = NULL;
 	struct passwd *pw;
 	int r, key_fd[NUM_KEYTYPES], i, found, version = 2, fd;
@@ -205,6 +205,14 @@ main(int argc, char **argv)
 	key_fd[i++] = open(_PATH_HOST_QTESLA_III_SPEED_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_QTESLA_III_SIZE_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_PICNIC_L1FS_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_RSA3072_OQSDEFAULT_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P256_OQSDEFAULT_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_RSA3072_QTESLA_I_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P256_QTESLA_I_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P384_QTESLA_III_SPEED_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P384_QTESLA_III_SIZE_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_RSA3072_PICNIC_L1FS_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P256_PICNIC_L1FS_KEY_FILE, O_RDONLY);
 	/* ADD_MORE_OQS_SIG_HERE */
 
 	original_real_uid = getuid();	/* XXX readconf.c needs this */

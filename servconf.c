@@ -270,6 +270,25 @@ fill_default_server_options(ServerOptions *options)
 		    _PATH_HOST_PICNIC_L1FS_KEY_FILE);
 		/* ADD_MORE_OQS_SIG_HERE */
 #endif /* WITH_PQ_AUTH */
+#ifdef WITH_HYBRID_AUTH
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_RSA3072_OQSDEFAULT_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P256_OQSDEFAULT_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_RSA3072_QTESLA_I_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P256_QTESLA_I_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P384_QTESLA_III_SPEED_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P384_QTESLA_III_SIZE_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_RSA3072_PICNIC_L1FS_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P256_PICNIC_L1FS_KEY_FILE);
+		/* ADD_MORE_OQS_SIG_HERE (hybrid) */
+#endif /* WITH_HYBRID_AUTH */
 	}
 	/* No certificates by default */
 	if (options->num_ports == 0)

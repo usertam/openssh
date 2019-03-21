@@ -405,6 +405,7 @@ sshkey_load_private_cert(int type, const char *filename, const char *passphrase,
 	case KEY_ED25519:
 	case KEY_XMSS:
 	CASE_KEY_OQS:
+	CASE_KEY_HYBRID:
 	case KEY_UNSPEC:
 		break;
 	default:
