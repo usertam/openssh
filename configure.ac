@@ -3458,7 +3458,7 @@ AC_ARG_WITH([liboqs-dir],
 
 if test "x$with_liboqs" = "xyes" ; then
 	dnl Check for LibOQS library
-	AC_DEFINE_UNQUOTED([WITH_OQS], [1], [use LibOQS for post-quantum and hybrid key exchange])
+	AC_DEFINE_UNQUOTED([WITH_OQS], [1], [use LibOQS for post-quantum and hybrid key exchange and authentication])
 	LIBS="-loqs $LIBS"
 	AC_CHECK_HEADER([oqs/kem.h], ,[AC_MSG_ERROR([*** LibOQS headers missing - please install first or check config.log ***])])
 	AC_TRY_LINK([#include <oqs/kem.h>],
@@ -3556,6 +3556,20 @@ AC_ARG_ENABLE([hybrid-kex],
 				AC_DEFINE([WITH_HYBRID_KEX], [1], [Define if hybrid key exchange methods are supported])
 			else
 				AC_MSG_ERROR([*** Hybrid key exchange methods requires LibOQS library ***])
+			fi
+		fi
+	]
+)
+
+# Enable PQ authentication methods
+AC_ARG_ENABLE([pq-auth],
+	[	--enable-pq-auth		enable post-quantum authentication methods (requires LibOQS library)],
+	[
+		if test "x$enableval" = "xyes" ; then
+			if test "x$with_liboqs" = "xyes" ; then
+				AC_DEFINE([WITH_PQ_AUTH], [1], [Define if post-quantum authentication methods are supported])
+			else
+				AC_MSG_ERROR([*** Post-quantum authentication methods requires LibOQS library ***])
 			fi
 		fi
 	]

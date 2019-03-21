@@ -1,0 +1,182 @@
+#include "includes.h"
+
+#include <string.h>
+#include <oqs/oqs.h>
+
+#include "ssherr.h"
+#include "ssh-oqs.h"
+#ifdef WITH_PQ_AUTH
+
+#define IS_OQS_KEY_TYPE(type) ((type) == KEY_OQSDEFAULT || \
+			       (type) == KEY_PICNIC_L1FS || \
+			       (type) == KEY_QTESLA_I || \
+			       (type) == KEY_QTESLA_III_SIZE || \
+			       (type) == KEY_QTESLA_III_SPEED)
+			       /* ADD_MORE_OQS_SIG_HERE */
+
+/*
+ * Maps OpenSSH key types to OQS IDs
+ */
+const char* get_oqs_alg_name(int openssh_type)
+{
+  switch (openssh_type)
+    {
+    case KEY_OQSDEFAULT:
+      return OQS_SIG_alg_default;
+    case KEY_PICNIC_L1FS:
+      return OQS_SIG_alg_picnic_L1_FS;
+    case KEY_QTESLA_I:
+      return OQS_SIG_alg_qTESLA_I;
+    case KEY_QTESLA_III_SIZE:
+      return OQS_SIG_alg_qTESLA_III_size;
+    case KEY_QTESLA_III_SPEED:
+      return OQS_SIG_alg_qTESLA_III_speed;
+    /* ADD_MORE_OQS_SIG_HERE */
+    default:
+      return NULL;
+    }
+}
+
+int
+sshkey_oqs_generate_private_key(struct sshkey *k, int type)
+{
+	int ret = SSH_ERR_INTERNAL_ERROR;
+	const char* oqs_alg_name = get_oqs_alg_name(type);
+	if ((k->oqs_sig = OQS_SIG_new(oqs_alg_name)) == NULL) {
+		return ret;
+	}
+	if ((k->oqs_sk = malloc(k->oqs_sig->length_secret_key)) == NULL) {
+		ret = SSH_ERR_ALLOC_FAIL;
+		goto err;
+	}
+	if ((k->oqs_pk = malloc(k->oqs_sig->length_public_key)) == NULL) {
+		ret = SSH_ERR_ALLOC_FAIL;
+		goto err;
+	}
+	if (OQS_SIG_keypair(k->oqs_sig, k->oqs_pk, k->oqs_sk) != OQS_SUCCESS) {
+		ret = SSH_ERR_INTERNAL_ERROR;
+		goto err;
+	}
+
+  return 0;
+
+err:
+	free(k->oqs_sk);
+	free(k->oqs_pk);
+	OQS_SIG_free(k->oqs_sig);
+	return ret;
+}
+
+int
+ssh_oqs_sign(const struct sshkey *key, u_char **sigp, size_t *lenp,
+    const u_char *data, size_t datalen, u_int compat)
+{
+	u_char *sig = NULL;
+	size_t siglen = 0, len;
+	int ret;
+	struct sshbuf *b = NULL;
+
+	if (lenp != NULL)
+		*lenp = 0;
+	if (sigp != NULL)
+		*sigp = NULL;
+
+	if (key == NULL ||
+	    !IS_OQS_KEY_TYPE(sshkey_type_plain(key->type)) ||
+	    key->oqs_sk == NULL)
+		return SSH_ERR_INVALID_ARGUMENT;
+	siglen = key->oqs_sig->length_signature;
+	if ((sig = malloc(siglen)) == NULL)
+		return SSH_ERR_ALLOC_FAIL;
+	if (OQS_SIG_sign(key->oqs_sig, sig, &siglen, data, datalen, key->oqs_sk) != OQS_SUCCESS) {
+		ret = SSH_ERR_LIBCRYPTO_ERROR;
+		goto out;
+	}
+	/* encode signature */
+	if ((b = sshbuf_new()) == NULL) {
+		ret = SSH_ERR_ALLOC_FAIL;
+		goto out;
+	}
+	/* OQS note: all the OQS algs use the same format, so we identify the signature as "ssh-oqs" */
+	if ((ret = sshbuf_put_cstring(b, "ssh-oqs")) != 0 ||
+	    (ret = sshbuf_put_string(b, sig, siglen)) != 0)
+		goto out;
+	len = sshbuf_len(b);
+	if (sigp != NULL) {
+		if ((*sigp = malloc(len)) == NULL) {
+			ret = SSH_ERR_ALLOC_FAIL;
+			goto out;
+		}
+		memcpy(*sigp, sshbuf_ptr(b), len);
+	}
+	if (lenp != NULL)
+		*lenp = len;
+
+	/* success */
+	ret = 0;
+ out:
+	sshbuf_free(b);
+	if (sig != NULL) {
+		explicit_bzero(sig, siglen);
+		free(sig);
+	}
+
+	return ret;
+}
+
+int
+ssh_oqs_verify(const struct sshkey *key,
+    const u_char *signature, size_t signaturelen,
+    const u_char *data, size_t datalen, u_int compat)
+{
+	struct sshbuf *b = NULL;
+	char *ktype = NULL;
+	const u_char *sigblob;
+	u_char *m = NULL;
+	size_t slen;
+	unsigned long long smlen = 0;
+	int ret;
+
+	if (key == NULL ||
+	    !IS_OQS_KEY_TYPE(sshkey_type_plain(key->type)) ||
+	    key->oqs_pk == NULL ||
+	    signature == NULL || signaturelen == 0)
+		return SSH_ERR_INVALID_ARGUMENT;
+
+	if ((b = sshbuf_from(signature, signaturelen)) == NULL)
+		return SSH_ERR_ALLOC_FAIL;
+	if ((ret = sshbuf_get_cstring(b, &ktype, NULL)) != 0 ||
+	    (ret = sshbuf_get_string_direct(b, &sigblob, &slen)) != 0)
+		goto out;
+	/* OQS note: all the OQS algs use the same format, so we identify the signature as "ssh-oqs" */
+	if (strcmp("ssh-oqs", ktype) != 0) {
+		ret = SSH_ERR_KEY_TYPE_MISMATCH;
+		goto out;
+	}
+	if (sshbuf_len(b) != 0) {
+		ret = SSH_ERR_UNEXPECTED_TRAILING_DATA;
+		goto out;
+	}
+	if (slen > key->oqs_sig->length_signature) {
+		ret = SSH_ERR_INVALID_FORMAT;
+		goto out;
+	}
+	if (OQS_SIG_verify(key->oqs_sig, data, datalen, sigblob, slen, key->oqs_pk) != OQS_SUCCESS) {
+		ret = SSH_ERR_SIGNATURE_INVALID;
+		goto out;
+	}
+
+	/* success */
+	ret = 0;
+ out:
+	if (m != NULL) {
+		explicit_bzero(m, smlen);
+		free(m);
+	}
+	sshbuf_free(b);
+	free(ktype);
+	return ret;
+}
+
+
+#endif /* WITH_PQ_AUTH */

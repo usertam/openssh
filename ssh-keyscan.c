@@ -54,17 +54,23 @@ int IPv4or6 = AF_UNSPEC;
 
 int ssh_port = SSH_DEFAULT_PORT;
 
-#define KT_DSA		(1)
-#define KT_RSA		(1<<1)
-#define KT_ECDSA	(1<<2)
-#define KT_ED25519	(1<<3)
-#define KT_XMSS		(1<<4)
+#define KT_DSA			(1)
+#define KT_RSA			(1<<1)
+#define KT_ECDSA		(1<<2)
+#define KT_ED25519		(1<<3)
+#define KT_XMSS			(1<<4)
+#define KT_OQSDEFAULT		(1<<5)
+#define KT_QTESLA_I		(1<<6)
+#define KT_QTESLA_III_SPEED	(1<<7)
+#define KT_QTESLA_III_SIZE	(1<<8)
+#define KT_PICNIC_L1FS		(1<<9)
+/* ADD_MORE_OQS_SIG_HERE */
 
 #define KT_MIN		KT_DSA
-#define KT_MAX		KT_XMSS
+#define KT_MAX		KT_PICNIC_L1FS
 
 int get_cert = 0;
-int get_keytypes = KT_RSA|KT_ECDSA|KT_ED25519;
+int get_keytypes = KT_RSA|KT_ECDSA|KT_ED25519|KT_OQSDEFAULT|KT_QTESLA_I|KT_QTESLA_III_SPEED|KT_QTESLA_III_SIZE|KT_PICNIC_L1FS; /* ADD_MORE_OQS_SIG_HERE */
 
 int hash_hosts = 0;		/* Hash hostname on output */
 
@@ -728,6 +734,22 @@ main(int argc, char **argv)
 				case KEY_XMSS:
 					get_keytypes |= KT_XMSS;
 					break;
+				case KEY_OQSDEFAULT:
+					get_keytypes |= KT_OQSDEFAULT;
+					break;
+				case KEY_QTESLA_I:
+					get_keytypes |= KT_QTESLA_I;
+					break;
+				case KEY_QTESLA_III_SPEED:
+					get_keytypes |= KT_QTESLA_III_SPEED;
+					break;
+				case KEY_QTESLA_III_SIZE:
+					get_keytypes |= KT_QTESLA_III_SIZE;
+					break;
+				case KEY_PICNIC_L1FS:
+					get_keytypes |= KT_PICNIC_L1FS;
+					break;
+				/* ADD_MORE_OQS_SIG_HERE */
 				case KEY_UNSPEC:
 				default:
 					fatal("Unknown key type \"%s\"", tname);

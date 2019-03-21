@@ -41,6 +41,12 @@
 #define _PATH_HOST_ED25519_KEY_FILE	SSHDIR "/ssh_host_ed25519_key"
 #define _PATH_HOST_XMSS_KEY_FILE	SSHDIR "/ssh_host_xmss_key"
 #define _PATH_HOST_RSA_KEY_FILE		SSHDIR "/ssh_host_rsa_key"
+#define _PATH_HOST_OQSDEFAULT_KEY_FILE	SSHDIR "/ssh_host_oqsdefault_key"
+#define _PATH_HOST_QTESLA_I_KEY_FILE	SSHDIR "/ssh_host_qteslaI_key"
+#define _PATH_HOST_QTESLA_III_SPEED_KEY_FILE	SSHDIR "/ssh_host_qteslaIIIspeed_key"
+#define _PATH_HOST_QTESLA_III_SIZE_KEY_FILE	SSHDIR "/ssh_host_qteslaIIIsize_key"
+#define _PATH_HOST_PICNIC_L1FS_KEY_FILE	SSHDIR "/ssh_host_picnicL1FS_key"
+/* ADD_MORE_OQS_SIG_HERE */
 #define _PATH_DH_MODULI			SSHDIR "/moduli"
 
 #ifndef _PATH_SSH_PROGRAM
@@ -77,6 +83,12 @@
 #define _PATH_SSH_CLIENT_ID_RSA		_PATH_SSH_USER_DIR "/id_rsa"
 #define _PATH_SSH_CLIENT_ID_ED25519	_PATH_SSH_USER_DIR "/id_ed25519"
 #define _PATH_SSH_CLIENT_ID_XMSS	_PATH_SSH_USER_DIR "/id_xmss"
+#define _PATH_SSH_CLIENT_ID_OQSDEFAULT	_PATH_SSH_USER_DIR "/id_oqsdefault"
+#define _PATH_SSH_CLIENT_ID_QTESLA_I	_PATH_SSH_USER_DIR "/id_qteslaI"
+#define _PATH_SSH_CLIENT_ID_QTESLA_III_SPEED	_PATH_SSH_USER_DIR "/id_qteslaIIIspeed"
+#define _PATH_SSH_CLIENT_ID_QTESLA_III_SIZE	_PATH_SSH_USER_DIR "/id_qteslaIIIsize"
+#define _PATH_SSH_CLIENT_ID_PICNIC_L1FS	_PATH_SSH_USER_DIR "/id_picnicL1FS"
+/* ADD_MORE_OQS_SIG_HERE */
 
 /*
  * Configuration file in user's home directory.  This file need not be

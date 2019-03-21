@@ -123,6 +123,8 @@
 #include "version.h"
 #include "ssherr.h"
 
+#include "oqs-utils.h"
+
 /* Re-exec fds */
 #define REEXEC_DEVCRYPTO_RESERVED_FD	(STDERR_FILENO + 1)
 #define REEXEC_STARTUP_PIPE_FD		(STDERR_FILENO + 2)
@@ -710,6 +712,7 @@ list_hostkey_types(void)
 		case KEY_ECDSA:
 		case KEY_ED25519:
 		case KEY_XMSS:
+		CASE_KEY_OQS:
 			if (buffer_len(&b) > 0)
 				buffer_append(&b, ",", 1);
 			p = key_ssh_name(key);
@@ -1742,6 +1745,7 @@ main(int ac, char **av)
 		case KEY_ECDSA:
 		case KEY_ED25519:
 		case KEY_XMSS:
+		CASE_KEY_OQS:
 			if (have_agent || key != NULL)
 				sensitive_data.have_ssh2_key = 1;
 			break;

@@ -28,6 +28,9 @@
 
 #include <sys/types.h>
 
+#ifdef WITH_OQS
+#include <oqs/oqs.h>
+#endif /* WITH_OQS */
 #ifdef WITH_OPENSSL
 #include <openssl/rsa.h>
 #include <openssl/dsa.h>
@@ -63,6 +66,12 @@ enum sshkey_types {
 	KEY_ED25519_CERT,
 	KEY_XMSS,
 	KEY_XMSS_CERT,
+	KEY_OQSDEFAULT,
+	KEY_QTESLA_I,
+	KEY_QTESLA_III_SPEED,
+	KEY_QTESLA_III_SIZE,
+	KEY_PICNIC_L1FS,
+	/* ADD_MORE_OQS_SIG_HERE */
 	KEY_UNSPEC
 };
 
@@ -119,6 +128,10 @@ struct sshkey {
 	void	*xmss_state;	/* depends on xmss_name, opaque */
 	u_char	*xmss_sk;
 	u_char	*xmss_pk;
+	/* OQS artefacts */
+	OQS_SIG *oqs_sig;
+	u_char	*oqs_sk;
+	u_char	*oqs_pk;
 	struct sshkey_cert *cert;
 };
 

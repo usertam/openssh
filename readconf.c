@@ -1944,6 +1944,14 @@ fill_default_options(Options * options)
 		add_identity_file(options, "~/",
 		    _PATH_SSH_CLIENT_ID_ED25519, 0);
 		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_XMSS, 0);
+#ifdef WITH_PQ_AUTH
+		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_OQSDEFAULT, 0);
+		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_QTESLA_I, 0);
+		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_QTESLA_III_SIZE, 0);
+		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_QTESLA_III_SPEED, 0);
+		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_PICNIC_L1FS, 0);
+		/* ADD_MORE_OQS_SIG_HERE */
+#endif /* WITH_PQ_AUTH */
 	}
 	if (options->escape_char == -1)
 		options->escape_char = '~';
