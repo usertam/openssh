@@ -1,18 +1,5 @@
 /* OQS authentication methods. */
 
-/* OQS note:
-   In addition to post-quantum (PQ) signatures; we also support classical/PQ hybrids. In that case, a classical and a PQ signature
-   are generated on the same data, and the resulting signatures are concatenated. The signed data is first hashed using the SHA-2
-   hash function matching the security level of the OQS scheme (SHA256 for L1, SHA384 for L2/L3, SHA512 for L4/L5) before being
-   signed by the classical algorithm (which can't support arbitrarily long messages), and is passed directly to the OQS signature
-   API. The hybrid scheme is identified as a new combo scheme with a unique ID. Currently, ECDSA-p256 and RSA3072 hybrids are
-   supported with L1 OQS schemes, and ECDSA-p384 hybrids are supported with L3 schemes. The public and private keys are also
-   concatenated when serialized. Encoding of artefacts (keys and signatures) are as follow:
-   - classical_artefact_length: 4 bytes encoding the size of the classical artefact
-   - classical_artefact: the classical artefact of length classical_artefact_length
-   - oqs_artefact: the post-quantum artefact, of length determined by the OQS signature context
-*/
-
 #include "includes.h"
 
 #include <string.h>

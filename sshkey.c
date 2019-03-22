@@ -25,6 +25,28 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/* OQS note:
+   In addition to post-quantum (PQ) signatures; we also support classical/PQ hybrids. In that case, a classical and a PQ signature
+   are generated on the same data, and the resulting signatures are concatenated. We combine RSA and ECDSA using the NIST curves
+   with the supported OQS algorithm at an equivalent security level; this means using:
+   - RSA3072 and NIST-P256 for L1 schemes, and
+   - NIST-P384 for L3 schemes (RSA isn't supported above L1 for efficiency reasons)
+
+   New key types have been defined for the hybrid cases, identified by the "ssh-<classical>-<pq>" string, where <classical> is either
+   "p256", "p284", or "rsa3072" and <pq> is one of the supported PQ scheme.
+
+   Keys are serialized sequentially: the classical key is serialized first, followed by the PQ one. The SSH key encoding contains
+   all the length and serialization information, so the OpenSSH serialization for each type is called sequentially.
+
+   The OpenSSH signature code is called sequentially: the classical handling is performed first (including hashing the signed data
+   with the appropriate SHA2 functions (SHA256 for L1 schemes, SHA384 for L3 schemes)), followed by the PQ one (in which case the
+   data is signed/verified directly). The resulting signatures are encoded as follows:
+   - classical_sig_len: 4 bytes encoding the size of the classical signature
+   - classical_sig: the classical signature of length classical_sig_len
+   - pq_sig_len: 4 bytes encoding the size of the post-quantum signature
+   - pq_sig: the post-quantum signature of length pq_sig_len
+*/
+
 #include "includes.h"
 
 #include <sys/types.h>
