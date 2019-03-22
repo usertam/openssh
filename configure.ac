@@ -3461,7 +3461,7 @@ AC_ARG_WITH([liboqs-dir],
 if test "x$with_liboqs" = "xyes" ; then
 	dnl Check for LibOQS library
 	AC_DEFINE_UNQUOTED([WITH_OQS], [1], [use LibOQS for post-quantum and hybrid key exchange and authentication])
-	LIBS="-loqs $LIBS"
+	LIBS="-loqs -lcrypto $LIBS"
 	AC_CHECK_HEADER([oqs/kem.h], ,[AC_MSG_ERROR([*** LibOQS headers missing - please install first or check config.log ***])])
 	AC_TRY_LINK([#include <oqs/kem.h>],
 				[
