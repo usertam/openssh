@@ -577,10 +577,9 @@ sshkey_new(int type)
 	}
 
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
-	/* check if we need to generate a PQ key. This is done outside the
+	/* check if we need to handle a PQ key. This is done outside the
 	   switch statement above because in the hybrid case, the classical
-	   processing is done there. We perform PQ init for both PQ-only
-	   and hybrid types.*/
+	   processing is done there. */
 	switch (k->type) {
 	CASE_KEY_OQS:
 	CASE_KEY_HYBRID:
@@ -729,10 +728,9 @@ sshkey_free(struct sshkey *k)
 		break;
 	}
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
-	/* check if we need to free a PQ key. This is done outside the
+	/* check if we need to handle a PQ key. This is done outside the
 	   switch statement above because in the hybrid case, the classical
-	   processing is done there. We free PQ key for both PQ-only
-	   and hybrid types.*/
+	   processing is done there. */
 	switch (k->type) {
 	CASE_KEY_OQS:
 	CASE_KEY_HYBRID:
@@ -855,10 +853,9 @@ sshkey_equal_public(const struct sshkey *a, const struct sshkey *b)
 	  return rv;
 	}
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
-	/* check if we PQ public key are equal. This is done outside the
+	/* check if we need to handle a PQ key. This is done outside the
 	   switch statement above because in the hybrid case, the classical
-	   processing is done there. We perform PQ pub key comp for both PQ-only
-	   and hybrid types.*/
+	   processing is done there. */
 	switch (a->type) {
 	CASE_KEY_OQS:
 	CASE_KEY_HYBRID:
@@ -976,24 +973,20 @@ to_blob_buf(const struct sshkey *key, struct sshbuf *b, int force_plain,
 #endif /* WITH_XMSS */
 #ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
-		/* we simply break here to avoid the default clause. PQ processing
-		   is done after the switch statement */
+		/* we simply serialize the type name, key handling is done after the switch statement */
+		if ((ret = sshbuf_put_cstring(b, typename)) != 0)
+			return ret;
 		break;
 #endif /* WITH_PQ_AUTH */
 	default:
 		return SSH_ERR_KEY_TYPE_UNKNOWN;
 	}
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
-	/* check if we need to serialize a PQ key. This is done outside the
+	/* check if we need to handle a PQ key. This is done outside the
 	   switch statement above because in the hybrid case, the classical
-	   processing is done there. We perform PQ serialization for both PQ-only
-	   and hybrid types.*/
+	   processing is done there. */
 	switch (type) {
 	CASE_KEY_OQS:
-		/* this has already been called in the hybrid case */
-		if ((ret = sshbuf_put_cstring(b, typename)) != 0)
-			return ret;
-		/* FALLTHROUGH */
 	CASE_KEY_HYBRID:
 		if (key->oqs_pk == NULL) {
 			return SSH_ERR_INVALID_ARGUMENT;
@@ -1586,10 +1579,9 @@ sshkey_read(struct sshkey *ret, char **cpp)
 		return SSH_ERR_INTERNAL_ERROR;
 	}
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
-	/* check if we need to read a PQ key. This is done outside the
+	/* check if we need to handle a PQ key. This is done outside the
 	   switch statement above because in the hybrid case, the classical
-	   processing is done there. We read the PQ key for both PQ-only
-	   and hybrid types.*/
+	   processing is done there. */
 	switch (sshkey_type_plain(ret->type)) {
 	CASE_KEY_OQS:
 	CASE_KEY_HYBRID:
@@ -1895,10 +1887,9 @@ sshkey_generate(int type, u_int bits, struct sshkey **keyp)
 		ret = SSH_ERR_INVALID_ARGUMENT;
 	}
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
-	/* check if we need to generate a PQ key. This is done outside the
+	/* check if we need to handle a PQ key. This is done outside the
 	   switch statement above because in the hybrid case, the classical
-	   processing is done there. We perform PQ key gen for both PQ-only
-	   and hybrid types.*/
+	   processing is done there. */
 	switch (type) {
 	CASE_KEY_OQS:
 	CASE_KEY_HYBRID:
@@ -2063,8 +2054,9 @@ sshkey_from_private(const struct sshkey *k, struct sshkey **pkp)
 #endif /* WITH_XMSS */
 #ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
-		/* we simply break here to avoid the default clause. PQ processing
-		   is done after the switch statement */
+		/* we simply create the key, handling is done after the switch statement */
+		if ((n = sshkey_new(k->type)) == NULL)
+			return SSH_ERR_ALLOC_FAIL;
 		break;
 #endif /* WITH_PQ_AUTH */
 	default:
@@ -2072,16 +2064,11 @@ sshkey_from_private(const struct sshkey *k, struct sshkey **pkp)
 	}
 
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
-	/* check if we need to generate a PQ key. This is done outside the
+	/* check if we need to handle a PQ key. This is done outside the
 	   switch statement above because in the hybrid case, the classical
-	   processing is done there. We perform PQ key gen for both PQ-only
-	   and hybrid types.*/
+	   processing is done there. */
 	switch (k->type) {
 	CASE_KEY_OQS:
-		/* this has already been called in the hybrid case */
-		if ((n = sshkey_new(k->type)) == NULL)
-			return SSH_ERR_ALLOC_FAIL;
-		/* FALLTHROUGH */
 	CASE_KEY_HYBRID:
 		if (k->oqs_pk != NULL) {
 			if ((n->oqs_pk = malloc(n->oqs_sig->length_public_key)) == NULL) {
@@ -2420,8 +2407,11 @@ sshkey_from_blob_internal(struct sshbuf *b, struct sshkey **keyp,
 #endif /* WITH_XMSS */
 #ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
-		/* we simply break here to avoid the default clause. PQ processing
-		   is done after the switch statement */
+		/* we simply create the key, handling is done after the switch statement */
+		if ((key = sshkey_new(type)) == NULL) {
+			ret = SSH_ERR_ALLOC_FAIL;
+			goto out;
+		}
 		break;
 #endif /* WITH_PQ_AUTH */
 	case KEY_UNSPEC:
@@ -2430,18 +2420,11 @@ sshkey_from_blob_internal(struct sshbuf *b, struct sshkey **keyp,
 		goto out;
 	}
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
-	/* check if we need to read a PQ key. This is done outside the
+	/* check if we need to handle a PQ key. This is done outside the
 	   switch statement above because in the hybrid case, the classical
-	   processing is done there. We read the PQ key for both PQ-only
-	   and hybrid types.*/
+	   processing is done there. */
 	switch (type) {
 	CASE_KEY_OQS:
-		/* this has already been called in the hybrid case */
-		if ((key = sshkey_new(type)) == NULL) {
-			ret = SSH_ERR_ALLOC_FAIL;
-			goto out;
-		}
-		/* FALLTHROUGH */
 	CASE_KEY_HYBRID:
 		if ((ret = sshbuf_get_string(b, &pk, &len)) != 0)
 			goto out;
@@ -2599,10 +2582,9 @@ sshkey_sign(const struct sshkey *key,
 		return ret;
 	}
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
-	/* check if we need to sign with a PQ key. This is done outside the
+	/* check if we need to handle with a PQ key. This is done outside the
 	   switch statement above because in the hybrid case, the classical
-	   processing is done there. We sign with the PQ key for both PQ-only
-	   and hybrid types.*/
+	   processing is done there. */
 	switch (key->type) {
 	CASE_KEY_OQS:
 	CASE_KEY_HYBRID:
@@ -2743,10 +2725,9 @@ sshkey_verify(const struct sshkey *key,
 	}
 
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
-	/* check if we need to verify a PQ sig. This is done outside the
+	/* check if we need to handle a PQ sig. This is done outside the
 	   switch statement above because in the hybrid case, the classical
-	   processing is done there. We sign with the PQ key for both PQ-only
-	   and hybrid types.*/
+	   processing is done there. */
 	switch (key->type) {
 	CASE_KEY_OQS:
 	CASE_KEY_HYBRID:
@@ -2882,8 +2863,7 @@ sshkey_demote(const struct sshkey *k, struct sshkey **dkp)
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
 	/* check if we need to handle a PQ key. This is done outside the
 	   switch statement above because in the hybrid case, the classical
-	   processing is done there. We handle the PQ key for both PQ-only
-	   and hybrid types.*/
+	   processing is done there. */
 	switch (k->type) {
 	CASE_KEY_OQS:
 	CASE_KEY_HYBRID:
@@ -3320,10 +3300,9 @@ sshkey_private_serialize_opt(const struct sshkey *key, struct sshbuf *b,
 		goto out;
 	}
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
-	/* check if we need to serialize a PQ key. This is done outside the
+	/* check if we need to handle a PQ key. This is done outside the
 	   switch statement above because in the hybrid case, the classical
-	   processing is done there. We serialize the PQ key for both PQ-only
-	   and hybrid types.*/
+	   processing is done there. */
 	switch (key->type) {
 	CASE_KEY_OQS:
 	CASE_KEY_HYBRID:
@@ -3557,8 +3536,11 @@ sshkey_private_deserialize(struct sshbuf *buf, struct sshkey **kp)
 #endif /* WITH_XMSS */
 #ifdef WITH_PQ_AUTH
 	CASE_KEY_OQS:
-		/* we simply break here to avoid the default clause. PQ processing
-		   is done after the switch statement */
+		/* we simply create the key, handling is done after the switch statement */
+		if ((k = sshkey_new_private(type)) == NULL) {
+			r = SSH_ERR_ALLOC_FAIL;
+			goto out;
+		}
 		break;
 #endif /* WITH_PQ_AUTH */
 
@@ -3567,19 +3549,11 @@ sshkey_private_deserialize(struct sshbuf *buf, struct sshkey **kp)
 		goto out;
 	}
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
-	/* check if we need to parse a PQ key. This is done outside the
+	/* check if we need to handle a PQ key. This is done outside the
 	   switch statement above because in the hybrid case, the classical
-	   processing is done there. We parse the PQ key for both PQ-only
-	   and hybrid types.*/
+	   processing is done there. */
 	switch (type) {
 	CASE_KEY_OQS:
-	  /* FIXMEOQS: here and elsewhere, this could be done in the empty switch statement above */
-		/* this has already been called in the hybrid case */
-		if ((k = sshkey_new_private(type)) == NULL) {
-			r = SSH_ERR_ALLOC_FAIL;
-			goto out;
-		}
-		/* FALLTHROUGH */
 	CASE_KEY_HYBRID:
 		if ((r = sshbuf_get_string(buf, &oqs_pk, &pklen)) != 0 ||
 		    (r = sshbuf_get_string(buf, &oqs_sk, &sklen)) != 0)
