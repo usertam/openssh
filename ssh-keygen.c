@@ -229,6 +229,19 @@ type_bits_valid(int type, const char *name, u_int32_t *bitsp)
 #endif
 			*bitsp = DEFAULT_BITS;
 	}
+	  /* OQS note: different parameter sets for one PQ scheme are identified
+	   * by different types (unlike ECDSA which uses one key type and a 2nd
+	   * 'nid' value to identify the curve. We need this special processing
+	   * for ECDSA hybrid of levels 3+ to avoid defaulting to P256 when
+	   * name is NULL (like when called from do_gen_all_hostkeys).
+	   */
+	if (name == NULL && IS_ECDSA_HYBRID(type)) {
+		switch (type) {
+		case KEY_P384_QTESLA_III_SPEED:
+		case KEY_P384_QTESLA_III_SIZE:
+			*bitsp = 384;
+		}
+	}
 #ifdef WITH_OPENSSL
 	maxbits = (type == KEY_DSA) ?
 	    OPENSSL_DSA_MAX_MODULUS_BITS : OPENSSL_RSA_MAX_MODULUS_BITS;
