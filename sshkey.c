@@ -2665,15 +2665,20 @@ sshkey_verify(const struct sshkey *key,
     const u_char *sig, size_t siglen,
     const u_char *data, size_t dlen, const char *alg, u_int compat)
 {
-	const u_char *sig_classical, *sig_pq;
-	size_t siglen_classical, siglen_pq;
-	int index = 0;
+	const u_char *sig_classical;
+	size_t siglen_classical;
+#if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
+	const u_char *sig_pq;
+	size_t siglen_pq;
+#endif /* WITH_PQ_AUTH || WITH_HYBRID_AUTH */
 	int ret = 0;
 	if (siglen == 0 || dlen > SSH_KEY_MAX_SIGN_DATA_SIZE)
 		return SSH_ERR_INVALID_ARGUMENT;
 	/* determine the type of signature: classical, PQ, or hybrid */
 	switch (key->type) {
+#if defined(WITH_HYBRID_AUTH)
 	CASE_KEY_HYBRID:
+		int index = 0;
 		/* classical-PQ hybrid: we separate the signatures */
 		/* decode the classical sig length */
 		siglen_classical = (size_t) PEEK_U32(sig + index);
@@ -2688,11 +2693,14 @@ sshkey_verify(const struct sshkey *key,
 		sig_pq = sig + index;
 		index += siglen_pq;
 		break;
+#endif /* WITH_HYBRID_AUTH */
+#if defined(WITH_PQ_AUTH)
 	CASE_KEY_OQS:
 		/* PQ signature */
 		sig_pq = sig;
 		siglen_pq = siglen;
 		break;
+#endif /* WITH_PQ_AUTH */
 	default:
 		/* classical signature */
 		sig_classical = sig;
@@ -3334,8 +3342,9 @@ sshkey_private_serialize_opt(const struct sshkey *key, struct sshbuf *b,
 		    key->oqs_sig->length_secret_key)) != 0)
 			goto out;
 		break;
-#endif /* WITH_PQ_AUTH */
 	}
+#endif /* WITH_PQ_AUTH || WITH_HYBRID_AUTH */
+
 	/* success */
 	r = 0;
  out:
@@ -3358,7 +3367,9 @@ sshkey_private_deserialize(struct sshbuf *buf, struct sshkey **kp)
 	int type, r = SSH_ERR_INTERNAL_ERROR;
 	u_char *ed25519_pk = NULL, *ed25519_sk = NULL;
 	u_char *xmss_pk = NULL, *xmss_sk = NULL;
+#if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
 	u_char *oqs_pk = NULL, *oqs_sk = NULL;
+#endif /* WITH_PQ_AUTH || WITH_HYBRID_AUTH */
 #ifdef WITH_OPENSSL
 	BIGNUM *exponent = NULL;
 #endif /* WITH_OPENSSL */

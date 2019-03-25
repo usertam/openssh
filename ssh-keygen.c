@@ -26,8 +26,8 @@
 
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
 #include <oqs/oqs.h>
-#include "oqs-utils.h"
 #endif
+#include "oqs-utils.h"
 
 #include <errno.h>
 #include <fcntl.h>
