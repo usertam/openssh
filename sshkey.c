@@ -27,13 +27,13 @@
 
 /* OQS note:
    In addition to post-quantum (PQ) signatures; we also support classical/PQ hybrids. In that case, a classical and a PQ signature
-   are generated on the same data, and the resulting signatures are concatenated. We combine RSA and ECDSA using the NIST curves
+   are generated on the same data, and the resulting signatures are concatenated. We combine RSA or ECDSA (using the NIST curves)
    with the supported OQS algorithm at an equivalent security level; this means using:
    - RSA3072 and NIST-P256 for L1 schemes, and
    - NIST-P384 for L3 schemes (RSA isn't supported above L1 for efficiency reasons)
 
    New key types have been defined for the hybrid cases, identified by the "ssh-<classical>-<pq>" string, where <classical> is either
-   "p256", "p284", or "rsa3072" and <pq> is one of the supported PQ scheme.
+   "p256", "p384", or "rsa3072" and <pq> is one of the supported PQ schemes.
 
    Keys are serialized sequentially: the classical key is serialized first, followed by the PQ one. The SSH key encoding contains
    all the length and serialization information, so the OpenSSH serialization for each type is called sequentially.
@@ -2665,11 +2665,11 @@ sshkey_verify(const struct sshkey *key,
     const u_char *sig, size_t siglen,
     const u_char *data, size_t dlen, const char *alg, u_int compat)
 {
-	const u_char *sig_classical;
-	size_t siglen_classical;
+	const u_char *sig_classical = NULL;
+	size_t siglen_classical = 0;
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
-	const u_char *sig_pq;
-	size_t siglen_pq;
+	const u_char *sig_pq = NULL;
+	size_t siglen_pq = 0;
 #endif /* WITH_PQ_AUTH || WITH_HYBRID_AUTH */
 	int ret = 0;
 	if (siglen == 0 || dlen > SSH_KEY_MAX_SIGN_DATA_SIZE)
