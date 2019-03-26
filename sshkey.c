@@ -2667,6 +2667,9 @@ sshkey_verify(const struct sshkey *key,
 {
 	const u_char *sig_classical = NULL;
 	size_t siglen_classical = 0;
+#if defined(WITH_HYBRID_AUTH)
+	int index = 0;
+#endif
 #if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
 	const u_char *sig_pq = NULL;
 	size_t siglen_pq = 0;
@@ -2678,7 +2681,6 @@ sshkey_verify(const struct sshkey *key,
 	switch (key->type) {
 #if defined(WITH_HYBRID_AUTH)
 	CASE_KEY_HYBRID:
-		int index = 0;
 		/* classical-PQ hybrid: we separate the signatures */
 		/* decode the classical sig length */
 		siglen_classical = (size_t) PEEK_U32(sig + index);
