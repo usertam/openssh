@@ -34,6 +34,7 @@
 #include "sshkey.h"
 #include "digest.h"
 #include "log.h"
+#include "oqs-utils.h"
 
 static int openssh_RSA_verify(int, u_char *, size_t, u_char *, size_t, RSA *);
 
@@ -57,7 +58,9 @@ rsa_hash_alg_from_ident(const char *ident)
 	if (strcmp(ident, "ssh-rsa") == 0 ||
 	    strcmp(ident, "ssh-rsa-cert-v01@openssh.com") == 0)
 		return SSH_DIGEST_SHA1;
-	if (strcmp(ident, "rsa-sha2-256") == 0)
+	if (strcmp(ident, "rsa-sha2-256") == 0 ||
+	    /* OQS note: RSA is currently only used for L1 PQ hybrids, corresponding to SHA256 security level */
+	    IS_RSA_HYBRID_ALG_NAME(ident))
 		return SSH_DIGEST_SHA256;
 	if (strcmp(ident, "rsa-sha2-512") == 0)
 		return SSH_DIGEST_SHA512;
@@ -88,7 +91,8 @@ ssh_rsa_generate_additional_parameters(struct sshkey *key)
 	int r;
 
 	if (key == NULL || key->rsa == NULL ||
-	    sshkey_type_plain(key->type) != KEY_RSA)
+	    (sshkey_type_plain(key->type) != KEY_RSA &&
+	     !IS_RSA_HYBRID(sshkey_type_plain(key->type))))
 		return SSH_ERR_INVALID_ARGUMENT;
 
 	if ((ctx = BN_CTX_new()) == NULL)
@@ -137,7 +141,8 @@ ssh_rsa_sign(const struct sshkey *key, u_char **sigp, size_t *lenp,
 	else
 		hash_alg = rsa_hash_alg_from_ident(alg_ident);
 	if (key == NULL || key->rsa == NULL || hash_alg == -1 ||
-	    sshkey_type_plain(key->type) != KEY_RSA)
+	    (sshkey_type_plain(key->type) != KEY_RSA &&
+	     !IS_RSA_HYBRID(sshkey_type_plain(key->type))))
 		return SSH_ERR_INVALID_ARGUMENT;
 	if (BN_num_bits(key->rsa->n) < SSH_RSA_MINIMUM_MODULUS_SIZE)
 		return SSH_ERR_KEY_LENGTH;
@@ -208,7 +213,8 @@ ssh_rsa_verify(const struct sshkey *key,
 	u_char digest[SSH_DIGEST_MAX_LENGTH], *osigblob, *sigblob = NULL;
 
 	if (key == NULL || key->rsa == NULL ||
-	    sshkey_type_plain(key->type) != KEY_RSA ||
+	    (sshkey_type_plain(key->type) != KEY_RSA &&
+	     !IS_RSA_HYBRID(sshkey_type_plain(key->type))) ||
 	    sig == NULL || siglen == 0)
 		return SSH_ERR_INVALID_ARGUMENT;
 	if (BN_num_bits(key->rsa->n) < SSH_RSA_MINIMUM_MODULUS_SIZE)
@@ -222,7 +228,10 @@ ssh_rsa_verify(const struct sshkey *key,
 	}
 	/* XXX djm: need cert types that reliably yield SHA-2 signatures */
 	if (alg != NULL && strcmp(alg, sigtype) != 0 &&
-	    strcmp(alg, "ssh-rsa-cert-v01@openssh.com") != 0) {
+	    strcmp(alg, "ssh-rsa-cert-v01@openssh.com") != 0 &&
+	    /* OQS note: RSA-PQ hybrid's sigtype is encoded as the classical type */
+	    !IS_RSA_HYBRID_ALG_NAME(alg)
+	    ) {
 		error("%s: RSA signature type mismatch: "
 		    "expected %s received %s", __func__, alg, sigtype);
 		ret = SSH_ERR_SIGNATURE_INVALID;

@@ -13,6 +13,8 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+# FIXMEOQS: turn on the OQS options on by default. Why else use our fork?
+
 AC_INIT([OpenSSH], [Portable], [openssh-unix-dev@mindrot.org])
 AC_REVISION($Revision: 1.583 $)
 AC_CONFIG_SRCDIR([ssh.c])
@@ -3570,6 +3572,20 @@ AC_ARG_ENABLE([pq-auth],
 				AC_DEFINE([WITH_PQ_AUTH], [1], [Define if post-quantum authentication methods are supported])
 			else
 				AC_MSG_ERROR([*** Post-quantum authentication methods requires LibOQS library ***])
+			fi
+		fi
+	]
+)
+
+# Enable PQ authentication methods
+AC_ARG_ENABLE([hybrid-auth],
+	[	--enable-hybrid-auth		enable hybrid authentication methods (requires LibOQS library)],
+	[
+		if test "x$enableval" = "xyes" ; then
+			if test "x$with_liboqs" = "xyes" ; then
+				AC_DEFINE([WITH_HYBRID_AUTH], [1], [Define if hybrid authentication methods are supported])
+			else
+				AC_MSG_ERROR([*** Hybrid authentication methods requires LibOQS library ***])
 			fi
 		fi
 	]

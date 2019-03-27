@@ -64,13 +64,25 @@ int ssh_port = SSH_DEFAULT_PORT;
 #define KT_QTESLA_III_SPEED	(1<<7)
 #define KT_QTESLA_III_SIZE	(1<<8)
 #define KT_PICNIC_L1FS		(1<<9)
+#define KT_RSA3072_OQSDEFAULT	(1<<10)
+#define KT_P256_OQSDEFAULT	(1<<11)
+#define KT_RSA3072_QTESLA_I	(1<<12)
+#define KT_P256_QTESLA_I	(1<<13)
+#define KT_P384_QTESLA_III_SPEED (1<<14)
+#define KT_P384_QTESLA_III_SIZE	(1<<15)
+#define KT_RSA3072_PICNIC_L1FS	(1<<16)
+#define KT_P256_PICNIC_L1FS	(1<<17)
 /* ADD_MORE_OQS_SIG_HERE */
 
 #define KT_MIN		KT_DSA
-#define KT_MAX		KT_PICNIC_L1FS
+#define KT_MAX		KT_P256_PICNIC_L1FS
 
 int get_cert = 0;
-int get_keytypes = KT_RSA|KT_ECDSA|KT_ED25519|KT_OQSDEFAULT|KT_QTESLA_I|KT_QTESLA_III_SPEED|KT_QTESLA_III_SIZE|KT_PICNIC_L1FS; /* ADD_MORE_OQS_SIG_HERE */
+int get_keytypes = KT_RSA|KT_ECDSA|KT_ED25519|KT_OQSDEFAULT|KT_QTESLA_I|KT_QTESLA_III_SPEED|KT_QTESLA_III_SIZE|KT_PICNIC_L1FS|\
+			KT_RSA3072_OQSDEFAULT|KT_P256_OQSDEFAULT|\
+			KT_RSA3072_QTESLA_I|KT_P256_QTESLA_I|KT_P384_QTESLA_III_SPEED|KT_P384_QTESLA_III_SIZE|\
+			KT_RSA3072_PICNIC_L1FS|KT_P256_PICNIC_L1FS;
+			/* ADD_MORE_OQS_SIG_HERE */
 
 int hash_hosts = 0;		/* Hash hostname on output */
 
@@ -748,6 +760,30 @@ main(int argc, char **argv)
 					break;
 				case KEY_PICNIC_L1FS:
 					get_keytypes |= KT_PICNIC_L1FS;
+					break;
+				case KEY_RSA3072_OQSDEFAULT:
+					get_keytypes |= KT_RSA3072_OQSDEFAULT;
+					break;
+				case KEY_P256_OQSDEFAULT:
+					get_keytypes |= KT_P256_OQSDEFAULT;
+					break;
+				case KEY_RSA3072_QTESLA_I:
+					get_keytypes |= KT_RSA3072_QTESLA_I;
+					break;
+				case KEY_P256_QTESLA_I:
+					get_keytypes |= KT_P256_QTESLA_I;
+					break;
+				case KEY_P384_QTESLA_III_SPEED:
+					get_keytypes |= KT_P384_QTESLA_III_SPEED;
+					break;
+				case KEY_P384_QTESLA_III_SIZE:
+					get_keytypes |= KT_P384_QTESLA_III_SIZE;
+					break;
+				case KEY_RSA3072_PICNIC_L1FS:
+					get_keytypes |= KT_RSA3072_PICNIC_L1FS;
+					break;
+				case KEY_P256_PICNIC_L1FS:
+					get_keytypes |= KT_P256_PICNIC_L1FS;
 					break;
 				/* ADD_MORE_OQS_SIG_HERE */
 				case KEY_UNSPEC:

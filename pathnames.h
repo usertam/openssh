@@ -47,6 +47,15 @@
 #define _PATH_HOST_QTESLA_III_SIZE_KEY_FILE	SSHDIR "/ssh_host_qteslaIIIsize_key"
 #define _PATH_HOST_PICNIC_L1FS_KEY_FILE	SSHDIR "/ssh_host_picnicL1FS_key"
 /* ADD_MORE_OQS_SIG_HERE */
+#define _PATH_HOST_RSA3072_OQSDEFAULT_KEY_FILE	SSHDIR "/ssh_host_rsa3072_oqsdefault_key"
+#define _PATH_HOST_P256_OQSDEFAULT_KEY_FILE	SSHDIR "/ssh_host_p256_oqsdefault_key"
+#define _PATH_HOST_RSA3072_QTESLA_I_KEY_FILE	SSHDIR "/ssh_host_rsa3072_qteslaI_key"
+#define _PATH_HOST_P256_QTESLA_I_KEY_FILE	SSHDIR "/ssh_host_p256_qteslaI_key"
+#define _PATH_HOST_P384_QTESLA_III_SPEED_KEY_FILE	SSHDIR "/ssh_host_p384_qteslaIIIspeed_key"
+#define _PATH_HOST_P384_QTESLA_III_SIZE_KEY_FILE	SSHDIR "/ssh_host_p384_qteslaIIIsize_key"
+#define _PATH_HOST_RSA3072_PICNIC_L1FS_KEY_FILE	SSHDIR "/ssh_host_rsa3072_picnicL1FS_key"
+#define _PATH_HOST_P256_PICNIC_L1FS_KEY_FILE	SSHDIR "/ssh_host_p256_picnicL1FS_key"
+/* ADD_MORE_OQS_SIG_HERE (hybrid) */
 #define _PATH_DH_MODULI			SSHDIR "/moduli"
 
 #ifndef _PATH_SSH_PROGRAM
@@ -89,6 +98,15 @@
 #define _PATH_SSH_CLIENT_ID_QTESLA_III_SIZE	_PATH_SSH_USER_DIR "/id_qteslaIIIsize"
 #define _PATH_SSH_CLIENT_ID_PICNIC_L1FS	_PATH_SSH_USER_DIR "/id_picnicL1FS"
 /* ADD_MORE_OQS_SIG_HERE */
+#define _PATH_SSH_CLIENT_ID_RSA3072_OQSDEFAULT	_PATH_SSH_USER_DIR "/id_rsa3072_oqsdefault"
+#define _PATH_SSH_CLIENT_ID_P256_OQSDEFAULT	_PATH_SSH_USER_DIR "/id_p256_oqsdefault"
+#define _PATH_SSH_CLIENT_ID_RSA3072_QTESLA_I	_PATH_SSH_USER_DIR "/id_rsa3072_qteslaI"
+#define _PATH_SSH_CLIENT_ID_P256_QTESLA_I	_PATH_SSH_USER_DIR "/id_p256_qteslaI"
+#define _PATH_SSH_CLIENT_ID_P384_QTESLA_III_SPEED	_PATH_SSH_USER_DIR "/id_p384_qteslaIIIspeed"
+#define _PATH_SSH_CLIENT_ID_P384_QTESLA_III_SIZE	_PATH_SSH_USER_DIR "/id_p384_qteslaIIIsize"
+#define _PATH_SSH_CLIENT_ID_RSA3072_PICNIC_L1FS	_PATH_SSH_USER_DIR "/id_rsa3072_picnicL1FS"
+#define _PATH_SSH_CLIENT_ID_P256_PICNIC_L1FS	_PATH_SSH_USER_DIR "/id_p256_picnicL1FS"
+/* ADD_MORE_OQS_SIG_HERE (hybrid) */
 
 /*
  * Configuration file in user's home directory.  This file need not be

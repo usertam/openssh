@@ -24,9 +24,10 @@
 #include "openbsd-compat/openssl-compat.h"
 #endif
 
-#ifdef WITH_PQ_AUTH
+#if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
 #include <oqs/oqs.h>
 #endif
+#include "oqs-utils.h"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -218,7 +219,7 @@ type_bits_valid(int type, const char *name, u_int32_t *bitsp)
 #ifdef WITH_OPENSSL
 		if (type == KEY_DSA)
 			*bitsp = DEFAULT_BITS_DSA;
-		else if (type == KEY_ECDSA) {
+		else if (type == KEY_ECDSA || IS_ECDSA_HYBRID(type)) {
 			if (name != NULL &&
 			    (nid = sshkey_ecdsa_nid_from_name(name)) > 0)
 				*bitsp = sshkey_curve_nid_to_bits(nid);
@@ -228,9 +229,23 @@ type_bits_valid(int type, const char *name, u_int32_t *bitsp)
 #endif
 			*bitsp = DEFAULT_BITS;
 	}
+	  /* OQS note: different parameter sets for one PQ scheme are identified
+	   * by different types (unlike ECDSA which uses one key type and a 2nd
+	   * 'nid' value to identify the curve. We need this special processing
+	   * for ECDSA hybrid of levels 3+ to avoid defaulting to P256 when
+	   * name is NULL (like when called from do_gen_all_hostkeys).
+	   */
+	if (name == NULL && IS_ECDSA_HYBRID(type)) {
+		switch (type) {
+		case KEY_P384_QTESLA_III_SPEED:
+		case KEY_P384_QTESLA_III_SIZE:
+			*bitsp = 384;
+		}
+	}
 #ifdef WITH_OPENSSL
 	maxbits = (type == KEY_DSA) ?
 	    OPENSSL_DSA_MAX_MODULUS_BITS : OPENSSL_RSA_MAX_MODULUS_BITS;
+	/* FIXMEOQS: do some PQ algs increase the maxbit value? */
 	if (*bitsp > maxbits)
 		fatal("key bits exceeds maximum %d", maxbits);
 	switch (type) {
@@ -244,6 +259,9 @@ type_bits_valid(int type, const char *name, u_int32_t *bitsp)
 			    SSH_RSA_MINIMUM_MODULUS_SIZE);
 		break;
 	case KEY_ECDSA:
+#ifdef WITH_HYBRID_AUTH
+	CASE_KEY_ECDSA_HYBRID:
+#endif
 		if (sshkey_ecdsa_bits_to_nid(*bitsp) == -1)
 			fatal("Invalid ECDSA key length: valid lengths are "
 			    "256, 384 or 521 bits");
@@ -1004,6 +1022,17 @@ do_gen_all_hostkeys(struct passwd *pw)
 		{ "picnicL1FS", "PICNICL1FS",_PATH_HOST_PICNIC_L1FS_KEY_FILE },
 		/* ADD_MORE_OQS_SIG_HERE */
 #endif /* WITH_PQ_AUTH */
+#ifdef WITH_HYBRID_AUTH
+		{ "rsa3072_oqsdefault", "RSA3072_OQSDEFAULT", _PATH_HOST_RSA3072_OQSDEFAULT_KEY_FILE },
+		{ "p256_oqsdefault", "P256_OQSDEFAULT", _PATH_HOST_P256_OQSDEFAULT_KEY_FILE },
+		{ "rsa3072_qteslaI", "RSA3072_QTESLAI", _PATH_HOST_RSA3072_QTESLA_I_KEY_FILE },
+		{ "p256_qteslaI", "P256_QTESLAI", _PATH_HOST_P256_QTESLA_I_KEY_FILE },
+		{ "p384_qteslaIIIspeed", "P384_QTESLAIIISPEED",_PATH_HOST_P384_QTESLA_III_SPEED_KEY_FILE },
+		{ "p384_qteslaIIIsize", "P384_QTESLAIIISIZE",_PATH_HOST_P384_QTESLA_III_SIZE_KEY_FILE },
+		{ "rsa3072_picnicL1FS", "RSA3072_PICNICL1FS",_PATH_HOST_RSA3072_PICNIC_L1FS_KEY_FILE },
+		{ "p256_picnicL1FS", "P256_PICNICL1FS",_PATH_HOST_P256_PICNIC_L1FS_KEY_FILE },
+		/* ADD_MORE_OQS_SIG_HERE (hybrid) */
+#endif /* WITH_HYBRID_AUTH */
 		{ NULL, NULL, NULL }
 	};
 
@@ -2317,10 +2346,17 @@ static void
 usage(void)
 {
 	fprintf(stderr,
-	    "usage: ssh-keygen [-q] [-b bits] [-t dsa | ecdsa | ed25519 | rsa | \n"
+	    "usage: ssh-keygen [-q] [-b bits] [-t dsa | ecdsa | ed25519 | rsa"
 #ifdef WITH_PQ_AUTH
-	    "                   oqsdefault, picnicL1FS, qteslaI, qteslaIIIsize, qteslaIIIspeed]\n"
+	    " |\n"
+	    "                   oqsdefault | picnicL1FS | qteslaI | qteslaIIIsize | qteslaIIIspeed"
 #endif
+#ifdef WITH_HYBRID_AUTH
+	    " |\n"
+	    "                   rsa3072_oqsdefault | p256_oqsdefault | rsa3072_picnicL1FS | p256_picnicL1FS |\n"
+	    "                   rsa3072_qteslaI | p256_qteslaI | p384_qteslaIIIsize | p384_qteslaIIIspeed"
+#endif
+	    "                  ]\n"
 	    "                  [-N new_passphrase] [-C comment] [-f output_keyfile]\n"
 	    "       ssh-keygen -p [-P old_passphrase] [-N new_passphrase] [-f keyfile]\n"
 	    "       ssh-keygen -i [-m key_format] [-f input_keyfile]\n"

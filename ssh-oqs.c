@@ -1,3 +1,5 @@
+/* OQS authentication methods. */
+
 #include "includes.h"
 
 #include <string.h>
@@ -5,14 +7,8 @@
 
 #include "ssherr.h"
 #include "ssh-oqs.h"
-#ifdef WITH_PQ_AUTH
-
-#define IS_OQS_KEY_TYPE(type) ((type) == KEY_OQSDEFAULT || \
-			       (type) == KEY_PICNIC_L1FS || \
-			       (type) == KEY_QTESLA_I || \
-			       (type) == KEY_QTESLA_III_SIZE || \
-			       (type) == KEY_QTESLA_III_SPEED)
-			       /* ADD_MORE_OQS_SIG_HERE */
+#include "oqs-utils.h"
+#if defined(WITH_PQ_AUTH) || defined(WITH_HYBRID_AUTH)
 
 /*
  * Maps OpenSSH key types to OQS IDs
@@ -22,14 +18,22 @@ const char* get_oqs_alg_name(int openssh_type)
   switch (openssh_type)
     {
     case KEY_OQSDEFAULT:
+    case KEY_RSA3072_OQSDEFAULT:
+    case KEY_P256_OQSDEFAULT:
       return OQS_SIG_alg_default;
     case KEY_PICNIC_L1FS:
+    case KEY_RSA3072_PICNIC_L1FS:
+    case KEY_P256_PICNIC_L1FS:
       return OQS_SIG_alg_picnic_L1_FS;
     case KEY_QTESLA_I:
+    case KEY_RSA3072_QTESLA_I:
+    case KEY_P256_QTESLA_I:
       return OQS_SIG_alg_qTESLA_I;
     case KEY_QTESLA_III_SIZE:
+    case KEY_P384_QTESLA_III_SIZE:
       return OQS_SIG_alg_qTESLA_III_size;
     case KEY_QTESLA_III_SPEED:
+    case KEY_P384_QTESLA_III_SPEED:
       return OQS_SIG_alg_qTESLA_III_speed;
     /* ADD_MORE_OQS_SIG_HERE */
     default:
@@ -42,6 +46,8 @@ sshkey_oqs_generate_private_key(struct sshkey *k, int type)
 {
 	int ret = SSH_ERR_INTERNAL_ERROR;
 	const char* oqs_alg_name = get_oqs_alg_name(type);
+
+	/* generate PQC key */
 	if ((k->oqs_sig = OQS_SIG_new(oqs_alg_name)) == NULL) {
 		return ret;
 	}
