@@ -25,7 +25,7 @@ What's New
 
 This is the first snapshot release of the OQS fork of OpenSSH.
 
-It is based on the upstream OpenSSH 7.7 portable 1 release.
+It is based on the upstream OpenSSH 7.9 portable 1 release.
 
 It provides:
 
