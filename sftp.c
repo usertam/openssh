@@ -1,4 +1,4 @@
-/* $OpenBSD: sftp.c,v 1.182 2017/11/03 03:46:52 djm Exp $ */
+/* $OpenBSD: sftp.c,v 1.186 2018/09/07 04:26:56 dtucker Exp $ */
 /*
  * Copyright (c) 2001-2004 Damien Miller <djm@openbsd.org>
  *
@@ -81,7 +81,7 @@ FILE* infile;
 int batchmode = 0;
 
 /* PID of ssh transport process */
-static pid_t sshpid = -1;
+static volatile pid_t sshpid = -1;
 
 /* Suppress diagnositic messages */
 int quiet = 0;
@@ -251,6 +251,25 @@ cmd_interrupt(int signo)
 	(void)write(STDERR_FILENO, msg, sizeof(msg) - 1);
 	interrupted = 1;
 	errno = olderrno;
+}
+
+/*ARGSUSED*/
+static void
+sigchld_handler(int sig)
+{
+	int save_errno = errno;
+	pid_t pid;
+	const char msg[] = "\rConnection closed.  \n";
+
+	/* Report if ssh transport process dies. */
+	while ((pid = waitpid(sshpid, NULL, WNOHANG)) == -1 && errno == EINTR)
+		continue;
+	if (pid == sshpid) {
+		(void)write(STDERR_FILENO, msg, sizeof(msg) - 1);
+		sshpid = -1;
+	}
+
+	errno = save_errno;
 }
 
 static void
@@ -1424,6 +1443,7 @@ parse_args(const char **cpp, int *ignore_errors, int *aflag,
 	case I_LUMASK:
 	case I_CHMOD:
 		base = 8;
+		/* FALLTHROUGH */
 	case I_CHOWN:
 	case I_CHGRP:
 		if ((optidx = parse_no_flags(cmd, argv, argc)) == -1)
@@ -1522,6 +1542,7 @@ parse_dispatch_command(struct sftp_conn *conn, const char *cmd, char **pwd,
 		break;
 	case I_SYMLINK:
 		sflag = 1;
+		/* FALLTHROUGH */
 	case I_LINK:
 		if (!sflag)
 			path1 = make_absolute(path1, *pwd);
@@ -1844,7 +1865,7 @@ complete_cmd_parse(EditLine *el, char *cmd, int lastarg, char quote,
 		return 0;
 	}
 
-	/* Complete ambigious command */
+	/* Complete ambiguous command */
 	tmp = complete_ambiguous(cmd, list, count);
 	if (count > 1)
 		complete_display(list, 0);
@@ -2227,6 +2248,7 @@ interactive_loop(struct sftp_conn *conn, char *file1, char *file2)
 		if (err != 0)
 			break;
 	}
+	signal(SIGCHLD, SIG_DFL);
 	free(remote_path);
 	free(startdir);
 	free(conn);
@@ -2296,6 +2318,7 @@ connect_to_server(char *path, char **args, int *in, int *out)
 	signal(SIGTSTP, suspchild);
 	signal(SIGTTIN, suspchild);
 	signal(SIGTTOU, suspchild);
+	signal(SIGCHLD, sigchld_handler);
 	close(c_in);
 	close(c_out);
 }
@@ -2535,7 +2558,7 @@ main(int argc, char **argv)
 	if (batchmode)
 		fclose(infile);
 
-	while (waitpid(sshpid, NULL, 0) == -1)
+	while (waitpid(sshpid, NULL, 0) == -1 && sshpid > 1)
 		if (errno != EINTR)
 			fatal("Couldn't wait for ssh process: %s",
 			    strerror(errno));

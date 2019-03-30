@@ -31,6 +31,7 @@
 #include "digest.h"
 #include "ssh2.h"
 #include "kexpq.h"
+#include "sshbuf.h"
 
 /*
  * @brief Initialise values of PQ-only key exchange context

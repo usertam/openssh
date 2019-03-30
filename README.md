@@ -12,14 +12,14 @@ The **Open Quantum Safe (OQS) project** has the goal of developing and prototypi
 
 **liboqs** is an open source C library for quantum-resistant cryptographic algorithms.  See more about liboqs at [https://github.com/open-quantum-safe/liboqs/](https://github.com/open-quantum-safe/liboqs/), including a list of supported algorithms. OpenSSH can use either the [master](https://github.com/open-quantum-safe/liboqs/tree/master) or the [nist](https://github.com/open-quantum-safe/liboqs/tree/nist-branch) branch of liboqs for key exchange mechanisms, but the master branch is required for signature mechanisms. The master branch is recommended for normal uses of OpenSSH as included mechanisms follow a stricter set of requirements; the nist branch contains more algorithms and is better suited for experimentation.
 
-**open-quantum-safe/openssh-portable** contains a fork of OpenSSH that adds quantum-safe key exchange algorithms using liboqs for prototyping purposes, specifically adding key exchange methods that use hybrid (post-quantum + traditional elliptic curve) or post-quantum-only algorithms.  The integration should not be considered "production quality".  The OQS-master branch of open-quantum-safe/openssh-portable is currently based on **OpenSSH version 7.7** (Git tag V_7_7_P1).
+**open-quantum-safe/openssh-portable** contains a fork of OpenSSH that adds quantum-safe key exchange algorithms using liboqs for prototyping purposes, specifically adding key exchange methods that use hybrid (post-quantum + traditional elliptic curve) or post-quantum-only algorithms.  The integration should not be considered "production quality".  The OQS-master branch of open-quantum-safe/openssh-portable is currently based on **OpenSSH version 7.9** (Git tag V_7_9_P1).
 
 More information on OQS can be found on our website: [https://openquantumsafe.org/](https://openquantumsafe.org/).
 
 Contents
 --------
 
-This branch ([OQS-master](https://github.com/open-quantum-safe/openssh-portable/tree/OQS-master)) integrates post-quantum key exchange and authentication from liboqs in SSH 2 in OpenSSH v7.7 portable 1.
+This branch ([OQS-master](https://github.com/open-quantum-safe/openssh-portable/tree/OQS-master)) integrates post-quantum key exchange and authentication from liboqs in SSH 2 in OpenSSH v7.9 portable 1.
 
 ### Key exchange mechanisms
 

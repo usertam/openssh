@@ -5,6 +5,7 @@
 #include <string.h>
 #include <oqs/oqs.h>
 
+#include "sshbuf.h"
 #include "ssherr.h"
 #include "ssh-oqs.h"
 #include "oqs-utils.h"

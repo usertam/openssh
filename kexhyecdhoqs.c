@@ -32,6 +32,7 @@
 #include "digest.h"
 #include "ssh2.h"
 #include "kexhy.h"
+#include "sshbuf.h"
 
 /*
  * @brief Initialise values of hybrid key exchange context

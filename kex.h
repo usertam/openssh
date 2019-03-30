@@ -1,4 +1,4 @@
-/* $OpenBSD: kex.h,v 1.83 2017/05/30 14:23:52 markus Exp $ */
+/* $OpenBSD: kex.h,v 1.91 2018/07/11 18:53:29 markus Exp $ */
 
 /*
  * Copyright (c) 2000, 2001 Markus Friedl.  All rights reserved.
@@ -27,8 +27,6 @@
 #define KEX_H
 
 #include "mac.h"
-#include "buffer.h" /* XXX for typedef */
-#include "key.h" /* XXX for typedef */
 
 #include "kexoqs.h"
 #include "kexhy.h"
@@ -47,6 +45,8 @@
 #  define EC_POINT	void
 # endif /* OPENSSL_HAS_ECC */
 #else /* WITH_OPENSSL */
+# define DH		void
+# define BIGNUM		void
 # define EC_KEY		void
 # define EC_GROUP	void
 # define EC_POINT	void
@@ -98,6 +98,7 @@
 #endif /* defined(WITH_OQS) && defined(WITH_HYBRID_KEX) */
 
 #define COMP_NONE	0
+/* pre-auth compression (COMP_ZLIB) is only supported in the client */
 #define COMP_ZLIB	1
 #define COMP_DELAYED	2
 
@@ -175,7 +176,7 @@ struct kex {
 	int	hostkey_type;
 	int	hostkey_nid;
 	u_int	kex_type;
-	int	rsa_sha2;
+	char	*server_sig_algs;
 	int	ext_info_c;
 	struct sshbuf *my;
 	struct sshbuf *peer;
@@ -211,7 +212,7 @@ struct kex {
 int	 kex_names_valid(const char *);
 char	*kex_alg_list(char);
 char	*kex_names_cat(const char *, const char *);
-int	 kex_assemble_names(const char *, char **);
+int	 kex_assemble_names(char **, const char *, const char *);
 
 int	 kex_new(struct ssh *, char *[PROPOSAL_MAX], struct kex **);
 int	 kex_setup(struct ssh *, char *[PROPOSAL_MAX]);

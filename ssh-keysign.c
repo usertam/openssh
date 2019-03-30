@@ -1,4 +1,4 @@
-/* $OpenBSD: ssh-keysign.c,v 1.54 2018/02/23 15:58:38 markus Exp $ */
+/* $OpenBSD: ssh-keysign.c,v 1.55 2018/07/27 05:34:42 dtucker Exp $ */
 /*
  * Copyright (c) 2002 Markus Friedl.  All rights reserved.
  *
@@ -59,11 +59,6 @@
 #include "ssherr.h"
 
 struct ssh *active_state = NULL; /* XXX needed for linking */
-
-extern char *__progname;
-
-/* XXX readconf.c needs these */
-uid_t original_real_uid;
 
 extern char *__progname;
 
@@ -215,8 +210,7 @@ main(int argc, char **argv)
 	key_fd[i++] = open(_PATH_HOST_P256_PICNIC_L1FS_KEY_FILE, O_RDONLY);
 	/* ADD_MORE_OQS_SIG_HERE */
 
-	original_real_uid = getuid();	/* XXX readconf.c needs this */
-	if ((pw = getpwuid(original_real_uid)) == NULL)
+	if ((pw = getpwuid(getuid())) == NULL)
 		fatal("getpwuid failed");
 	pw = pwcopy(pw);
 
