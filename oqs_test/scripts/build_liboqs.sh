@@ -20,7 +20,13 @@ PREFIX=${PREFIX:-"`pwd`/tmp/install"}
 
 cd tmp/liboqs
 autoreconf -i
-./configure --prefix=${PREFIX} --with-pic=yes --enable-openssl --with-openssl-dir=${OPENSSL_SYS_DIR}
+if [ "x${CIRCLECI}" == "xtrue" ]; then
+    BIKEARG="--disable-kem-bike"
+    # FIXME: BIKE doesn't work on CircleCI due to symbol _CMP_LT_OS not being defined
+else
+    BIKEARG=
+fi
+./configure --prefix=${PREFIX} --with-pic=yes --enable-openssl --with-openssl-dir=${OPENSSL_SYS_DIR} ${BIKEARG}
 if [ "x${CIRCLECI}" == "xtrue" ] || [ "x${TRAVIS}" == "xtrue" ]; then
     make -j2
 else
