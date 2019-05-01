@@ -24,7 +24,7 @@ else
     PQAUTH_ARG=""
 fi
 
-cd tmp/openssh
+cd ..
 autoreconf -i
 if [ "x${WITH_OPENSSL}" == "xtrue" ]; then
     ./configure --prefix="${PREFIX}" --enable-pq-kex --enable-hybrid-kex ${PQAUTH_ARG} --with-ldflags="-Wl,-rpath -Wl,${PREFIX}/lib" --with-libs=-lm --with-ssl-dir="${OPENSSL_SYS_DIR}" --with-liboqs-dir="${PREFIX}" --with-cflags="-I${PREFIX}/include" --sysconfdir="${PREFIX}"

@@ -39,21 +39,21 @@ jobs:
   ssh-amd64-buster-liboqs-master-with-openssl-with-pqauth:
     <<: *opensshjob
     environment:
-      IMAGE: dstebila/liboqs:amd64-buster-0.0.1
+      IMAGE: dstebila/liboqs:amd64-buster-0.0.2
       ARCH: x64
       WITH_OPENSSL: true
       WITH_PQAUTH: true
   ssh-amd64-buster-liboqs-master-with-openssl-no-pqauth:
     <<: *opensshjob
     environment:
-      IMAGE: dstebila/liboqs:amd64-buster-0.0.1
+      IMAGE: dstebila/liboqs:amd64-buster-0.0.2
       ARCH: x64
       WITH_OPENSSL: true
       WITH_PQAUTH: false
   ssh-amd64-buster-liboqs-master-no-openssl-no-pqauth:
     <<: *opensshjob
     environment:
-      IMAGE: dstebila/liboqs:amd64-buster-0.0.1
+      IMAGE: dstebila/liboqs:amd64-buster-0.0.2
       ARCH: x64
       WITH_OPENSSL: false
       WITH_PQAUTH: false
