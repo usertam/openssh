@@ -361,7 +361,10 @@ sshkey_size(const struct sshkey *k)
 #if defined(WITH_OPENSSL) && defined(WITH_HYBRID_AUTH)
 	/* For hybrid cases, we return the sum of the classical and PQ public key lengths */
 	CASE_KEY_RSA_HYBRID:
-		return BN_num_bits(k->rsa->n) + (k->oqs_sig == NULL ? 0 : k->oqs_sig->length_public_key);
+		if (k->rsa == NULL)
+			return 0;
+		RSA_get0_key(k->rsa, &rsa_n, NULL, NULL);
+		return BN_num_bits(rsa_n) + (k->oqs_sig == NULL ? 0 : k->oqs_sig->length_public_key);
 	CASE_KEY_ECDSA_HYBRID:
 		return sshkey_curve_nid_to_bits(k->ecdsa_nid) + (k->oqs_sig == NULL ? 0 : k->oqs_sig->length_public_key);
 #endif /* WITH_OPENSSL && WITH_HYBRID_AUTH */
