@@ -26,7 +26,7 @@ if [ "x${CIRCLECI}" == "xtrue" ]; then
 else
     BIKEARG=
 fi
-./configure --prefix=${PREFIX} --with-pic=yes --enable-openssl --with-openssl-dir=${OPENSSL_SYS_DIR} ${BIKEARG}
+./configure --prefix=${PREFIX} --with-pic=yes --with-openssl=${OPENSSL_SYS_DIR} ${BIKEARG}
 if [ "x${CIRCLECI}" == "xtrue" ] || [ "x${TRAVIS}" == "xtrue" ]; then
     make -j2
 else
