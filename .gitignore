@@ -3,6 +3,7 @@ buildpkg.sh
 config.h
 config.h.in
 config.status
+config.log
 configure
 openbsd-compat/Makefile
 openbsd-compat/regress/Makefile
@@ -29,3 +30,4 @@ sshd
 
 oqs_test/tmp
 __pycache__
+tags

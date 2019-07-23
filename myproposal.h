@@ -48,7 +48,10 @@
 # define KEX_PQ_METHOD_BIKE \
 	PQ_OQS_KEX_METHOD("bike1-L1-sha384") \
 	PQ_OQS_KEX_METHOD("bike1-L3-sha384") \
-	PQ_OQS_KEX_METHOD("bike1-L5-sha384")
+	PQ_OQS_KEX_METHOD("bike1-L5-sha384") \
+	PQ_OQS_KEX_METHOD("bike2-L1-sha384") \
+	PQ_OQS_KEX_METHOD("bike2-L3-sha384") \
+	PQ_OQS_KEX_METHOD("bike2-L5-sha384")
 #else
 # define KEX_PQ_METHOD_BIKE ""
 #endif
@@ -94,7 +97,10 @@
 # define KEX_HYBRID_METHOD_BIKE \
 	HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike1-L1-sha384") \
 	HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike1-L3-sha384") \
-	HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike1-L5-sha384")
+	HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike1-L5-sha384") \
+	HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike2-L1-sha384") \
+	HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike2-L3-sha384") \
+	HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike2-L5-sha384")
 #else
 # define KEX_HYBRID_METHOD_BIKE ""
 #endif
