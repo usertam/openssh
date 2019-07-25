@@ -6,14 +6,31 @@ import time
 sig_algs = ['ssh-ed25519']
 if 'WITH_PQAUTH' in os.environ and os.environ['WITH_PQAUTH'] == 'true':
     # post-quantum
-    sig_algs += ['ssh-qteslai', 'ssh-qteslaiiispeed', 'ssh-qteslaiiisize', 'ssh-picnicl1fs', 'ssh-oqsdefault']
-    # hybrid
-    sig_algs += ['ssh-p256-qteslai', 'ssh-rsa3072-qteslai', 'ssh-p384-qteslaiiispeed', 'ssh-p384-qteslaiiisize', 'ssh-p256-picnicl1fs', 'ssh-rsa3072-picnicl1fs', 'ssh-p256-oqsdefault', 'ssh-rsa3072-oqsdefault']
+    sig_algs += [
+            'ssh-oqsdefault',
+            'ssh-qteslai',
+            'ssh-qteslaiiispeed',
+            'ssh-qteslaiiisize',
+            'ssh-picnicl1fs',
+            # hybrid
+            'ssh-p256-qteslai',
+            'ssh-rsa3072-qteslai',
+            'ssh-p384-qteslaiiispeed',
+            'ssh-p384-qteslaiiisize',
+            'ssh-p256-picnicl1fs',
+            'ssh-rsa3072-picnicl1fs',
+            'ssh-p256-oqsdefault',
+            'ssh-rsa3072-oqsdefault']
 
 # post-quantum only KEX
-kex_algs = ['bike1-L1-sha384@openquantumsafe.org', 'bike1-L3-sha384@openquantumsafe.org', 'bike1-L5-sha384@openquantumsafe.org', 'bike2-L1-sha384@openquantumsafe.org', 'bike2-L3-sha384@openquantumsafe.org', 'bike2-L5-sha384@openquantumsafe.org', 'frodo-640-aes-sha384@openquantumsafe.org', 'frodo-976-aes-sha384@openquantumsafe.org', 'sike-503-sha384@openquantumsafe.org', 'sike-751-sha384@openquantumsafe.org', 'oqsdefault-sha384@openquantumsafe.org']
-# hybrid KEX
-kex_algs += ['ecdh-nistp384-bike1-L1-sha384@openquantumsafe.org', 'ecdh-nistp384-bike1-L3-sha384@openquantumsafe.org', 'ecdh-nistp384-bike1-L5-sha384@openquantumsafe.org', 'ecdh-nistp384-bike2-L1-sha384@openquantumsafe.org', 'ecdh-nistp384-bike2-L3-sha384@openquantumsafe.org', 'ecdh-nistp384-bike2-L5-sha384@openquantumsafe.org', 'ecdh-nistp384-frodo-640-aes-sha384@openquantumsafe.org', 'ecdh-nistp384-frodo-976-aes-sha384@openquantumsafe.org', 'ecdh-nistp384-sike-503-sha384@openquantumsafe.org', 'ecdh-nistp384-sike-751-sha384@openquantumsafe.org', 'ecdh-nistp384-oqsdefault-sha384@openquantumsafe.org']
+kex_algs = [
+##### OQS_TEMPLATE_FRAGMENT_LIST_KEXS_START
+    # post-quantum only kex
+    'frodo-640-aes-sha384@openquantumsafe.org','frodo-976-aes-sha384@openquantumsafe.org','sike-503-sha384@openquantumsafe.org','sike-751-sha384@openquantumsafe.org','bike1-L1-sha384@openquantumsafe.org','bike1-L3-sha384@openquantumsafe.org','bike1-L5-sha384@openquantumsafe.org','bike2-L1-sha384@openquantumsafe.org','bike2-L3-sha384@openquantumsafe.org','bike2-L5-sha384@openquantumsafe.org','newhope-512-sha384@openquantumsafe.org','newhope-1024-sha384@openquantumsafe.org',
+    # hybrid key exchanges
+    'ecdh-nistp384-frodo-640-aes-sha384@openquantumsafe.org','ecdh-nistp384-frodo-976-aes-sha384@openquantumsafe.org','ecdh-nistp384-sike-503-sha384@openquantumsafe.org','ecdh-nistp384-sike-751-sha384@openquantumsafe.org','ecdh-nistp384-bike1-L1-sha384@openquantumsafe.org','ecdh-nistp384-bike1-L3-sha384@openquantumsafe.org','ecdh-nistp384-bike1-L5-sha384@openquantumsafe.org','ecdh-nistp384-bike2-L1-sha384@openquantumsafe.org','ecdh-nistp384-bike2-L3-sha384@openquantumsafe.org','ecdh-nistp384-bike2-L5-sha384@openquantumsafe.org','ecdh-nistp384-newhope-512-sha384@openquantumsafe.org','ecdh-nistp384-newhope-1024-sha384@openquantumsafe.org',
+##### OQS_TEMPLATE_FRAGMENT_LIST_KEXS_END
+        ]
 
 
 def test_gen_keys():

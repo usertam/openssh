@@ -198,6 +198,7 @@ kex_tests(void)
 	do_kex("ecdh-sha2-nistp521");
 #if defined(WITH_OQS) && defined(WITH_HYBRID_KEX)
 	do_kex(KEX_ECDH_NISTP384_OQSDEFAULT_SHA384);
+///// OQS_TEMPLATE_FRAGMENT_DO_HYBRID_KEXS_START
 #ifdef HAVE_FRODO
 	do_kex(KEX_ECDH_NISTP384_FRODO_640_AES_SHA384);
 	do_kex(KEX_ECDH_NISTP384_FRODO_976_AES_SHA384);
@@ -218,6 +219,7 @@ kex_tests(void)
 	do_kex(KEX_ECDH_NISTP384_NEWHOPE_512_SHA384);
 	do_kex(KEX_ECDH_NISTP384_NEWHOPE_1024_SHA384);
 #endif /* HAVE_NEWHOPE */
+///// OQS_TEMPLATE_FRAGMENT_DO_HYBRID_KEXS_END
 #endif /* defined(WITH_OQS) && defined(WITH_HYBRID_KEX) */
 #endif /* OPENSSL_HAS_ECC */
 	do_kex("diffie-hellman-group-exchange-sha256");
@@ -226,6 +228,7 @@ kex_tests(void)
 	do_kex("diffie-hellman-group1-sha1");
 #if defined(WITH_OQS) && defined(WITH_OQ_KEX)
 	do_kex(KEX_OQSDEFAULT_SHA384);
+///// OQS_TEMPLATE_FRAGMENT_DO_PQ_KEXS_START
 #ifdef HAVE_FRODO
 	do_kex(KEX_FRODO_640_AES_SHA384);
 	do_kex(KEX_FRODO_976_AES_SHA384);
@@ -246,5 +249,6 @@ kex_tests(void)
 	do_kex(KEX_NEWHOPE_512_SHA384);
 	do_kex(KEX_NEWHOPE_1024_SHA384);
 #endif /* HAVE_NEWHOPE */
+///// OQS_TEMPLATE_FRAGMENT_DO_PQ_KEXS_END
 #endif /* defined(WITH_OQS) && defined(WITH_PQ_KEX) */
 }

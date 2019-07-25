@@ -31,3 +31,4 @@ sshd
 oqs_test/tmp
 __pycache__
 tags
+*.swp
