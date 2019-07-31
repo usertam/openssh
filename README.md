@@ -31,6 +31,10 @@ The following key exchange / key encapsulation methods from liboqs are supported
 - `sike-503`, `sike-751`
 - `oqsdefault`
 
+In addition to the PQ-only key exchange methods, the following hybrid methods are supported combining a PQ scheme with ECDH using NIST's P384 curve (assuming the PQ schemes have been enabled in liboqs and that the `hybrid-kex` configuration option has been enabled; see below):
+
+- `ecdh-nistp384-<KEX>`, where <KEX> is any of the key exchange algorithms listed above.
+
 ### Authentication mechanisms
 
 The following signature methods from liboqs's master branch are supported (assuming they have been enabled in liboqs and that the `pq-auth` configuration option has been enabled; see below):
@@ -84,7 +88,7 @@ Builds have been tested manually on macOS 10.14 (clang 10.0.0), Ubuntu 14.04 (gc
 
 For **Ubuntu**, you need to install the following packages:
 
-	sudo apt install autoconf automake gcc libtool libssl-dev make unzip xsltproc
+	sudo apt install autoconf automake gcc libtool libssl-dev make unzip xsltproc zlib1g-dev
 
 For **Ubuntu 18.04**, you need to downgrade the version of OpenSSL.  (Ubuntu 18.04 bundles OpenSSL 1.1.0 by default,  but OpenSSH only supports building against OpenSSL 1.0.2 at present.)
 
@@ -118,7 +122,7 @@ For the **master branch** of liboqs:
 	git clone -b master --single-branch https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
 	autoreconf -i
-	./configure --prefix=<path-to-openssl-dir>/oqs --with-pic=yes --enable-shared=no
+	./configure --prefix=<path-to-openssh-dir>/oqs --with-pic=yes --enable-shared=no
 	make -j
 	make install
 	rm -f <path-to-install-liboqs>/lib/liboqs.so*
@@ -219,7 +223,7 @@ The server automatically supports all available hybrid and PQ-only key exchange 
 
 In another terminal, run a client:
 
-	<path-to-openssh>/bin/ssh -l <username>              \
+	<path-to-openssh>/bin/ssh -l                         \
 	    -p 2222 localhost                                \
 	    -o KexAlgorithms=<LIBOQS_ALGORITHM_KEX>          \
 	   [-o HostKeyAlgorithms=<LIBOQS_SIG_ALGORITHM>      \
