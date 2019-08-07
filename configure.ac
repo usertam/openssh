@@ -3570,11 +3570,12 @@ fi
 
 if test "x$with_liboqs" = "xyes" ; then
 	dnl Check which post-quantum schemes that are enabled in LibOQS library
+    ##### OQS_TEMPLATE_FRAGMENT_TEST_PQ_KEX_SUPPORT_START
 	AC_MSG_CHECKING([for libOQS FRODO support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(ENABLE_KEM_FRODOKEM) || (defined(OQS_ENABLE_KEM_frodokem_640_aes) && defined(OQS_ENABLE_KEM_frodokem_976_aes))
+					#if defined(ENABLE_KEM_FRODO) || (defined(OQS_ENABLE_KEM_frodokem_640_aes) && defined(OQS_ENABLE_KEM_frodokem_976_aes))
 					#else
 					#error "FRODO is not supported"
 					#endif
@@ -3583,6 +3584,7 @@ if test "x$with_liboqs" = "xyes" ; then
 				AC_DEFINE([HAVE_FRODO], [1], [Define to 1 if LibOQS library is compiled with support for FRODO])
 			], [AC_MSG_RESULT([no])
 	])
+
 	AC_MSG_CHECKING([for libOQS SIKE support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
@@ -3596,11 +3598,12 @@ if test "x$with_liboqs" = "xyes" ; then
 				AC_DEFINE([HAVE_SIKE], [1], [Define to 1 if LibOQS library is compiled with support for SIKE])
 			], [AC_MSG_RESULT([no])
 	])
+
 	AC_MSG_CHECKING([for libOQS BIKE support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(ENABLE_KEM_BIKE) || (defined(OQS_ENABLE_KEM_bike1_l1) && defined(OQS_ENABLE_KEM_bike1_l3) && defined(OQS_ENABLE_KEM_bike1_l5))
+					#if defined(ENABLE_KEM_BIKE) || (defined(OQS_ENABLE_KEM_bike1_l1) && defined(OQS_ENABLE_KEM_bike1_l3) && defined(OQS_ENABLE_KEM_bike1_l5) && defined(OQS_ENABLE_KEM_bike2_l1) && defined(OQS_ENABLE_KEM_bike2_l3) && defined(OQS_ENABLE_KEM_bike2_l5))
 					#else
 					#error "BIKE is not supported"
 					#endif
@@ -3609,19 +3612,21 @@ if test "x$with_liboqs" = "xyes" ; then
 				AC_DEFINE([HAVE_BIKE], [1], [Define to 1 if LibOQS library is compiled with support for BIKE])
 			], [AC_MSG_RESULT([no])
 	])
-	AC_MSG_CHECKING([for libOQS NewHope support])
+
+	AC_MSG_CHECKING([for libOQS NEWHOPE support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(ENABLE_KEM_NEWHOPE) || (defined(OQS_ENABLE_KEM_newhope_1024_cca_kem) && defined(OQS_ENABLE_KEM_newhope_512_cca_kem))
+					#if defined(ENABLE_KEM_NEWHOPE) || (defined(OQS_ENABLE_KEM_newhope_512cca) && defined(OQS_ENABLE_KEM_newhope_1024cca))
 					#else
-					#error "NewHope is not supported"
+					#error "NEWHOPE is not supported"
 					#endif
 			]])],
 			[ AC_MSG_RESULT([yes])
-				AC_DEFINE([HAVE_NEWHOPE], [1], [Define to 1 if LibOQS library is compiled with support for NewHope])
+				AC_DEFINE([HAVE_NEWHOPE], [1], [Define to 1 if LibOQS library is compiled with support for NEWHOPE])
 			], [AC_MSG_RESULT([no])
 	])
+##### OQS_TEMPLATE_FRAGMENT_TEST_PQ_KEX_SUPPORT_END
 	dnl End supported post-quantum schemes LibOQS library check
 fi
 

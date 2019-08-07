@@ -26,6 +26,7 @@ This branch ([OQS-master](https://github.com/open-quantum-safe/openssh-portable/
 The following key exchange / key encapsulation methods from liboqs are supported (assuming they have been enabled in liboqs):
 
 - `bike1-L1`, `bike1-L3`, `bike1-L5`
+- `bike2-L1`, `bike2-L3`, `bike2-L3`
 - `frodo-640-aes`, `frodo-976-aes`
 - `newhope-512`, `newhope-1024`
 - `sike-503`, `sike-751`

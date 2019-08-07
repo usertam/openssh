@@ -1,0 +1,61 @@
+kems:
+  -
+    family: "FRODO"
+    variants:
+      -
+        name: "FRODO_640_AES"
+        ssh_name: "frodo-640-aes-sha384"
+        oqs_meth: "OQS_KEM_alg_frodokem_640_aes"
+      -
+        name: "FRODO_976_AES"
+        ssh_name: "frodo-976-aes-sha384"
+        oqs_meth: "OQS_KEM_alg_frodokem_976_aes"
+  -
+    family: "SIKE"
+    variants:
+      -
+        name: "SIKE_503"
+        ssh_name: "sike-503-sha384"
+        oqs_meth: "OQS_KEM_alg_sike_p503"
+      -
+        name: "SIKE_751"
+        ssh_name: "sike-751-sha384"
+        oqs_meth: "OQS_KEM_alg_sike_p751"
+  -
+    family: "BIKE"
+    variants:
+      -
+        name: "BIKE1_L1"
+        ssh_name: "bike1-L1-sha384"
+        oqs_meth: "OQS_KEM_alg_bike1_l1"
+      -
+        name: "BIKE1_L3"
+        ssh_name: "bike1-L3-sha384"
+        oqs_meth: "OQS_KEM_alg_bike1_l3"
+      -
+        name: "BIKE1_L5"
+        ssh_name: "bike1-L5-sha384"
+        oqs_meth: "OQS_KEM_alg_bike1_l5"
+      -
+        name: "BIKE2_L1"
+        ssh_name: "bike2-L1-sha384"
+        oqs_meth: "OQS_KEM_alg_bike2_l1"
+      -
+        name: "BIKE2_L3"
+        ssh_name: "bike2-L3-sha384"
+        oqs_meth: "OQS_KEM_alg_bike2_l3"
+      -
+        name: "BIKE2_L5"
+        ssh_name: "bike2-L5-sha384"
+        oqs_meth: "OQS_KEM_alg_bike2_l5"
+  -
+    family: "NEWHOPE"
+    variants:
+      -
+        name: "NEWHOPE_512"
+        ssh_name: "newhope-512-sha384"
+        oqs_meth: "OQS_KEM_alg_newhope_512cca"
+      -
+        name: "NEWHOPE_1024"
+        ssh_name: "newhope-1024-sha384"
+        oqs_meth: "OQS_KEM_alg_newhope_1024cca"
