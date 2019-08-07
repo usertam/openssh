@@ -53,21 +53,21 @@ jobs:
   ubuntu-xenial-x86_64-with-openssl-with-pqauth:
     <<: *opensshjob
     environment:
-      IMAGE: dstebila/liboqs:ubuntu-xenial-x64_64-0.1.0
+      IMAGE: dstebila/liboqs:ubuntu-xenial-x86_64-0.1.0
       ARCH: x64
       WITH_OPENSSL: true
       WITH_PQAUTH: true
   ubuntu-xenial-x86_64-with-openssl-no-pqauth:
     <<: *opensshjob
     environment:
-      IMAGE: dstebila/liboqs:ubuntu-xenial-x64_64-0.1.0
+      IMAGE: dstebila/liboqs:ubuntu-xenial-x86_64-0.1.0
       ARCH: x64
       WITH_OPENSSL: true
       WITH_PQAUTH: false
   ubuntu-xenial-x86_64-no-openssl-no-pqauth:
     <<: *opensshjob
     environment:
-      IMAGE: dstebila/liboqs:ubuntu-xenial-x64_64-0.1.0
+      IMAGE: dstebila/liboqs:ubuntu-xenial-x86_64-0.1.0
       ARCH: x64
       WITH_OPENSSL: false
       WITH_PQAUTH: false
