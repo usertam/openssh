@@ -78,16 +78,16 @@ kems:
     family: "SABER"
     variants:
       -
-        name: "LIGHTSABER"
-        ssh_name: "lightsaber-sha384"
+        name: "SABER_LIGHTSABER"
+        ssh_name: "saber-lightsaber-sha384"
         oqs_meth: "OQS_KEM_alg_saber_lightsaber"
       -
-        name: "SABER"
-        ssh_name: "saber-sha384"
+        name: "SABER_SABER"
+        ssh_name: "saber-saber-sha384"
         oqs_meth: "OQS_KEM_alg_saber_saber"
       -
-        name: "FIRESABER"
-        ssh_name: "firesaber-sha384"
+        name: "SABER_FIRESABER"
+        ssh_name: "saber-firesaber-sha384"
         oqs_meth: "OQS_KEM_alg_saber_firesaber"
   -
     family: "SIDH"

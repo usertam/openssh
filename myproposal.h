@@ -73,9 +73,9 @@
 #endif /* HAVE_NTRU */
 #ifdef HAVE_SABER
 #define KEX_PQ_METHOD_SABER \
-    PQ_OQS_KEX_METHOD("lightsaber-sha384") \
-    PQ_OQS_KEX_METHOD("saber-sha384") \
-    PQ_OQS_KEX_METHOD("firesaber-sha384")
+    PQ_OQS_KEX_METHOD("saber-lightsaber-sha384") \
+    PQ_OQS_KEX_METHOD("saber-saber-sha384") \
+    PQ_OQS_KEX_METHOD("saber-firesaber-sha384")
 #else
 #define KEX_PQ_METHOD_SABER ""
 #endif /* HAVE_SABER */
@@ -166,9 +166,9 @@
 #endif /* HAVE_NTRU */
 #ifdef HAVE_SABER
 #define KEX_HYBRID_METHOD_SABER \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-lightsaber-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-saber-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-firesaber-sha384")
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-saber-lightsaber-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-saber-saber-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-saber-firesaber-sha384")
 #else
 #define KEX_HYBRID_METHOD_SABER ""
 #endif /* HAVE_SABER */

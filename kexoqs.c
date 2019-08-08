@@ -84,11 +84,11 @@ static const OQS_ALG oqs_alg_mapping[] = {
 	SSH2_MSG_HY_ECDH_NTRU_INIT, SSH2_MSG_HY_ECDH_NTRU_REPLY},
 #endif /* HAVE_NTRU */
 #ifdef HAVE_SABER
-	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-lightsaber-sha384"), OQS_KEM_alg_saber_lightsaber,
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-saber-lightsaber-sha384"), OQS_KEM_alg_saber_lightsaber,
 	SSH2_MSG_HY_ECDH_SABER_INIT, SSH2_MSG_HY_ECDH_SABER_REPLY},
-	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-saber-sha384"), OQS_KEM_alg_saber_saber,
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-saber-saber-sha384"), OQS_KEM_alg_saber_saber,
 	SSH2_MSG_HY_ECDH_SABER_INIT, SSH2_MSG_HY_ECDH_SABER_REPLY},
-	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-firesaber-sha384"), OQS_KEM_alg_saber_firesaber,
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-saber-firesaber-sha384"), OQS_KEM_alg_saber_firesaber,
 	SSH2_MSG_HY_ECDH_SABER_INIT, SSH2_MSG_HY_ECDH_SABER_REPLY},
 #endif /* HAVE_SABER */
 #ifdef HAVE_SIDH
@@ -151,11 +151,11 @@ static const OQS_ALG oqs_alg_mapping[] = {
 	SSH2_MSG_PQ_NTRU_INIT, SSH2_MSG_PQ_NTRU_REPLY},
 #endif /* HAVE_NTRU */
 #ifdef HAVE_SABER
-	{PQ_OQS_KEX_SUFFIX("lightsaber-sha384"), OQS_KEM_alg_saber_lightsaber,
+	{PQ_OQS_KEX_SUFFIX("saber-lightsaber-sha384"), OQS_KEM_alg_saber_lightsaber,
 	SSH2_MSG_PQ_SABER_INIT, SSH2_MSG_PQ_SABER_REPLY},
-	{PQ_OQS_KEX_SUFFIX("saber-sha384"), OQS_KEM_alg_saber_saber,
+	{PQ_OQS_KEX_SUFFIX("saber-saber-sha384"), OQS_KEM_alg_saber_saber,
 	SSH2_MSG_PQ_SABER_INIT, SSH2_MSG_PQ_SABER_REPLY},
-	{PQ_OQS_KEX_SUFFIX("firesaber-sha384"), OQS_KEM_alg_saber_firesaber,
+	{PQ_OQS_KEX_SUFFIX("saber-firesaber-sha384"), OQS_KEM_alg_saber_firesaber,
 	SSH2_MSG_PQ_SABER_INIT, SSH2_MSG_PQ_SABER_REPLY},
 #endif /* HAVE_SABER */
 #ifdef HAVE_SIDH
