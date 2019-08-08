@@ -2,7 +2,7 @@
     # post-quantum only kex
     {% for kem in config['kems'] %}{% for variant in kem['variants'] %}'{{ variant['ssh_name'] }}@openquantumsafe.org',
     {%- endfor %} {%- endfor %}
-    # hybrid key exchanges
+    # hybrid kex
     {% for kem in config['kems'] %}{% for variant in kem['variants'] %}'ecdh-nistp384-{{ variant['ssh_name'] }}@openquantumsafe.org',
     {%- endfor %}{% endfor %}
 

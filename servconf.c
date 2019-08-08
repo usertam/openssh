@@ -280,6 +280,7 @@ fill_default_server_options(ServerOptions *options)
 		    _PATH_HOST_XMSS_KEY_FILE);
 #endif /* WITH_XMSS */
 #ifdef WITH_PQ_AUTH
+///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_HOSTKEYS_START
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_OQSDEFAULT_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
@@ -290,9 +291,10 @@ fill_default_server_options(ServerOptions *options)
 		    _PATH_HOST_QTESLA_III_SIZE_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_PICNIC_L1FS_KEY_FILE);
-		/* ADD_MORE_OQS_SIG_HERE */
+///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_HOSTKEYS_END
 #endif /* WITH_PQ_AUTH */
 #ifdef WITH_HYBRID_AUTH
+///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_HOSTKEYS_START
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_RSA3072_OQSDEFAULT_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
@@ -309,7 +311,7 @@ fill_default_server_options(ServerOptions *options)
 		    _PATH_HOST_RSA3072_PICNIC_L1FS_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_P256_PICNIC_L1FS_KEY_FILE);
-		/* ADD_MORE_OQS_SIG_HERE (hybrid) */
+///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_HOSTKEYS_END
 #endif /* WITH_HYBRID_AUTH */
 	}
 	/* No certificates by default */

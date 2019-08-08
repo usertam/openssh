@@ -166,7 +166,9 @@ main(int argc, char **argv)
 {
 	struct sshbuf *b;
 	Options options;
-#define NUM_KEYTYPES 18 /* ADD_MORE_OQS_SIG_HERE: update this value */
+///// OQS_TEMPLATE_FRAGMENT_COUNT_KT_START
+#define NUM_KEYTYPES 18
+///// OQS_TEMPLATE_FRAGMENT_COUNT_KT_END
 	struct sshkey *keys[NUM_KEYTYPES], *key = NULL;
 	struct passwd *pw;
 	int r, key_fd[NUM_KEYTYPES], i, found, version = 2, fd;
@@ -190,6 +192,7 @@ main(int argc, char **argv)
 
 	i = 0;
 	/* XXX This really needs to read sshd_config for the paths */
+///// OQS_TEMPLATE_FRAGMENT_OPEN_KEYFILES_START
 	key_fd[i++] = open(_PATH_HOST_DSA_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_ECDSA_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_ED25519_KEY_FILE, O_RDONLY);
@@ -208,7 +211,7 @@ main(int argc, char **argv)
 	key_fd[i++] = open(_PATH_HOST_P384_QTESLA_III_SIZE_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_RSA3072_PICNIC_L1FS_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_P256_PICNIC_L1FS_KEY_FILE, O_RDONLY);
-	/* ADD_MORE_OQS_SIG_HERE */
+///// OQS_TEMPLATE_FRAGMENT_OPEN_KEYFILES_END
 
 	if ((pw = getpwuid(getuid())) == NULL)
 		fatal("getpwuid failed");

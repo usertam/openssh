@@ -238,9 +238,11 @@ type_bits_valid(int type, const char *name, u_int32_t *bitsp)
 	   */
 	if (name == NULL && IS_ECDSA_HYBRID(type)) {
 		switch (type) {
+///// OQS_TEMPLATE_FRAGMENT_SET_BITS_START
 		case KEY_P384_QTESLA_III_SPEED:
 		case KEY_P384_QTESLA_III_SIZE:
 			*bitsp = 384;
+///// OQS_TEMPLATE_FRAGMENT_SET_BITS_END
 		}
 	}
 #ifdef WITH_OPENSSL
@@ -302,6 +304,7 @@ ask_filename(struct passwd *pw, const char *prompt)
 		case KEY_XMSS_CERT:
 			name = _PATH_SSH_CLIENT_ID_XMSS;
 			break;
+///// OQS_TEMPLATE_FRAGMENT_ASSIGN_PQ_ID_PATHS_START
 		case KEY_OQSDEFAULT:
 			name = _PATH_SSH_CLIENT_ID_OQSDEFAULT;
 			break;
@@ -317,7 +320,7 @@ ask_filename(struct passwd *pw, const char *prompt)
 		case KEY_PICNIC_L1FS:
 			name = _PATH_SSH_CLIENT_ID_PICNIC_L1FS;
 			break;
-		/* ADD_MORE_OQS_SIG_HERE */
+///// OQS_TEMPLATE_FRAGMENT_ASSIGN_PQ_ID_PATHS_END
 		default:
 			fatal("bad key type");
 		}
@@ -1051,14 +1054,16 @@ do_gen_all_hostkeys(struct passwd *pw)
 		{ "xmss", "XMSS",_PATH_HOST_XMSS_KEY_FILE },
 #endif /* WITH_XMSS */
 #ifdef WITH_PQ_AUTH
+///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_KT_START
 		{ "oqsdefault", "OQSDEFAULT", _PATH_HOST_OQSDEFAULT_KEY_FILE },
 		{ "qteslaI", "QTESLAI", _PATH_HOST_QTESLA_I_KEY_FILE },
 		{ "qteslaIIIspeed", "QTESLAIIISPEED",_PATH_HOST_QTESLA_III_SPEED_KEY_FILE },
 		{ "qteslaIIIsize", "QTESLAIIISIZE",_PATH_HOST_QTESLA_III_SIZE_KEY_FILE },
 		{ "picnicL1FS", "PICNICL1FS",_PATH_HOST_PICNIC_L1FS_KEY_FILE },
-		/* ADD_MORE_OQS_SIG_HERE */
+///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_KT_END
 #endif /* WITH_PQ_AUTH */
 #ifdef WITH_HYBRID_AUTH
+///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_KT_START
 		{ "rsa3072_oqsdefault", "RSA3072_OQSDEFAULT", _PATH_HOST_RSA3072_OQSDEFAULT_KEY_FILE },
 		{ "p256_oqsdefault", "P256_OQSDEFAULT", _PATH_HOST_P256_OQSDEFAULT_KEY_FILE },
 		{ "rsa3072_qteslaI", "RSA3072_QTESLAI", _PATH_HOST_RSA3072_QTESLA_I_KEY_FILE },
@@ -1067,7 +1072,7 @@ do_gen_all_hostkeys(struct passwd *pw)
 		{ "p384_qteslaIIIsize", "P384_QTESLAIIISIZE",_PATH_HOST_P384_QTESLA_III_SIZE_KEY_FILE },
 		{ "rsa3072_picnicL1FS", "RSA3072_PICNICL1FS",_PATH_HOST_RSA3072_PICNIC_L1FS_KEY_FILE },
 		{ "p256_picnicL1FS", "P256_PICNICL1FS",_PATH_HOST_P256_PICNIC_L1FS_KEY_FILE },
-		/* ADD_MORE_OQS_SIG_HERE (hybrid) */
+///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_KT_END
 #endif /* WITH_HYBRID_AUTH */
 		{ NULL, NULL, NULL }
 	};
@@ -2817,7 +2822,6 @@ main(int argc, char **argv)
 				fatal("%s: %s", identity_file, strerror(errno));
 			exit(0);
 		} else {
-
 			n += do_print_resource_record(pw,
 			    _PATH_HOST_RSA_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
@@ -2828,6 +2832,7 @@ main(int argc, char **argv)
 			    _PATH_HOST_ED25519_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
 			    _PATH_HOST_XMSS_KEY_FILE, rr_hostname);
+///// OQS_TEMPLATE_FRAGMENT_PRINT_PQ_RR_START
 			n += do_print_resource_record(pw,
 			    _PATH_HOST_OQSDEFAULT_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
@@ -2838,7 +2843,7 @@ main(int argc, char **argv)
 			    _PATH_HOST_QTESLA_III_SIZE_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
 			    _PATH_HOST_PICNIC_L1FS_KEY_FILE, rr_hostname);
-			/* ADD_MORE_OQS_SIG_HERE */
+///// OQS_TEMPLATE_FRAGMENT_PRINT_PQ_RR_END
 
 			if (n == 0)
 				fatal("no keys found.");

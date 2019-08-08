@@ -16,8 +16,9 @@
  */
 const char* get_oqs_alg_name(int openssh_type)
 {
-  switch (openssh_type)
-    {
+	switch (openssh_type)
+	{
+///// OQS_TEMPLATE_FRAGMENT_OSSH_KT_TO_OQS_METH_START
     case KEY_OQSDEFAULT:
     case KEY_RSA3072_OQSDEFAULT:
     case KEY_P256_OQSDEFAULT:
@@ -36,10 +37,10 @@ const char* get_oqs_alg_name(int openssh_type)
     case KEY_QTESLA_III_SPEED:
     case KEY_P384_QTESLA_III_SPEED:
       return OQS_SIG_alg_qTESLA_III_speed;
-    /* ADD_MORE_OQS_SIG_HERE */
-    default:
-      return NULL;
-    }
+///// OQS_TEMPLATE_FRAGMENT_OSSH_KT_TO_OQS_METH_END
+		default:
+			return NULL;
+	}
 }
 
 int

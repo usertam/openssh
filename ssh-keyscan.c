@@ -59,6 +59,7 @@ int ssh_port = SSH_DEFAULT_PORT;
 #define KT_ECDSA		(1<<2)
 #define KT_ED25519		(1<<3)
 #define KT_XMSS			(1<<4)
+///// OQS_TEMPLATE_FRAGMENT_ASSIGN_KT_MARKERS_START
 #define KT_OQSDEFAULT		(1<<5)
 #define KT_QTESLA_I		(1<<6)
 #define KT_QTESLA_III_SPEED	(1<<7)
@@ -72,17 +73,19 @@ int ssh_port = SSH_DEFAULT_PORT;
 #define KT_P384_QTESLA_III_SIZE	(1<<15)
 #define KT_RSA3072_PICNIC_L1FS	(1<<16)
 #define KT_P256_PICNIC_L1FS	(1<<17)
-/* ADD_MORE_OQS_SIG_HERE */
 
 #define KT_MIN		KT_DSA
 #define KT_MAX		KT_P256_PICNIC_L1FS
+///// OQS_TEMPLATE_FRAGMENT_ASSIGN_KT_MARKERS_END
 
 int get_cert = 0;
-int get_keytypes = KT_RSA|KT_ECDSA|KT_ED25519|KT_OQSDEFAULT|KT_QTESLA_I|KT_QTESLA_III_SPEED|KT_QTESLA_III_SIZE|KT_PICNIC_L1FS|\
+uint64_t get_keytypes = KT_RSA|KT_ECDSA|KT_ED25519| \
+///// OQS_TEMPLATE_FRAGMENT_GET_KT_START
+KT_OQSDEFAULT|KT_QTESLA_I|KT_QTESLA_III_SPEED|KT_QTESLA_III_SIZE|KT_PICNIC_L1FS|\
 			KT_RSA3072_OQSDEFAULT|KT_P256_OQSDEFAULT|\
 			KT_RSA3072_QTESLA_I|KT_P256_QTESLA_I|KT_P384_QTESLA_III_SPEED|KT_P384_QTESLA_III_SIZE|\
 			KT_RSA3072_PICNIC_L1FS|KT_P256_PICNIC_L1FS;
-			/* ADD_MORE_OQS_SIG_HERE */
+///// OQS_TEMPLATE_FRAGMENT_GET_KT_END
 
 int hash_hosts = 0;		/* Hash hostname on output */
 
@@ -627,7 +630,7 @@ static void
 do_host(char *host)
 {
 	char *name = strnnsep(&host, " \t\n");
-	int j;
+	uint64_t j;
 
 	if (name == NULL)
 		return;
@@ -746,6 +749,7 @@ main(int argc, char **argv)
 				case KEY_XMSS:
 					get_keytypes |= KT_XMSS;
 					break;
+///// OQS_TEMPLATE_FRAGMENT_SWITCH_KT_START
 				case KEY_OQSDEFAULT:
 					get_keytypes |= KT_OQSDEFAULT;
 					break;
@@ -785,7 +789,7 @@ main(int argc, char **argv)
 				case KEY_P256_PICNIC_L1FS:
 					get_keytypes |= KT_P256_PICNIC_L1FS;
 					break;
-				/* ADD_MORE_OQS_SIG_HERE */
+///// OQS_TEMPLATE_FRAGMENT_SWITCH_KT_END
 				case KEY_UNSPEC:
 				default:
 					fatal("Unknown key type \"%s\"", tname);

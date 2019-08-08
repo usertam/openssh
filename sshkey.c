@@ -126,14 +126,16 @@ static const struct keytype keytypes[] = {
 	    KEY_XMSS_CERT, 0, 1, 0 },
 #endif /* WITH_XMSS */
 #ifdef WITH_PQ_AUTH
+///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_KT_START
 	{ "ssh-oqsdefault", "OQSDEFAULT", NULL, KEY_OQSDEFAULT, 0, 0, 0 },
 	{ "ssh-qteslai", "QTESLAI", NULL, KEY_QTESLA_I, 0, 0, 0 },
 	{ "ssh-qteslaiiispeed", "QTESLAIIISPEED", NULL, KEY_QTESLA_III_SPEED, 0, 0, 0 },
 	{ "ssh-qteslaiiisize", "QTESLAIIISIZE", NULL, KEY_QTESLA_III_SIZE, 0, 0, 0 },
 	{ "ssh-picnicl1fs", "PICNICL1FS", NULL, KEY_PICNIC_L1FS, 0, 0, 0 },
-	/* ADD_MORE_OQS_SIG_HERE */
+///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_KT_END
 #endif /* WITH_PQ_AUTH */
 #ifdef WITH_HYBRID_AUTH
+///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_KT_START
 	{ "ssh-rsa3072-oqsdefault", "RSA3072_OQSDEFAULT", NULL, KEY_RSA3072_OQSDEFAULT, 0, 0, 0 },
 	{ "ssh-p256-oqsdefault", "P256_OQSDEFAULT", NULL, KEY_P256_OQSDEFAULT, NID_X9_62_prime256v1, 0, 0 },
 	{ "ssh-rsa3072-qteslai", "RSA3072_QTESLAI", NULL, KEY_RSA3072_QTESLA_I, 0, 0, 0 },
@@ -142,7 +144,7 @@ static const struct keytype keytypes[] = {
 	{ "ssh-p384-qteslaiiisize", "P384_QTESLAIIISIZE", NULL, KEY_P384_QTESLA_III_SIZE, NID_secp384r1, 0, 0 },
 	{ "ssh-rsa3072-picnicl1fs", "RSA3072_PICNICL1FS", NULL, KEY_RSA3072_PICNIC_L1FS, 0, 0, 0 },
 	{ "ssh-p256-picnicl1fs", "P256_PICNICL1FS", NULL, KEY_P256_PICNIC_L1FS, NID_X9_62_prime256v1, 0, 0 },
-	/* ADD_MORE_OQS_SIG_HERE (hybrid) */
+///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_KT_END
 #endif /* WITH_HYBRID_AUTH */
 #ifdef WITH_OPENSSL
 	{ "ssh-rsa", "RSA", NULL, KEY_RSA, 0, 0, 0 },

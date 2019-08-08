@@ -7,6 +7,7 @@ sig_algs = ['ssh-ed25519']
 if 'WITH_PQAUTH' in os.environ and os.environ['WITH_PQAUTH'] == 'true':
     # post-quantum
     sig_algs += [
+##### OQS_TEMPLATE_FRAGMENT_LIST_SIGS_START
             'ssh-oqsdefault',
             'ssh-qteslai',
             'ssh-qteslaiiispeed',
@@ -20,9 +21,10 @@ if 'WITH_PQAUTH' in os.environ and os.environ['WITH_PQAUTH'] == 'true':
             'ssh-p256-picnicl1fs',
             'ssh-rsa3072-picnicl1fs',
             'ssh-p256-oqsdefault',
-            'ssh-rsa3072-oqsdefault']
+            'ssh-rsa3072-oqsdefault',
+##### OQS_TEMPLATE_FRAGMENT_LIST_SIGS_END
+]
 
-# post-quantum only KEX
 kex_algs = [
 ##### OQS_TEMPLATE_FRAGMENT_LIST_KEXS_START
     # post-quantum only kex
