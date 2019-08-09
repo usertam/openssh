@@ -13,8 +13,6 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-# FIXMEOQS: turn on the OQS options on by default. Why else use our fork?
-
 AC_INIT([OpenSSH], [Portable], [openssh-unix-dev@mindrot.org])
 AC_REVISION($Revision: 1.583 $)
 AC_CONFIG_SRCDIR([ssh.c])
@@ -3569,8 +3567,12 @@ if test "x$with_liboqs" = "xyes" ; then
 fi
 
 if test "x$with_liboqs" = "xyes" ; then
-	dnl Check which post-quantum schemes that are enabled in LibOQS library
-    ##### OQS_TEMPLATE_FRAGMENT_TEST_PQ_KEX_SUPPORT_START
+	AC_DEFINE([WITH_PQ_KEX], [1], [Define if post-quantum key exchange methods are supported])
+	AC_DEFINE([WITH_HYBRID_KEX], [1], [Define if hybrid key exchange methods are supported])
+	AC_DEFINE([WITH_PQ_AUTH], [1], [Define if post-quantum authentication methods are supported])
+	AC_DEFINE([WITH_HYBRID_AUTH], [1], [Define if hybrid authentication methods are supported])
+	dnl Check which post-quantum schemes are enabled in LibOQS library
+##### OQS_TEMPLATE_FRAGMENT_TEST_PQ_ALG_SUPPORT_START
 	AC_MSG_CHECKING([for libOQS BIKE support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
@@ -3682,65 +3684,80 @@ if test "x$with_liboqs" = "xyes" ; then
 				AC_DEFINE([HAVE_SIKE], [1], [Define to 1 if LibOQS library is compiled with support for SIKE])
 			], [AC_MSG_RESULT([no])
 	])
-##### OQS_TEMPLATE_FRAGMENT_TEST_PQ_KEX_SUPPORT_END
-	dnl End supported post-quantum schemes LibOQS library check
+
+
+	AC_MSG_CHECKING([for libOQS DILITHIUM support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/oqs.h>
+			]], [[
+					#if defined(ENABLE_SIG_DILITHIUM) || (defined(OQS_ENABLE_SIG_dilithium_2) && defined(OQS_ENABLE_SIG_dilithium_4))
+					#else
+					#error "DILITHIUM is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_DILITHIUM], [1], [Define to 1 if LibOQS library is compiled with support for DILITHIUM])
+			], [AC_MSG_RESULT([no])
+	])
+
+	AC_MSG_CHECKING([for libOQS MQDSS support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/oqs.h>
+			]], [[
+					#if defined(ENABLE_SIG_MQDSS) || (defined(OQS_ENABLE_SIG_mqdss_31_64))
+					#else
+					#error "MQDSS is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_MQDSS], [1], [Define to 1 if LibOQS library is compiled with support for MQDSS])
+			], [AC_MSG_RESULT([no])
+	])
+
+	AC_MSG_CHECKING([for libOQS PICNIC support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/oqs.h>
+			]], [[
+					#if defined(ENABLE_SIG_PICNIC) || (defined(OQS_ENABLE_SIG_picnic_L1_FS) && defined(OQS_ENABLE_SIG_picnic_L1_UR) && defined(OQS_ENABLE_SIG_picnic_L3_FS) && defined(OQS_ENABLE_SIG_picnic_L3_UR) && defined(OQS_ENABLE_SIG_picnic_L5_FS) && defined(OQS_ENABLE_SIG_picnic_L5_UR) && defined(OQS_ENABLE_SIG_picnic2_L1_FS) && defined(OQS_ENABLE_SIG_picnic2_L3_FS))
+					#else
+					#error "PICNIC is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_PICNIC], [1], [Define to 1 if LibOQS library is compiled with support for PICNIC])
+			], [AC_MSG_RESULT([no])
+	])
+
+	AC_MSG_CHECKING([for libOQS QTESLA support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/oqs.h>
+			]], [[
+					#if defined(ENABLE_SIG_QTESLA) || (defined(OQS_ENABLE_SIG_qTESLA_I) && defined(OQS_ENABLE_SIG_qTESLA_III_size) && defined(OQS_ENABLE_SIG_qTESLA_III_speed))
+					#else
+					#error "QTESLA is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_QTESLA], [1], [Define to 1 if LibOQS library is compiled with support for QTESLA])
+			], [AC_MSG_RESULT([no])
+	])
+
+	AC_MSG_CHECKING([for libOQS SPHINCS support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/oqs.h>
+			]], [[
+					#if defined(ENABLE_SIG_SPHINCS) || (defined(OQS_ENABLE_SIG_sphincs_haraka_128f_robust))
+					#else
+					#error "SPHINCS is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_SPHINCS], [1], [Define to 1 if LibOQS library is compiled with support for SPHINCS])
+			], [AC_MSG_RESULT([no])
+	])
+##### OQS_TEMPLATE_FRAGMENT_TEST_PQ_ALG_SUPPORT_END
+	dnl End supported post-quantum schemes in LibOQS check
 fi
-
-# Enable PQ key exchange methods
-AC_ARG_ENABLE([pq-kex],
-	[	--enable-pq-kex			enable post-quantum key exchange methods (requires LibOQS library)],
-	[
-		if test "x$enableval" = "xyes" ; then
-			if test "x$with_liboqs" = "xyes" ; then
-				AC_DEFINE([WITH_PQ_KEX], [1], [Define if post-quantum key exchange methods are supported])
-			else
-				AC_MSG_ERROR([*** Post-quantum key exchange methods requires LibOQS library ***])
-			fi
-		fi
-	]
-)
-
-# Enable Hybrid key exchange methods
-AC_ARG_ENABLE([hybrid-kex],
-	[	--enable-hybrid-kex			enable hybrid key exchange methods (requires LibOQS library)],
-	[
-		if test "x$enableval" = "xyes" ; then
-			if test "x$with_liboqs" = "xyes" ; then
-				AC_DEFINE([WITH_HYBRID_KEX], [1], [Define if hybrid key exchange methods are supported])
-			else
-				AC_MSG_ERROR([*** Hybrid key exchange methods requires LibOQS library ***])
-			fi
-		fi
-	]
-)
-
-# Enable PQ authentication methods
-AC_ARG_ENABLE([pq-auth],
-	[	--enable-pq-auth		enable post-quantum authentication methods (requires LibOQS library)],
-	[
-		if test "x$enableval" = "xyes" ; then
-			if test "x$with_liboqs" = "xyes" ; then
-				AC_DEFINE([WITH_PQ_AUTH], [1], [Define if post-quantum authentication methods are supported])
-			else
-				AC_MSG_ERROR([*** Post-quantum authentication methods requires LibOQS library ***])
-			fi
-		fi
-	]
-)
-
-# Enable PQ authentication methods
-AC_ARG_ENABLE([hybrid-auth],
-	[	--enable-hybrid-auth		enable hybrid authentication methods (requires LibOQS library)],
-	[
-		if test "x$enableval" = "xyes" ; then
-			if test "x$with_liboqs" = "xyes" ; then
-				AC_DEFINE([WITH_HYBRID_AUTH], [1], [Define if hybrid authentication methods are supported])
-			else
-				AC_MSG_ERROR([*** Hybrid authentication methods requires LibOQS library ***])
-			fi
-		fi
-	]
-)
 
 # Cheap hack to ensure NEWS-OS libraries are arranged right.
 if test ! -z "$SONY" ; then
