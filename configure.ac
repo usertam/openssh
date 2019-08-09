@@ -3571,34 +3571,6 @@ fi
 if test "x$with_liboqs" = "xyes" ; then
 	dnl Check which post-quantum schemes that are enabled in LibOQS library
     ##### OQS_TEMPLATE_FRAGMENT_TEST_PQ_KEX_SUPPORT_START
-	AC_MSG_CHECKING([for libOQS FRODO support])
-	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-				#include <oqs/oqs.h>
-			]], [[
-					#if defined(ENABLE_KEM_FRODO) || (defined(OQS_ENABLE_KEM_frodokem_640_aes) && defined(OQS_ENABLE_KEM_frodokem_976_aes))
-					#else
-					#error "FRODO is not supported"
-					#endif
-			]])],
-			[ AC_MSG_RESULT([yes])
-				AC_DEFINE([HAVE_FRODO], [1], [Define to 1 if LibOQS library is compiled with support for FRODO])
-			], [AC_MSG_RESULT([no])
-	])
-
-	AC_MSG_CHECKING([for libOQS SIKE support])
-	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-				#include <oqs/oqs.h>
-			]], [[
-					#if defined(ENABLE_KEM_SIKE) || (defined(OQS_ENABLE_KEM_sike_p503) && defined(OQS_ENABLE_KEM_sike_p751))
-					#else
-					#error "SIKE is not supported"
-					#endif
-			]])],
-			[ AC_MSG_RESULT([yes])
-				AC_DEFINE([HAVE_SIKE], [1], [Define to 1 if LibOQS library is compiled with support for SIKE])
-			], [AC_MSG_RESULT([no])
-	])
-
 	AC_MSG_CHECKING([for libOQS BIKE support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
@@ -3613,6 +3585,34 @@ if test "x$with_liboqs" = "xyes" ; then
 			], [AC_MSG_RESULT([no])
 	])
 
+	AC_MSG_CHECKING([for libOQS FRODO support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/oqs.h>
+			]], [[
+					#if defined(ENABLE_KEM_FRODO) || (defined(OQS_ENABLE_KEM_frodokem_640_aes) && defined(OQS_ENABLE_KEM_frodokem_976_aes))
+					#else
+					#error "FRODO is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_FRODO], [1], [Define to 1 if LibOQS library is compiled with support for FRODO])
+			], [AC_MSG_RESULT([no])
+	])
+
+	AC_MSG_CHECKING([for libOQS KYBER support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/oqs.h>
+			]], [[
+					#if defined(ENABLE_KEM_KYBER) || (defined(OQS_ENABLE_KEM_kyber_512) && defined(OQS_ENABLE_KEM_kyber_768) && defined(OQS_ENABLE_KEM_kyber_1024))
+					#else
+					#error "KYBER is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_KYBER], [1], [Define to 1 if LibOQS library is compiled with support for KYBER])
+			], [AC_MSG_RESULT([no])
+	])
+
 	AC_MSG_CHECKING([for libOQS NEWHOPE support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
@@ -3624,6 +3624,62 @@ if test "x$with_liboqs" = "xyes" ; then
 			]])],
 			[ AC_MSG_RESULT([yes])
 				AC_DEFINE([HAVE_NEWHOPE], [1], [Define to 1 if LibOQS library is compiled with support for NEWHOPE])
+			], [AC_MSG_RESULT([no])
+	])
+
+	AC_MSG_CHECKING([for libOQS NTRU support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/oqs.h>
+			]], [[
+					#if defined(ENABLE_KEM_NTRU) || (defined(OQS_ENABLE_KEM_ntru_hps2048509) && defined(OQS_ENABLE_KEM_ntru_hps2048677))
+					#else
+					#error "NTRU is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_NTRU], [1], [Define to 1 if LibOQS library is compiled with support for NTRU])
+			], [AC_MSG_RESULT([no])
+	])
+
+	AC_MSG_CHECKING([for libOQS SABER support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/oqs.h>
+			]], [[
+					#if defined(ENABLE_KEM_SABER) || (defined(OQS_ENABLE_KEM_saber_lightsaber) && defined(OQS_ENABLE_KEM_saber_saber) && defined(OQS_ENABLE_KEM_saber_firesaber))
+					#else
+					#error "SABER is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_SABER], [1], [Define to 1 if LibOQS library is compiled with support for SABER])
+			], [AC_MSG_RESULT([no])
+	])
+
+	AC_MSG_CHECKING([for libOQS SIDH support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/oqs.h>
+			]], [[
+					#if defined(ENABLE_KEM_SIDH) || (defined(OQS_ENABLE_KEM_sidh_p503) && defined(OQS_ENABLE_KEM_sidh_p751))
+					#else
+					#error "SIDH is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_SIDH], [1], [Define to 1 if LibOQS library is compiled with support for SIDH])
+			], [AC_MSG_RESULT([no])
+	])
+
+	AC_MSG_CHECKING([for libOQS SIKE support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/oqs.h>
+			]], [[
+					#if defined(ENABLE_KEM_SIKE) || (defined(OQS_ENABLE_KEM_sike_p503) && defined(OQS_ENABLE_KEM_sike_p751))
+					#else
+					#error "SIKE is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_SIKE], [1], [Define to 1 if LibOQS library is compiled with support for SIKE])
 			], [AC_MSG_RESULT([no])
 	])
 ##### OQS_TEMPLATE_FRAGMENT_TEST_PQ_KEX_SUPPORT_END
