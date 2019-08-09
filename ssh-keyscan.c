@@ -60,31 +60,94 @@ int ssh_port = SSH_DEFAULT_PORT;
 #define KT_ED25519		(1<<3)
 #define KT_XMSS			(1<<4)
 ///// OQS_TEMPLATE_FRAGMENT_ASSIGN_KT_MARKERS_START
-#define KT_OQSDEFAULT		(1<<5)
-#define KT_QTESLA_I		(1<<6)
-#define KT_QTESLA_III_SPEED	(1<<7)
-#define KT_QTESLA_III_SIZE	(1<<8)
-#define KT_PICNIC_L1FS		(1<<9)
-#define KT_RSA3072_OQSDEFAULT	(1<<10)
-#define KT_P256_OQSDEFAULT	(1<<11)
-#define KT_RSA3072_QTESLA_I	(1<<12)
-#define KT_P256_QTESLA_I	(1<<13)
-#define KT_P384_QTESLA_III_SPEED (1<<14)
-#define KT_P384_QTESLA_III_SIZE	(1<<15)
-#define KT_RSA3072_PICNIC_L1FS	(1<<16)
-#define KT_P256_PICNIC_L1FS	(1<<17)
+#define KT_OQSDEFAULT ((uint64_t)1<<5)
+#define KT_DILITHIUM_2 ((uint64_t)1<<6)
+#define KT_DILITHIUM_4 ((uint64_t)1<<7)
+#define KT_MQDSS_31_48 ((uint64_t)1<<8)
+#define KT_PICNIC_L1FS ((uint64_t)1<<9)
+#define KT_PICNIC_L1UR ((uint64_t)1<<10)
+#define KT_PICNIC_L3FS ((uint64_t)1<<11)
+#define KT_PICNIC_L3UR ((uint64_t)1<<12)
+#define KT_PICNIC_L5FS ((uint64_t)1<<13)
+#define KT_PICNIC_L5UR ((uint64_t)1<<14)
+#define KT_PICNIC2_L1FS ((uint64_t)1<<15)
+#define KT_PICNIC2_L3FS ((uint64_t)1<<16)
+#define KT_QTESLA_I ((uint64_t)1<<17)
+#define KT_QTESLA_III_SIZE ((uint64_t)1<<18)
+#define KT_QTESLA_III_SPEED ((uint64_t)1<<19)
+#define KT_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<20)
+#define KT_RSA3072_OQSDEFAULT ((uint64_t)1<<21)
+#define KT_P256_OQSDEFAULT ((uint64_t)1<<22)
+#define KT_RSA3072_DILITHIUM_2 ((uint64_t)1<<23)
+#define KT_P256_DILITHIUM_2 ((uint64_t)1<<24)
+#define KT_P384_DILITHIUM_4 ((uint64_t)1<<25)
+#define KT_RSA3072_MQDSS_31_48 ((uint64_t)1<<26)
+#define KT_P256_MQDSS_31_48 ((uint64_t)1<<27)
+#define KT_RSA3072_PICNIC_L1FS ((uint64_t)1<<28)
+#define KT_P256_PICNIC_L1FS ((uint64_t)1<<29)
+#define KT_RSA3072_PICNIC_L1UR ((uint64_t)1<<30)
+#define KT_P256_PICNIC_L1UR ((uint64_t)1<<31)
+#define KT_P384_PICNIC_L3FS ((uint64_t)1<<32)
+#define KT_P384_PICNIC_L3UR ((uint64_t)1<<33)
+#define KT_P521_PICNIC_L5FS ((uint64_t)1<<34)
+#define KT_P521_PICNIC_L5UR ((uint64_t)1<<35)
+#define KT_RSA3072_PICNIC2_L1FS ((uint64_t)1<<36)
+#define KT_P256_PICNIC2_L1FS ((uint64_t)1<<37)
+#define KT_P384_PICNIC2_L3FS ((uint64_t)1<<38)
+#define KT_RSA3072_QTESLA_I ((uint64_t)1<<39)
+#define KT_P256_QTESLA_I ((uint64_t)1<<40)
+#define KT_P384_QTESLA_III_SIZE ((uint64_t)1<<41)
+#define KT_P384_QTESLA_III_SPEED ((uint64_t)1<<42)
+#define KT_RSA3072_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<43)
+#define KT_P256_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<44)
 
-#define KT_MIN		KT_DSA
-#define KT_MAX		KT_P256_PICNIC_L1FS
+#define KT_MIN KT_DSA
+#define KT_MAX KT_P256_SPHINCS_HARAKA_128F_ROBUST
 ///// OQS_TEMPLATE_FRAGMENT_ASSIGN_KT_MARKERS_END
 
 int get_cert = 0;
 uint64_t get_keytypes = KT_RSA|KT_ECDSA|KT_ED25519| \
 ///// OQS_TEMPLATE_FRAGMENT_GET_KT_START
-KT_OQSDEFAULT|KT_QTESLA_I|KT_QTESLA_III_SPEED|KT_QTESLA_III_SIZE|KT_PICNIC_L1FS|\
-			KT_RSA3072_OQSDEFAULT|KT_P256_OQSDEFAULT|\
-			KT_RSA3072_QTESLA_I|KT_P256_QTESLA_I|KT_P384_QTESLA_III_SPEED|KT_P384_QTESLA_III_SIZE|\
-			KT_RSA3072_PICNIC_L1FS|KT_P256_PICNIC_L1FS;
+                   KT_OQSDEFAULT| \
+                   KT_DILITHIUM_2| \
+                   KT_DILITHIUM_4| \
+                   KT_MQDSS_31_48| \
+                   KT_PICNIC_L1FS| \
+                   KT_PICNIC_L1UR| \
+                   KT_PICNIC_L3FS| \
+                   KT_PICNIC_L3UR| \
+                   KT_PICNIC_L5FS| \
+                   KT_PICNIC_L5UR| \
+                   KT_PICNIC2_L1FS| \
+                   KT_PICNIC2_L3FS| \
+                   KT_QTESLA_I| \
+                   KT_QTESLA_III_SIZE| \
+                   KT_QTESLA_III_SPEED| \
+                   KT_SPHINCS_HARAKA_128F_ROBUST| \
+                   KT_RSA3072_OQSDEFAULT| \
+                   KT_P256_OQSDEFAULT| \
+                   KT_RSA3072_DILITHIUM_2| \
+                   KT_P256_DILITHIUM_2| \
+                   KT_P384_DILITHIUM_4| \
+                   KT_RSA3072_MQDSS_31_48| \
+                   KT_P256_MQDSS_31_48| \
+                   KT_RSA3072_PICNIC_L1FS| \
+                   KT_P256_PICNIC_L1FS| \
+                   KT_RSA3072_PICNIC_L1UR| \
+                   KT_P256_PICNIC_L1UR| \
+                   KT_P384_PICNIC_L3FS| \
+                   KT_P384_PICNIC_L3UR| \
+                   KT_P521_PICNIC_L5FS| \
+                   KT_P521_PICNIC_L5UR| \
+                   KT_RSA3072_PICNIC2_L1FS| \
+                   KT_P256_PICNIC2_L1FS| \
+                   KT_P384_PICNIC2_L3FS| \
+                   KT_RSA3072_QTESLA_I| \
+                   KT_P256_QTESLA_I| \
+                   KT_P384_QTESLA_III_SIZE| \
+                   KT_P384_QTESLA_III_SPEED| \
+                   KT_RSA3072_SPHINCS_HARAKA_128F_ROBUST| \
+                   KT_P256_SPHINCS_HARAKA_128F_ROBUST;
 ///// OQS_TEMPLATE_FRAGMENT_GET_KT_END
 
 int hash_hosts = 0;		/* Hash hostname on output */
@@ -753,17 +816,50 @@ main(int argc, char **argv)
 				case KEY_OQSDEFAULT:
 					get_keytypes |= KT_OQSDEFAULT;
 					break;
+				case KEY_DILITHIUM_2:
+					get_keytypes |= KT_DILITHIUM_2;
+					break;
+				case KEY_DILITHIUM_4:
+					get_keytypes |= KT_DILITHIUM_4;
+					break;
+				case KEY_MQDSS_31_48:
+					get_keytypes |= KT_MQDSS_31_48;
+					break;
+				case KEY_PICNIC_L1FS:
+					get_keytypes |= KT_PICNIC_L1FS;
+					break;
+				case KEY_PICNIC_L1UR:
+					get_keytypes |= KT_PICNIC_L1UR;
+					break;
+				case KEY_PICNIC_L3FS:
+					get_keytypes |= KT_PICNIC_L3FS;
+					break;
+				case KEY_PICNIC_L3UR:
+					get_keytypes |= KT_PICNIC_L3UR;
+					break;
+				case KEY_PICNIC_L5FS:
+					get_keytypes |= KT_PICNIC_L5FS;
+					break;
+				case KEY_PICNIC_L5UR:
+					get_keytypes |= KT_PICNIC_L5UR;
+					break;
+				case KEY_PICNIC2_L1FS:
+					get_keytypes |= KT_PICNIC2_L1FS;
+					break;
+				case KEY_PICNIC2_L3FS:
+					get_keytypes |= KT_PICNIC2_L3FS;
+					break;
 				case KEY_QTESLA_I:
 					get_keytypes |= KT_QTESLA_I;
-					break;
-				case KEY_QTESLA_III_SPEED:
-					get_keytypes |= KT_QTESLA_III_SPEED;
 					break;
 				case KEY_QTESLA_III_SIZE:
 					get_keytypes |= KT_QTESLA_III_SIZE;
 					break;
-				case KEY_PICNIC_L1FS:
-					get_keytypes |= KT_PICNIC_L1FS;
+				case KEY_QTESLA_III_SPEED:
+					get_keytypes |= KT_QTESLA_III_SPEED;
+					break;
+				case KEY_SPHINCS_HARAKA_128F_ROBUST:
+					get_keytypes |= KT_SPHINCS_HARAKA_128F_ROBUST;
 					break;
 				case KEY_RSA3072_OQSDEFAULT:
 					get_keytypes |= KT_RSA3072_OQSDEFAULT;
@@ -771,23 +867,71 @@ main(int argc, char **argv)
 				case KEY_P256_OQSDEFAULT:
 					get_keytypes |= KT_P256_OQSDEFAULT;
 					break;
-				case KEY_RSA3072_QTESLA_I:
-					get_keytypes |= KT_RSA3072_QTESLA_I;
+				case KEY_RSA3072_DILITHIUM_2:
+					get_keytypes |= KT_RSA3072_DILITHIUM_2;
 					break;
-				case KEY_P256_QTESLA_I:
-					get_keytypes |= KT_P256_QTESLA_I;
+				case KEY_P256_DILITHIUM_2:
+					get_keytypes |= KT_P256_DILITHIUM_2;
 					break;
-				case KEY_P384_QTESLA_III_SPEED:
-					get_keytypes |= KT_P384_QTESLA_III_SPEED;
+				case KEY_P384_DILITHIUM_4:
+					get_keytypes |= KT_P384_DILITHIUM_4;
 					break;
-				case KEY_P384_QTESLA_III_SIZE:
-					get_keytypes |= KT_P384_QTESLA_III_SIZE;
+				case KEY_RSA3072_MQDSS_31_48:
+					get_keytypes |= KT_RSA3072_MQDSS_31_48;
+					break;
+				case KEY_P256_MQDSS_31_48:
+					get_keytypes |= KT_P256_MQDSS_31_48;
 					break;
 				case KEY_RSA3072_PICNIC_L1FS:
 					get_keytypes |= KT_RSA3072_PICNIC_L1FS;
 					break;
 				case KEY_P256_PICNIC_L1FS:
 					get_keytypes |= KT_P256_PICNIC_L1FS;
+					break;
+				case KEY_RSA3072_PICNIC_L1UR:
+					get_keytypes |= KT_RSA3072_PICNIC_L1UR;
+					break;
+				case KEY_P256_PICNIC_L1UR:
+					get_keytypes |= KT_P256_PICNIC_L1UR;
+					break;
+				case KEY_P384_PICNIC_L3FS:
+					get_keytypes |= KT_P384_PICNIC_L3FS;
+					break;
+				case KEY_P384_PICNIC_L3UR:
+					get_keytypes |= KT_P384_PICNIC_L3UR;
+					break;
+				case KEY_P521_PICNIC_L5FS:
+					get_keytypes |= KT_P521_PICNIC_L5FS;
+					break;
+				case KEY_P521_PICNIC_L5UR:
+					get_keytypes |= KT_P521_PICNIC_L5UR;
+					break;
+				case KEY_RSA3072_PICNIC2_L1FS:
+					get_keytypes |= KT_RSA3072_PICNIC2_L1FS;
+					break;
+				case KEY_P256_PICNIC2_L1FS:
+					get_keytypes |= KT_P256_PICNIC2_L1FS;
+					break;
+				case KEY_P384_PICNIC2_L3FS:
+					get_keytypes |= KT_P384_PICNIC2_L3FS;
+					break;
+				case KEY_RSA3072_QTESLA_I:
+					get_keytypes |= KT_RSA3072_QTESLA_I;
+					break;
+				case KEY_P256_QTESLA_I:
+					get_keytypes |= KT_P256_QTESLA_I;
+					break;
+				case KEY_P384_QTESLA_III_SIZE:
+					get_keytypes |= KT_P384_QTESLA_III_SIZE;
+					break;
+				case KEY_P384_QTESLA_III_SPEED:
+					get_keytypes |= KT_P384_QTESLA_III_SPEED;
+					break;
+				case KEY_RSA3072_SPHINCS_HARAKA_128F_ROBUST:
+					get_keytypes |= KT_RSA3072_SPHINCS_HARAKA_128F_ROBUST;
+					break;
+				case KEY_P256_SPHINCS_HARAKA_128F_ROBUST:
+					get_keytypes |= KT_P256_SPHINCS_HARAKA_128F_ROBUST;
 					break;
 ///// OQS_TEMPLATE_FRAGMENT_SWITCH_KT_END
 				case KEY_UNSPEC:

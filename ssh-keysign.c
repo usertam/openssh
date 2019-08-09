@@ -167,7 +167,7 @@ main(int argc, char **argv)
 	struct sshbuf *b;
 	Options options;
 ///// OQS_TEMPLATE_FRAGMENT_COUNT_KT_START
-#define NUM_KEYTYPES 18
+#define NUM_KEYTYPES 45
 ///// OQS_TEMPLATE_FRAGMENT_COUNT_KT_END
 	struct sshkey *keys[NUM_KEYTYPES], *key = NULL;
 	struct passwd *pw;
@@ -193,24 +193,46 @@ main(int argc, char **argv)
 	i = 0;
 	/* XXX This really needs to read sshd_config for the paths */
 ///// OQS_TEMPLATE_FRAGMENT_OPEN_KEYFILES_START
-	key_fd[i++] = open(_PATH_HOST_DSA_KEY_FILE, O_RDONLY);
-	key_fd[i++] = open(_PATH_HOST_ECDSA_KEY_FILE, O_RDONLY);
-	key_fd[i++] = open(_PATH_HOST_ED25519_KEY_FILE, O_RDONLY);
-	key_fd[i++] = open(_PATH_HOST_XMSS_KEY_FILE, O_RDONLY);
-	key_fd[i++] = open(_PATH_HOST_RSA_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_OQSDEFAULT_KEY_FILE, O_RDONLY);
-	key_fd[i++] = open(_PATH_HOST_QTESLA_I_KEY_FILE, O_RDONLY);
-	key_fd[i++] = open(_PATH_HOST_QTESLA_III_SPEED_KEY_FILE, O_RDONLY);
-	key_fd[i++] = open(_PATH_HOST_QTESLA_III_SIZE_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_DILITHIUM_2_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_DILITHIUM_4_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_MQDSS_31_48_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_PICNIC_L1FS_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_PICNIC_L1UR_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_PICNIC_L3FS_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_PICNIC_L3UR_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_PICNIC_L5FS_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_PICNIC_L5UR_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_PICNIC2_L1FS_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_PICNIC2_L3FS_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_QTESLA_I_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_QTESLA_III_SIZE_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_QTESLA_III_SPEED_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_RSA3072_OQSDEFAULT_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_P256_OQSDEFAULT_KEY_FILE, O_RDONLY);
-	key_fd[i++] = open(_PATH_HOST_RSA3072_QTESLA_I_KEY_FILE, O_RDONLY);
-	key_fd[i++] = open(_PATH_HOST_P256_QTESLA_I_KEY_FILE, O_RDONLY);
-	key_fd[i++] = open(_PATH_HOST_P384_QTESLA_III_SPEED_KEY_FILE, O_RDONLY);
-	key_fd[i++] = open(_PATH_HOST_P384_QTESLA_III_SIZE_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_RSA3072_DILITHIUM_2_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P256_DILITHIUM_2_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P384_DILITHIUM_4_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_RSA3072_MQDSS_31_48_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P256_MQDSS_31_48_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_RSA3072_PICNIC_L1FS_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_P256_PICNIC_L1FS_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_RSA3072_PICNIC_L1UR_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P256_PICNIC_L1UR_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P384_PICNIC_L3FS_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P384_PICNIC_L3UR_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P521_PICNIC_L5FS_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P521_PICNIC_L5UR_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_RSA3072_PICNIC2_L1FS_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P256_PICNIC2_L1FS_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P384_PICNIC2_L3FS_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_RSA3072_QTESLA_I_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P256_QTESLA_I_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P384_QTESLA_III_SIZE_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P384_QTESLA_III_SPEED_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_RSA3072_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE, O_RDONLY);
+	key_fd[i++] = open(_PATH_HOST_P256_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE, O_RDONLY);
 ///// OQS_TEMPLATE_FRAGMENT_OPEN_KEYFILES_END
 
 	if ((pw = getpwuid(getuid())) == NULL)
