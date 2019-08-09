@@ -280,36 +280,92 @@ fill_default_server_options(ServerOptions *options)
 		    _PATH_HOST_XMSS_KEY_FILE);
 #endif /* WITH_XMSS */
 #ifdef WITH_PQ_AUTH
+///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_HOSTKEYS_START
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_OQSDEFAULT_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_QTESLA_I_KEY_FILE);
+		    _PATH_HOST_DILITHIUM_2_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_QTESLA_III_SPEED_KEY_FILE);
+		    _PATH_HOST_DILITHIUM_4_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_MQDSS_31_48_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_PICNIC_L1FS_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_PICNIC_L1UR_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_PICNIC_L3FS_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_PICNIC_L3UR_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_PICNIC_L5FS_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_PICNIC_L5UR_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_PICNIC2_L1FS_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_PICNIC2_L3FS_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_QTESLA_I_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_QTESLA_III_SIZE_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_PICNIC_L1FS_KEY_FILE);
-		/* ADD_MORE_OQS_SIG_HERE */
+		    _PATH_HOST_QTESLA_III_SPEED_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE);
+///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_HOSTKEYS_END
 #endif /* WITH_PQ_AUTH */
 #ifdef WITH_HYBRID_AUTH
+///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_HOSTKEYS_START
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_RSA3072_OQSDEFAULT_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_P256_OQSDEFAULT_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_RSA3072_QTESLA_I_KEY_FILE);
+		    _PATH_HOST_RSA3072_DILITHIUM_2_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_P256_QTESLA_I_KEY_FILE);
+		    _PATH_HOST_P256_DILITHIUM_2_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_P384_QTESLA_III_SPEED_KEY_FILE);
+		    _PATH_HOST_P384_DILITHIUM_4_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_P384_QTESLA_III_SIZE_KEY_FILE);
+		    _PATH_HOST_RSA3072_MQDSS_31_48_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P256_MQDSS_31_48_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_RSA3072_PICNIC_L1FS_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_P256_PICNIC_L1FS_KEY_FILE);
-		/* ADD_MORE_OQS_SIG_HERE (hybrid) */
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_RSA3072_PICNIC_L1UR_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P256_PICNIC_L1UR_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P384_PICNIC_L3FS_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P384_PICNIC_L3UR_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P521_PICNIC_L5FS_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P521_PICNIC_L5UR_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_RSA3072_PICNIC2_L1FS_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P256_PICNIC2_L1FS_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P384_PICNIC2_L3FS_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_RSA3072_QTESLA_I_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P256_QTESLA_I_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P384_QTESLA_III_SIZE_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P384_QTESLA_III_SPEED_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_RSA3072_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P256_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE);
+///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_HOSTKEYS_END
 #endif /* WITH_HYBRID_AUTH */
 	}
 	/* No certificates by default */

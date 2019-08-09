@@ -126,23 +126,52 @@ static const struct keytype keytypes[] = {
 	    KEY_XMSS_CERT, 0, 1, 0 },
 #endif /* WITH_XMSS */
 #ifdef WITH_PQ_AUTH
+///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_KT_START
 	{ "ssh-oqsdefault", "OQSDEFAULT", NULL, KEY_OQSDEFAULT, 0, 0, 0 },
-	{ "ssh-qteslai", "QTESLAI", NULL, KEY_QTESLA_I, 0, 0, 0 },
-	{ "ssh-qteslaiiispeed", "QTESLAIIISPEED", NULL, KEY_QTESLA_III_SPEED, 0, 0, 0 },
-	{ "ssh-qteslaiiisize", "QTESLAIIISIZE", NULL, KEY_QTESLA_III_SIZE, 0, 0, 0 },
+	{ "ssh-dilithium2", "DILITHIUM2", NULL, KEY_DILITHIUM_2, 0, 0, 0 },
+	{ "ssh-dilithium4", "DILITHIUM4", NULL, KEY_DILITHIUM_4, 0, 0, 0 },
+	{ "ssh-mqdss3148", "MQDSS3148", NULL, KEY_MQDSS_31_48, 0, 0, 0 },
 	{ "ssh-picnicl1fs", "PICNICL1FS", NULL, KEY_PICNIC_L1FS, 0, 0, 0 },
-	/* ADD_MORE_OQS_SIG_HERE */
+	{ "ssh-picnicl1ur", "PICNICL1UR", NULL, KEY_PICNIC_L1UR, 0, 0, 0 },
+	{ "ssh-picnicl3fs", "PICNICL3FS", NULL, KEY_PICNIC_L3FS, 0, 0, 0 },
+	{ "ssh-picnicl3ur", "PICNICL3UR", NULL, KEY_PICNIC_L3UR, 0, 0, 0 },
+	{ "ssh-picnicl5fs", "PICNICL5FS", NULL, KEY_PICNIC_L5FS, 0, 0, 0 },
+	{ "ssh-picnicl5ur", "PICNICL5UR", NULL, KEY_PICNIC_L5UR, 0, 0, 0 },
+	{ "ssh-picnic2l1fs", "PICNIC2L1FS", NULL, KEY_PICNIC2_L1FS, 0, 0, 0 },
+	{ "ssh-picnic2l3fs", "PICNIC2L3FS", NULL, KEY_PICNIC2_L3FS, 0, 0, 0 },
+	{ "ssh-qteslai", "QTESLAI", NULL, KEY_QTESLA_I, 0, 0, 0 },
+	{ "ssh-qteslaiiisize", "QTESLAIIISIZE", NULL, KEY_QTESLA_III_SIZE, 0, 0, 0 },
+	{ "ssh-qteslaiiispeed", "QTESLAIIISPEED", NULL, KEY_QTESLA_III_SPEED, 0, 0, 0 },
+	{ "ssh-sphincsharaka128frobust", "SPHINCSHARAKA128FROBUST", NULL, KEY_SPHINCS_HARAKA_128F_ROBUST, 0, 0, 0 },
+///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_KT_END
 #endif /* WITH_PQ_AUTH */
 #ifdef WITH_HYBRID_AUTH
+///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_KT_START
 	{ "ssh-rsa3072-oqsdefault", "RSA3072_OQSDEFAULT", NULL, KEY_RSA3072_OQSDEFAULT, 0, 0, 0 },
 	{ "ssh-p256-oqsdefault", "P256_OQSDEFAULT", NULL, KEY_P256_OQSDEFAULT, NID_X9_62_prime256v1, 0, 0 },
-	{ "ssh-rsa3072-qteslai", "RSA3072_QTESLAI", NULL, KEY_RSA3072_QTESLA_I, 0, 0, 0 },
-	{ "ssh-p256-qteslai", "P256_QTESLAI", NULL, KEY_P256_QTESLA_I, NID_X9_62_prime256v1, 0, 0 },
-	{ "ssh-p384-qteslaiiispeed", "P384_QTESLAIIISPEED", NULL, KEY_P384_QTESLA_III_SPEED, NID_secp384r1, 0, 0 },
-	{ "ssh-p384-qteslaiiisize", "P384_QTESLAIIISIZE", NULL, KEY_P384_QTESLA_III_SIZE, NID_secp384r1, 0, 0 },
+	{ "ssh-rsa3072-dilithium2", "RSA3072_DILITHIUM2", NULL, KEY_RSA3072_DILITHIUM_2, 0, 0, 0 },
+	{ "ssh-p256-dilithium2", "P256_DILITHIUM2", NULL, KEY_P256_DILITHIUM_2, NID_X9_62_prime256v1, 0, 0 },
+	{ "ssh-p384-dilithium4", "P384_DILITHIUM4", NULL, KEY_P384_DILITHIUM_4, NID_secp384r1, 0, 0 },
+	{ "ssh-rsa3072-mqdss3148", "RSA3072_MQDSS3148", NULL, KEY_RSA3072_MQDSS_31_48, 0, 0, 0 },
+	{ "ssh-p256-mqdss3148", "P256_MQDSS3148", NULL, KEY_P256_MQDSS_31_48, NID_X9_62_prime256v1, 0, 0 },
 	{ "ssh-rsa3072-picnicl1fs", "RSA3072_PICNICL1FS", NULL, KEY_RSA3072_PICNIC_L1FS, 0, 0, 0 },
 	{ "ssh-p256-picnicl1fs", "P256_PICNICL1FS", NULL, KEY_P256_PICNIC_L1FS, NID_X9_62_prime256v1, 0, 0 },
-	/* ADD_MORE_OQS_SIG_HERE (hybrid) */
+	{ "ssh-rsa3072-picnicl1ur", "RSA3072_PICNICL1UR", NULL, KEY_RSA3072_PICNIC_L1UR, 0, 0, 0 },
+	{ "ssh-p256-picnicl1ur", "P256_PICNICL1UR", NULL, KEY_P256_PICNIC_L1UR, NID_X9_62_prime256v1, 0, 0 },
+	{ "ssh-p384-picnicl3fs", "P384_PICNICL3FS", NULL, KEY_P384_PICNIC_L3FS, NID_secp384r1, 0, 0 },
+	{ "ssh-p384-picnicl3ur", "P384_PICNICL3UR", NULL, KEY_P384_PICNIC_L3UR, NID_secp384r1, 0, 0 },
+	{ "ssh-p521-picnicl5fs", "P521_PICNICL5FS", NULL, KEY_P521_PICNIC_L5FS, NID_secp521r1, 0, 0 },
+	{ "ssh-p521-picnicl5ur", "P521_PICNICL5UR", NULL, KEY_P521_PICNIC_L5UR, NID_secp521r1, 0, 0 },
+	{ "ssh-rsa3072-picnic2l1fs", "RSA3072_PICNIC2L1FS", NULL, KEY_RSA3072_PICNIC2_L1FS, 0, 0, 0 },
+	{ "ssh-p256-picnic2l1fs", "P256_PICNIC2L1FS", NULL, KEY_P256_PICNIC2_L1FS, NID_X9_62_prime256v1, 0, 0 },
+	{ "ssh-p384-picnic2l3fs", "P384_PICNIC2L3FS", NULL, KEY_P384_PICNIC2_L3FS, NID_secp384r1, 0, 0 },
+	{ "ssh-rsa3072-qteslai", "RSA3072_QTESLAI", NULL, KEY_RSA3072_QTESLA_I, 0, 0, 0 },
+	{ "ssh-p256-qteslai", "P256_QTESLAI", NULL, KEY_P256_QTESLA_I, NID_X9_62_prime256v1, 0, 0 },
+	{ "ssh-p384-qteslaiiisize", "P384_QTESLAIIISIZE", NULL, KEY_P384_QTESLA_III_SIZE, NID_secp384r1, 0, 0 },
+	{ "ssh-p384-qteslaiiispeed", "P384_QTESLAIIISPEED", NULL, KEY_P384_QTESLA_III_SPEED, NID_secp384r1, 0, 0 },
+	{ "ssh-rsa3072-sphincsharaka128frobust", "RSA3072_SPHINCSHARAKA128FROBUST", NULL, KEY_RSA3072_SPHINCS_HARAKA_128F_ROBUST, 0, 0, 0 },
+	{ "ssh-p256-sphincsharaka128frobust", "P256_SPHINCSHARAKA128FROBUST", NULL, KEY_P256_SPHINCS_HARAKA_128F_ROBUST, NID_X9_62_prime256v1, 0, 0 },
+///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_KT_END
 #endif /* WITH_HYBRID_AUTH */
 #ifdef WITH_OPENSSL
 	{ "ssh-rsa", "RSA", NULL, KEY_RSA, 0, 0, 0 },

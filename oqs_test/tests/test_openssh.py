@@ -7,22 +7,14 @@ sig_algs = ['ssh-ed25519']
 if 'WITH_PQAUTH' in os.environ and os.environ['WITH_PQAUTH'] == 'true':
     # post-quantum
     sig_algs += [
-            'ssh-oqsdefault',
-            'ssh-qteslai',
-            'ssh-qteslaiiispeed',
-            'ssh-qteslaiiisize',
-            'ssh-picnicl1fs',
-            # hybrid
-            'ssh-p256-qteslai',
-            'ssh-rsa3072-qteslai',
-            'ssh-p384-qteslaiiispeed',
-            'ssh-p384-qteslaiiisize',
-            'ssh-p256-picnicl1fs',
-            'ssh-rsa3072-picnicl1fs',
-            'ssh-p256-oqsdefault',
-            'ssh-rsa3072-oqsdefault']
+##### OQS_TEMPLATE_FRAGMENT_LIST_SIGS_START
+    # post-quantum only sigs
+    'ssh-oqsdefault','ssh-dilithium2','ssh-dilithium4','ssh-mqdss3148','ssh-picnicl1fs','ssh-picnicl1ur','ssh-picnicl3fs','ssh-picnicl3ur','ssh-picnicl5fs','ssh-picnicl5ur','ssh-picnic2l1fs','ssh-picnic2l3fs','ssh-qteslai','ssh-qteslaiiisize','ssh-qteslaiiispeed','ssh-sphincsharaka128frobust',
+    # hybrid sigs
+    'ssh-rsa3072-oqsdefault','ssh-p256-oqsdefault','ssh-rsa3072-dilithium2','ssh-p256-dilithium2','ssh-p384-dilithium4','ssh-rsa3072-mqdss3148','ssh-p256-mqdss3148','ssh-rsa3072-picnicl1fs','ssh-p256-picnicl1fs','ssh-rsa3072-picnicl1ur','ssh-p256-picnicl1ur','ssh-p384-picnicl3fs','ssh-p384-picnicl3ur','ssh-p521-picnicl5fs','ssh-p521-picnicl5ur','ssh-rsa3072-picnic2l1fs','ssh-p256-picnic2l1fs','ssh-p384-picnic2l3fs','ssh-rsa3072-qteslai','ssh-p256-qteslai','ssh-p384-qteslaiiisize','ssh-p384-qteslaiiispeed','ssh-rsa3072-sphincsharaka128frobust','ssh-p256-sphincsharaka128frobust',
+##### OQS_TEMPLATE_FRAGMENT_LIST_SIGS_END
+]
 
-# post-quantum only KEX
 kex_algs = [
 ##### OQS_TEMPLATE_FRAGMENT_LIST_KEXS_START
     # post-quantum only kex

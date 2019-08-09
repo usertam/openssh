@@ -16,30 +16,69 @@
  */
 const char* get_oqs_alg_name(int openssh_type)
 {
-  switch (openssh_type)
-    {
-    case KEY_OQSDEFAULT:
-    case KEY_RSA3072_OQSDEFAULT:
-    case KEY_P256_OQSDEFAULT:
-      return OQS_SIG_alg_default;
-    case KEY_PICNIC_L1FS:
-    case KEY_RSA3072_PICNIC_L1FS:
-    case KEY_P256_PICNIC_L1FS:
-      return OQS_SIG_alg_picnic_L1_FS;
-    case KEY_QTESLA_I:
-    case KEY_RSA3072_QTESLA_I:
-    case KEY_P256_QTESLA_I:
-      return OQS_SIG_alg_qTESLA_I;
-    case KEY_QTESLA_III_SIZE:
-    case KEY_P384_QTESLA_III_SIZE:
-      return OQS_SIG_alg_qTESLA_III_size;
-    case KEY_QTESLA_III_SPEED:
-    case KEY_P384_QTESLA_III_SPEED:
-      return OQS_SIG_alg_qTESLA_III_speed;
-    /* ADD_MORE_OQS_SIG_HERE */
-    default:
-      return NULL;
-    }
+	switch (openssh_type)
+	{
+///// OQS_TEMPLATE_FRAGMENT_OSSH_KT_TO_OQS_METH_START
+		case KEY_OQSDEFAULT:
+		case KEY_RSA3072_OQSDEFAULT:
+		case KEY_P256_OQSDEFAULT:
+			return OQS_SIG_alg_default;
+		case KEY_DILITHIUM_2:
+		case KEY_RSA3072_DILITHIUM_2:
+		case KEY_P256_DILITHIUM_2:
+			return OQS_SIG_alg_dilithium_2;
+		case KEY_DILITHIUM_4:
+		case KEY_P384_DILITHIUM_4:
+			return OQS_SIG_alg_dilithium_4;
+		case KEY_MQDSS_31_48:
+		case KEY_RSA3072_MQDSS_31_48:
+		case KEY_P256_MQDSS_31_48:
+			return OQS_SIG_alg_mqdss_31_64;
+		case KEY_PICNIC_L1FS:
+		case KEY_RSA3072_PICNIC_L1FS:
+		case KEY_P256_PICNIC_L1FS:
+			return OQS_SIG_alg_picnic_L1_FS;
+		case KEY_PICNIC_L1UR:
+		case KEY_RSA3072_PICNIC_L1UR:
+		case KEY_P256_PICNIC_L1UR:
+			return OQS_SIG_alg_picnic_L1_UR;
+		case KEY_PICNIC_L3FS:
+		case KEY_P384_PICNIC_L3FS:
+			return OQS_SIG_alg_picnic_L3_FS;
+		case KEY_PICNIC_L3UR:
+		case KEY_P384_PICNIC_L3UR:
+			return OQS_SIG_alg_picnic_L3_UR;
+		case KEY_PICNIC_L5FS:
+		case KEY_P521_PICNIC_L5FS:
+			return OQS_SIG_alg_picnic_L5_FS;
+		case KEY_PICNIC_L5UR:
+		case KEY_P521_PICNIC_L5UR:
+			return OQS_SIG_alg_picnic_L5_UR;
+		case KEY_PICNIC2_L1FS:
+		case KEY_RSA3072_PICNIC2_L1FS:
+		case KEY_P256_PICNIC2_L1FS:
+			return OQS_SIG_alg_picnic2_L1_FS;
+		case KEY_PICNIC2_L3FS:
+		case KEY_P384_PICNIC2_L3FS:
+			return OQS_SIG_alg_picnic2_L3_FS;
+		case KEY_QTESLA_I:
+		case KEY_RSA3072_QTESLA_I:
+		case KEY_P256_QTESLA_I:
+			return OQS_SIG_alg_qTESLA_I;
+		case KEY_QTESLA_III_SIZE:
+		case KEY_P384_QTESLA_III_SIZE:
+			return OQS_SIG_alg_qTESLA_III_size;
+		case KEY_QTESLA_III_SPEED:
+		case KEY_P384_QTESLA_III_SPEED:
+			return OQS_SIG_alg_qTESLA_III_speed;
+		case KEY_SPHINCS_HARAKA_128F_ROBUST:
+		case KEY_RSA3072_SPHINCS_HARAKA_128F_ROBUST:
+		case KEY_P256_SPHINCS_HARAKA_128F_ROBUST:
+			return OQS_SIG_alg_sphincs_haraka_128f_robust;
+///// OQS_TEMPLATE_FRAGMENT_OSSH_KT_TO_OQS_METH_END
+		default:
+			return NULL;
+	}
 }
 
 int

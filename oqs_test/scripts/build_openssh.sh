@@ -25,7 +25,12 @@ else
 fi
 
 cd ..
-autoreconf -i
+if [ -f Makefile ]; then
+    make clean
+else
+    autoreconf -i
+fi
+
 if [ "x${WITH_OPENSSL}" == "xtrue" ]; then
     ./configure --prefix="${PREFIX}" --enable-pq-kex --enable-hybrid-kex ${PQAUTH_ARG} --with-ldflags="-Wl,-rpath -Wl,${PREFIX}/lib" --with-libs=-lm --with-ssl-dir="${OPENSSL_SYS_DIR}" --with-liboqs-dir="${PREFIX}" --with-cflags="-I${PREFIX}/include" --sysconfdir="${PREFIX}"
 else
