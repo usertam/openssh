@@ -47,6 +47,8 @@ We realize some parties may want to deploy quantum-safe cryptography prior to th
 
 ### Supported Algorithms
 
+If an algorithm is provided by liboqs but is not listed below, it can still be used in the fork through [either one of two ways](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork).
+
 #### Key Exchange
 
 The following quantum-safe algorithms from liboqs are supported (assuming they have been enabled in liboqs):
@@ -84,7 +86,6 @@ The following hybrid algorithms are supported; they combine a quantum-safe algor
 - if `<SIG>` has L3 security, the fork provides the method `p384-<SIG>`, which combines `<SIG>` with ECDSA using NIST's P384 curve.
 - if `<SIG>` has L5 security, the fork provides the method `p521-<SIG>`, which combines `<SIG>` with ECDSA using NIST's P521 curve.
 
-If an algorithm is provided by liboqs but is not listed above, it can still be used in the fork through either one of two ways. For more information consult the [wiki](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork).
 
 ## Quickstart
 
@@ -153,7 +154,7 @@ For Ubuntu 16.04 and macOS, try the following:
 	make -j
 	make install
 
-On Ubuntu 18.04, some modifications are required due to the default openssl version:
+On Ubuntu 18.04, some modifications are required due to the default OpenSSL version:
 
 	./configure --with-ldflags=-L/usr/lib/ssl1.0      \
 	            --prefix=$OPENSSH_INSTALL             \
