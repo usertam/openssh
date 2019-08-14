@@ -1,89 +1,97 @@
-open-quantum-safe/openssh-portable
+[![Build status image](https://circleci.com/gh/open-quantum-safe/openssh-portable/tree/OQS-master.svg?style=svg)](https://circleci.com/gh/open-quantum-safe/openssh-portable)
+
+OQS-OpenSSH
 ==================================
 
-**OpenSSH** is an open-source implementation of the Secure Shell protocol https://openssh.org/.  ([View the original README file for OpenSSH](https://github.com/open-quantum-safe/openssh-portable/blob/OQS-master/README).)
+[OpenSSH](https://openssh.org/) is an open-source implementation of the Secure Shell protocol.  ([View the original README](https://github.com/open-quantum-safe/openssh-portable/blob/OQS-master/README).)
 
-This repository contains a fork of OpenSSH that adds quantum-resistant key exchange and signature algorithms using liboqs for prototyping purposes.
+OQS-OpenSSH is a fork of OpenSSH that adds quantum-safe key exchange and signature algorithms using [liboqs](https://github.com/open-quantum-safe/liboqs) for prototyping and evaluation purposes. This fork is not endorsed by the OpenSSH project.
 
-Overview
---------
+- [Overview](#overview)
+- [Status](#status)
+  * [Limitations and Security](#limitations-and-security)
+  * [Supported Algorithms](#supported-algorithms)
+- [Quickstart](#quickstart)
+  * [Building OQS-OpenSSH](#building-oqs-openssh)
+  * [Running OQS-OpenSSH](#running-oqs-openssh)
+- [License](#license)
+- [Team](#team)
+- [Acknowledgements](#acknowledgements)
 
-The **Open Quantum Safe (OQS) project** has the goal of developing and prototyping quantum-resistant cryptography.
+## Overview
 
-**liboqs** is an open source C library for quantum-resistant cryptographic algorithms.  See more about liboqs at [https://github.com/open-quantum-safe/liboqs/](https://github.com/open-quantum-safe/liboqs/), including a list of supported algorithms. OpenSSH can use either the [master](https://github.com/open-quantum-safe/liboqs/tree/master) or the [nist](https://github.com/open-quantum-safe/liboqs/tree/nist-branch) branch of liboqs for key exchange mechanisms, but the master branch is required for signature mechanisms. The master branch is recommended for normal uses of OpenSSH as included mechanisms follow a stricter set of requirements; the nist branch contains more algorithms and is better suited for experimentation.
+**liboqs** is an open source C library for quantum-resistant cryptographic algorithms. See [here](https://github.com/open-quantum-safe/liboqs/) for more information.
 
-**open-quantum-safe/openssh-portable** contains a fork of OpenSSH that adds quantum-safe key exchange algorithms using liboqs for prototyping purposes, specifically adding key exchange methods that use hybrid (post-quantum + traditional elliptic curve) or post-quantum-only algorithms.  The integration should not be considered "production quality".  The OQS-master branch of open-quantum-safe/openssh-portable is currently based on **OpenSSH version 7.9** (Git tag V_7_9_P1).
+**OQS-OpenSSH** is a fork of OpenSSH that adds quantum-safe key exchange and signature algorithms using liboqs for prototyping purposes.
 
-More information on OQS can be found on our website: [https://openquantumsafe.org/](https://openquantumsafe.org/).
+Both liboqs and this fork are part of the **Open Quantum Safe (OQS) project**, which aims to develop and prototype quantum-safe cryptography. More information about the project can be found [here](https://openquantumsafe.org/).
 
-Contents
---------
+## Status
 
-This branch ([OQS-master](https://github.com/open-quantum-safe/openssh-portable/tree/OQS-master)) integrates post-quantum key exchange and authentication from liboqs in SSH 2 in OpenSSH v7.9 portable 1.
+This fork is currently based on OpenSSH version **7.9** (Git tag V_7_9_P1), and is maintained for the purposes of prototyping and evaluating the use of quantum-safe cryptography in SSH. **It is at an experimental stage**, and has not received the same level of auditing and analysis that OpenSSH has received. See the [Limitations and Security](#limitations-and-security) section below for more information.
 
-### Key exchange mechanisms
+**We do not recommend relying on this fork in a production environment or to protect any sensitive data.**
 
-The following key exchange / key encapsulation methods from liboqs are supported (assuming they have been enabled in liboqs):
+liboqs is provided "as is", without warranty of any kind.  See [LICENSE.txt](https://github.com/open-quantum-safe/liboqs/blob/master/LICENSE.txt) for the full disclaimer.
 
+This fork also contains an experimental (pre-draft) [IETF draft](https://github.com/open-quantum-safe/openssh-portable/blob/OQS-master/ietf_pre_draft_sike_bike_hybrid_kex.txt) for hybrid key exchange algorithms ECDH-SIKE and ECDH-BIKE. This document has **not** been submitted to IETF.
+
+### Limitations and security
+As research advances, the supported algorithms may see rapid changes in their security, and may even prove insecure against both classical and quantum computers.
+
+We believe that the NIST Post-Quantum Cryptography standardization project is currently the best avenue to identifying potentially quantum-resistant algorithms, and strongly recommend that applications and protocols rely on the outcomes of the NIST standardization project when deploying post-quantum cryptography.
+
+While at the time of this writing there are no vulnerabilities known in any of the quantum-safe algorithms used in this fork, it is advisable to wait on deploying quantum-safe algorithms until further guidance is provided by the standards community, especially from the NIST standardization project.
+
+We realize some parties may want to deploy quantum-safe cryptography prior to the conclusion of the standardization project.  We strongly recommend such attempts make use of so-called **hybrid cryptography**, in which quantum-safe public-key algorithms are combined with traditional public key algorithms (like RSA or elliptic curves) such that the solution is at least no less secure than existing traditional cryptography. This fork provides the ability to use hybrid cryptography.
+
+### Supported Algorithms
+
+If an algorithm is provided by liboqs but is not listed below, it can still be used in the fork through [either one of two ways](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork).
+
+#### Key Exchange
+
+The following quantum-safe algorithms from liboqs are supported (assuming they have been enabled in liboqs):
+
+- `oqsdefault` (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
 - `bike1-L1`, `bike1-L3`, `bike1-L5`
 - `bike2-L1`, `bike2-L3`, `bike2-L3`
 - `frodo-640-aes`, `frodo-976-aes`
+- `kyber-512`, `kyber-768`, `kyber-1024`
 - `newhope-512`, `newhope-1024`
+- `ntru-hps-2048-509`, `ntru-hps-2048-677`
+- `saber-lightsaber`, `saber-saber`, `saber-firesaber`
+- `sidh-503`, `sidh-751`
 - `sike-503`, `sike-751`
-- `oqsdefault`
 
-In addition to the PQ-only key exchange methods, the following hybrid methods are supported combining a PQ scheme with ECDH using NIST's P384 curve (assuming the PQ schemes have been enabled in liboqs and that the `hybrid-kex` configuration option has been enabled; see below):
+The following hybrid algorithms are supported; they combine a quantum-safe algorithm listed above with ECDH that uses NIST's P384 curve:
 
-- `ecdh-nistp384-<KEX>`, where <KEX> is any of the key exchange algorithms listed above.
+- `ecdh-nistp384-<KEX>`, where ``<KEX>`` is any one of the algorithms listed above.
 
-### Authentication mechanisms
+#### Digital Signature
 
-The following signature methods from liboqs's master branch are supported (assuming they have been enabled in liboqs and that the `pq-auth` configuration option has been enabled; see below):
+The following digital signature algorithms from liboqs are supported (assuming they have been enabled in liboqs):
 
+- `oqsdefault` (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
+- `dilithium2`, `dilithium4`
+- `mqdss3148`
+- `picnicl1fs`, `picnicl1ur`, `picnicl3fs`,`picnicl3ur`, `picnicl5fs`, `picnicl5ur`
+- `picnic2l1fs`, `picnic2l3fs`
 - `qteslai`, `qteslaiiispeed`, `qteslaiiisize`
-- `picnicl1fs`
-- `oqsdefault`
+- `sphincsharaka128frobust`
 
-In addition to the PQ-only signature methods, the following hybrid methods are supported combining a PQ scheme with either RSA3072 or ECDSA using NIST's P256 curve for L1 schemes, and with ECDSA using NIST's P384 curve for L3 schemes (assuming the PQ schemes have been enabled in liboqs and that the `hybrid-auth` configuration option has been enabled; see below):
+The following hybrid algorithms are supported; they combine a quantum-safe algorithm listed above with a traditional digital signature algorithm (`<SIG>` is any one of the algorithm listed above):
 
-- `rsa3072-qteslai`, `p256-qteslai`, `p384-qteslaiiispeed`, `p384-qteslaiiisize`
-- `rsa3072-picnicl1fs`, `p256-picnicl1fs`
-- `rsa3072-oqsdefault`, `p256-oqsdefault`
+- if `<SIG>` has L1 security, then the fork provides the methods `rsa3072-<SIG>` and `p256-<SIG>`, which combine `<SIG>` with RSA3072 and with ECDSA using NIST's P256 curve respectively.
+- if `<SIG>` has L3 security, the fork provides the method `p384-<SIG>`, which combines `<SIG>` with ECDSA using NIST's P384 curve.
+- if `<SIG>` has L5 security, the fork provides the method `p521-<SIG>`, which combines `<SIG>` with ECDSA using NIST's P521 curve.
 
-The liboqs's nist branch uses a different signature API that hasn't yet been integrated.
 
-Limitations and security
-------------------------
+## Quickstart
 
-liboqs is designed for prototyping and evaluating quantum-resistant cryptography.  Security of proposed quantum-resistant algorithms may rapidly change as research advances, and may ultimately be completely insecure against either classical or quantum computers.
+The steps below have been confirmed to work on macOS 10.14 (clang 10.0.0), Ubuntu 14.04 (gcc-5), Ubuntu 16.04 (gcc-5), and Ubuntu 18.04.1 (gcc-7).
 
-We believe that the NIST Post-Quantum Cryptography standardization project is currently the best avenue to identifying potentially quantum-resistant algorithms.  liboqs does not intend to "pick winners", and we strongly recommend that applications and protocols rely on the outcomes of the NIST standardization project when deploying post-quantum cryptography.
-
-We acknowledge that some parties may want to begin deploying post-quantum cryptography prior to the conclusion of the NIST standardization project.  We strongly recommend that any attempts to do make use of so-called **hybrid cryptography**, in which post-quantum public-key algorithms are used alongside traditional public key algorithms (like RSA or elliptic curves) so that the solution is at least no less secure than existing traditional cryptography.
-
-liboqs is provided "as is", without warranty of any kind.  See [LICENSE.txt](https://github.com/open-quantum-safe/liboqs/blob/nist-branch/LICENSE.txt) for the full disclaimer.
-
-The integration of liboqs into our fork of OpenSSH is currently at an experimental stage.  This fork of OpenSSH has not received the same level of auditing and analysis that OpenSSH has received.  At this stage, we do not recommend relying on it in any production environment or to protect any sensitive data.
-
-The OQS fork of OpenSSH is not endorsed by with the OpenSSH project.
-
-This fork is developed for the purposes of prototyping and evaluating the use of post-quantum cryptography in SSH, and is not intended for use in production environments to protect the transmission of sensitive information.
-
-At the time of writing, there are no vulnerabilities or weaknesses known in any of the post-quantum key exchange algorithms used in this fork.  However, it is advisable to wait on deploying post-quantum algorithms until further guidance is provided by the standards community, especially from the NIST Post-Quantum Cryptography project.
-
-Lifecycle for open-quantum-safe/openssh-portable OQS-master branch
-------------------------------------------------------------------
-
-**Release cycle:** We aim to make releases of our fork of OpenSSH stable on a bi-monthly basis, either when there has been a new release of OpenSSH or when we have made changes to our fork.
-
-See the README.md files of [liboqs master branch](https://github.com/open-quantum-safe/liboqs/blob/master/README.md) and [liboqs nist-branch](https://github.com/open-quantum-safe/liboqs/blob/nist-branch/README.md) for information about the algorithm lifecycle within the corresponding libraries.
-
-**SSH compatibility:** The message format used in this fork is not standardized, and is subject to unilateral change at any time without regards to backwards compatibility with previous versions of this fork.
-
-Building on Linux and macOS
----------------------------
-
-Builds have been tested manually on macOS 10.14 (clang 10.0.0), Ubuntu 14.04 (gcc-5), Ubuntu 16.04 (gcc-5), and Ubuntu 18.04.1 (gcc-7).
+### Building OQS-OpenSSH
 
 ### Step 0: Install dependencies
 
@@ -94,7 +102,7 @@ For **Ubuntu**, you need to install the following packages:
 For **Ubuntu 18.04**, you need to downgrade the version of OpenSSL.  (Ubuntu 18.04 bundles OpenSSL 1.1.0 by default,  but OpenSSH only supports building against OpenSSL 1.0.2 at present.)
 
 	sudo apt install openssl1.0 libssl1.0-dev
-	
+
 Warning: this removes the existing libssl 1.1 development package.
 
 On **Linux**, you also may need to do the following:
@@ -111,14 +119,10 @@ On **Linux**, you also may need to do the following:
 For **macOS**, you need to install the following packages using brew (or a package manager of your choice):
 
 	brew install autoconf automake libtool openssl wget
-	
+
 ### Step 1: Build and install liboqs
 
-You can use the either the [master](https://github.com/open-quantum-safe/liboqs/tree/master) or the [nist](https://github.com/open-quantum-safe/liboqs/tree/nist-branch) branch of liboqs with the OQS-master branch of OpenSSH for key exchange mechanisms (each branch support a different set, see above), but the master branch is required for signature mechanisms.
-
 You will need to specify a path to install liboqs in during configure time; we recommend that you install in a special-purpose directory, rather than the global `/usr` or `/usr/local` directories.
-
-For the **master branch** of liboqs:
 
 	git clone -b master --single-branch https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
@@ -130,16 +134,9 @@ For the **master branch** of liboqs:
 
 Building liboqs requires your system to have OpenSSL already installed.  configure will detect it if it is located in a standard location, such as `/usr` or `/usr/local/opt/openssl` (for brew on macOS).  Otherwise, you may need to specify it with `--with-openssl=<path-to-system-openssl-dir>`.
 
-For the **nist branch** of liboqs:
+### Step 2: Build the fork
 
-	git clone -b nist-branch --single-branch https://github.com/open-quantum-safe/liboqs.git
-	cd liboqs
-	make -j
-	make install-noshared PREFIX=<path-to-install-liboqs>
-
-### Step 2: Build fork of OpenSSH
-
-Next, you can build and install our fork of OpenSSH:
+Next, build and install our fork of OpenSSH:
 
 	export LIBOQS_INSTALL=<path-to-liboqs>
 	export OPENSSH_INSTALL=<path-to-install-openssh>
@@ -149,9 +146,7 @@ Next, you can build and install our fork of OpenSSH:
 
 For Ubuntu 16.04 and macOS, try the following:
 
-	./configure --enable-pq-kex --enable-hybrid-kex      \
-	            --enable-pq-auth --enable-hybrid-auth    \
-	            --with-ssl-dir=<path-to-openssl>/include \
+	./configure --with-ssl-dir=<path-to-openssl>/include \
 	            --with-ldflags=-L<path-to-openssl>/lib   \
 	            --prefix=$OPENSSH_INSTALL                \
 	            --sysconfdir=$OPENSSH_INSTALL            \
@@ -159,34 +154,26 @@ For Ubuntu 16.04 and macOS, try the following:
 	make -j
 	make install
 
-On Ubuntu 18.04, some modifications are required due to the default openssl version:
+On Ubuntu 18.04, some modifications are required due to the default OpenSSL version:
 
-	./configure --enable-pq-kex --enable-hybrid-kex   \
-	            --enable-pq-auth --enable-hybrid-auth \
-	            --with-ldflags=-L/usr/lib/ssl1.0      \
+	./configure --with-ldflags=-L/usr/lib/ssl1.0      \
 	            --prefix=$OPENSSH_INSTALL             \
 	            --sysconfdir=$OPENSSH_INSTALL         \
 	            --with-liboqs-dir=$LIBOQS_INSTALL
 	make -j
 	make install
 
-Notes about building OpenSSH:
+To test the build, run:
 
-- `--enable-pq-kex` enables PQ-only key exchange methods.
-- `--enable-hybrid-kex` enables hybrid key exchange methods.
-- `--enable-pq-auth` enables PQ-only authentication methods, requires the liboqs master branch.
-- `--enable-hybrid-auth` enables hybrid authentication methods, requires the liboqs master branch.
+	make tests
 
-Running
--------
+### Running OQS-OpenSSH
 
-The following instructions explain how to run a quantum-safe SSH connection (with both key exchange and authentication).
+The following instructions explain how to establish an SSH connection that uses quantum-safe key exchange and authentication.
 
-### Generating post-quantum authentication keys
+#### Generating post-quantum authentication keys
 
-To setup post-quantum authentication, the server and optionally the client need to generate post-quantum keys. The process
-is illustrated using test key files. In what follows, `<SIG>` is one of the signature algorithms listed in the Contents
-section above.
+To setup post-quantum authentication, the server (and optionally, the client) need to generate post-quantum keys. In what follows, `<SIG>` is one of the quantum-safe digital signature algorithms listed in [Supported Algorithms](#supported-algorithms) section above.
 
 The server generates its key files with the right permissions, and then generates its key pair:
 
@@ -205,91 +192,47 @@ The server then adds the client's public key to its authorized keys
 
 	cat ~/ssh_client/id_<SIG>.pub >> ~/ssh_server/authorized_keys
 
-### Running key exchange
+#### Establishing a quantum-safe SSH connection
 
-In what follows, `<KEX>` and `<SIG>` are one of the key exchange and signature (PQ-only or hybrid) algorithms listed in the Contents section above, respectively. The `-o` options can instead be added to the server/client configuration file.
-
-In one terminal, run a server:
+In one terminal, run a server (the arguments between `[...]` can be omitted if only classical authentication is required):
 
 	sudo <path-to-openssh>/sbin/sshd -p 2222 -d             \
-	    -o KexAlgorithms=<LIBOQS_ALGORITHM_KEX>             \
+	    -o KexAlgorithms=<OPENSSH_KEX_ALGORITHM>             \
 	    [-o AuthorizedKeysFile=<absolute-path-to>/ssh_server/authorized_keys \
-	     -o HostKeyAlgorithms=<LIBOQS_SIG_ALGORITHM>        \
-	     -o PubkeyAcceptedKeyTypes=<LIBOQS_SIG_ALGORITHM>   \
+	     -o HostKeyAlgorithms=<OPENSSH_SIG_ALGORITHM>        \
+	     -o PubkeyAcceptedKeyTypes=<OPENSSH_SIG_ALGORITHM>   \
 	     -h <absolute-path-to>/ssh_server/id_<SIG>]
 
-where `<LIBOQS_SIG_ALGORITHM>` is `ssh-<SIG>` all in lowercase.
-
-The server automatically supports all available hybrid and PQ-only key exchange methods.  `sudo` is required on Linux so that sshd can read the shadow password file. The arguments between `[...]` are for post-quantum authentication and can be omitted to use classical authentication.
-
-In another terminal, run a client:
-
-	<path-to-openssh>/bin/ssh -l                         \
-	    -p 2222 localhost                                \
-	    -o KexAlgorithms=<LIBOQS_ALGORITHM_KEX>          \
-	   [-o HostKeyAlgorithms=<LIBOQS_SIG_ALGORITHM>      \
-	    -o PubkeyAcceptedKeyTypes=<LIBOQS_SIG_ALGORITHM> \
-	    -o StrictHostKeyChecking=no                      \
-	    -i ~/ssh_client/id_<SIG>]
-
-where `<LIBOQS_KEX_ALGORITHM>` is either:
+where `<OPENSSH_SIG_ALGORITHM>` is `ssh-<SIG>` (all in lowercase) and `<OPENSSH_KEX_ALGORITM>` can be one of:
 
 - `<KEX>-sha384@openquantumsafe.org` (for post-quantum-only key exchange)
 - `ecdh-nistp384-<KEX>-sha384@openquantumsafe.org` (for hybrid post-quantum and elliptic curve key exchange)
 
-and where `<LIBOQS_SIG_ALGORITHM>` is `ssh-<SIG>` all in lowercase.
+`<KEX>` and `<SIG>` are respectively one of the key exchange and signature (PQ-only or hybrid) algorithms listed in the [Supported Algorithms](#supported-algorithms) section above.
 
-The `StrictHostKeyChecking` option is used to allow trusting the newly generated server key; alternatively, the key could be added manually to the client's trusted keys. The arguments between `[...]` are for post-quantum authentication and can be omitted to use classical authentication.
+The `-o` options can also be added to the server/client configuration file instead of being specified on the command line.
 
-### Automated tests
+The server automatically supports all available hybrid and PQ-only key exchange algorithms.  `sudo` is required on Linux so that sshd can read the shadow password file.
 
-To test the build, run:
+In another terminal, run a client(the arguments between `[...]` can be omitted if only classical authentication is required):
 
-	make tests
+	<path-to-openssh>/bin/ssh -l                         \
+	    -p 2222 localhost                                \
+	    -o KexAlgorithms=<OPENSSH_KEX_ALGORITHM>          \
+	   [-o HostKeyAlgorithms=<OPENSSH_SIG_ALGORITHM>      \
+	    -o PubkeyAcceptedKeyTypes=<OPENSSH_SIG_ALGORITHM> \
+	    -o StrictHostKeyChecking=no                      \
+	    -i ~/ssh_client/id_<SIG>]
 
-oqsdefault alg
---------------
+The `StrictHostKeyChecking` option is used to allow trusting the newly generated server key; alternatively, the key could be added manually to the client's trusted keys.
 
-liboqs can be configured at compile-time to use any of its algorithms as its "default" algorithm.  If OpenSSH is told to use `oqsdefault`, then it will use whichever KEM or signature algorithm was set as the default in liboqs at compile time.
+## License
 
-The purpose of this option is as follows.  The liboqs master and nist branches contain different subsets of algorithms; and the master branch is needed to enable PQC authentication.  We will make most algorithms from liboqs master branch available as a named key exchange or signature method in OpenSSH.  However, there are significantly more algorithms supported in the nist branch than in the master one, and we will not be explicitly making each nist branch algorithm available as a named method in OpenSSH.  It is still possible to test with algorithms not made available as named methods in OpenSSH using the `oqsdefault` method in OpenSSH by changing the default mapping in liboqs and then recompiling the library.
+This fork is released under the same license(s) as Portable OpenSSH. More information can be found in the [LICENSE](LICENSE) file.
 
-1. Recompile liboqs with your preferred default algorithm:
-	- For liboqs master branch:
-		- `cd liboqs`
-		- For KEX: edit `src/kem/kem.h` and change `#define OQS_KEM_DEFAULT` to map to your preferred algorithm
-		- For signature: edit `src/sig/sig.h` and change `#define OQS_SIG_DEFAULT` to map to your preferred algorithm
-		- `make clean`
-		- `make -j`
-		- `make install`
-	- For liboqs nist-branch:
-		- `cd liboqs`
-		- `make clean`
-		- `make -j KEM_DEFAULT=newhope_1024_cca_kem` (or whichever algorithm you prefer)
-		- `make install-noshared PREFIX=<path-to-install-liboqs>`
-2. Recompile OpenSSH against the newly build liboqs:
-	- `cd openssh-portable`
-	- `make clean`
-	- `make -j`
-	- `make install`
-3. Run `ssh` with `oqsdefault` replacing the `<KEX>` and/or `<SIG>` value in the Running section above.
-
-License
--------
-
-This fork is released under the same license(s) as Portable OpenSSH. More information about licensing can be found in the LICENSE file.
-
-(Pre-draft) IETF Draft
-----------------------
-
-This repository contains an experimental (pre-draft) IETF draft for hybrid key exchange methods ECDH-SIKE and ECDH-BIKE. This documents has **not** been submitted to IETF.  See https://github.com/open-quantum-safe/openssh-portable/blob/OQS-master/ietf_pre_draft_sike_bike_hybrid_kex.txt.
-
-Team
-----
+## Team
 
 The Open Quantum Safe project is led by [Douglas Stebila](https://www.douglas.stebila.ca/research/) and [Michele Mosca](http://faculty.iqc.uwaterloo.ca/mmosca/) at the University of Waterloo.
-
-### Contributors
 
 Contributors to this fork of OpenSSH include:
 
@@ -298,21 +241,17 @@ Contributors to this fork of OpenSSH include:
 - Torben Hansen (Amazon Web Services and Royal Holloway, University of London)
 - Christian Paquin (Microsoft Research)
 - Douglas Stebila (University of Waterloo)
+- Goutam Tamvada (University of Waterloo)
 
 Contributors to an earlier OQS fork of OpenSSH included:
 
 - Mira Belenkiy (Microsoft Research)
 - Karl Knopf (McMaster University)
 
-### Support
+## Acknowledgments
 
-Financial support for the development of Open Quantum Safe has been provided by Amazon Web Services and the Tutte Institute for Mathematics and Computing.  
+Financial support for the development of Open Quantum Safe has been provided by Amazon Web Services and the Tutte Institute for Mathematics and Computing.
 
-We'd like to make a special acknowledgement to the companies who have dedicated programmer time to contribute source code to OQS, including Amazon Web Services, evolutionQ, and Microsoft Research.  
+We'd like to make a special acknowledgement to the companies who have dedicated programmer time to contribute source code to OQS, including Amazon Web Services, evolutionQ, and Microsoft Research.
 
 Research projects which developed specific components of OQS have been supported by various research grants, including funding from the Natural Sciences and Engineering Research Council of Canada (NSERC); see the source papers for funding acknowledgments.
-
-### OQS TODO
-
-- Add certified PQ keys (?)
-- Add PQ info to doc (man pages)

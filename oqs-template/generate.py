@@ -10,6 +10,7 @@ import subprocess
 import sys
 import yaml
 
+# For list.append in Jinja templates
 Jinja2 = jinja2.Environment(loader=jinja2.FileSystemLoader(searchpath="."),extensions=['jinja2.ext.do'])
 
 def file_get_contents(filename, encoding=None):
@@ -39,6 +40,9 @@ def load_config():
 
 config = load_config()
 
+# update build script
+replacer('configure.ac', config, '#####')
+
 # add kems
 replacer('kex.c', config, '/////')
 replacer('kex.h', config, '/////')
@@ -46,7 +50,6 @@ replacer('kexoqs.c', config, '/////')
 replacer('myproposal.h', config, '/////')
 replacer('regress/unittests/kex/test_kex.c', config, '/////')
 replacer('ssh2.h', config, '/////')
-replacer('configure.ac', config, '#####')
 
 # add sigs
 replacer('oqs-utils.h', config, '/////')
@@ -63,5 +66,5 @@ replacer('sshconnect.c', config, '/////')
 replacer('sshkey.c', config, '/////')
 replacer('sshkey.h', config, '/////')
 
-# then, update test suite
+# update test suite
 replacer('oqs_test/tests/test_openssh.py', config, '#####')
