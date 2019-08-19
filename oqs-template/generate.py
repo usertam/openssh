@@ -21,16 +21,23 @@ def file_put_contents(filename, s, encoding=None):
     with open(filename, mode='w', encoding=encoding) as fh:
         fh.write(s)
 
-def replacer(filename, instructions, delimiter):
+def populate(filename, config, delimiter, overwrite=False):
     fragments = glob.glob(os.path.join('oqs-template', filename, '*.fragment'))
-    contents = file_get_contents(filename)
+    if overwrite == True:
+        source_file = os.path.join('oqs-template', filename, os.path.basename(filename)+ '.base')
+        contents = file_get_contents(source_file)
+    else:
+        contents = file_get_contents(filename)
     for fragment in fragments:
         identifier = os.path.splitext(os.path.basename(fragment))[0]
         identifier_start = '{} OQS_TEMPLATE_FRAGMENT_{}_START'.format(delimiter, identifier.upper())
         identifier_end = '{} OQS_TEMPLATE_FRAGMENT_{}_END'.format(delimiter, identifier.upper())
         preamble = contents[:contents.find(identifier_start)]
         postamble = contents[contents.find(identifier_end):]
-        contents = preamble + identifier_start + Jinja2.get_template(fragment).render({'config': config}) + postamble
+        if overwrite == True:
+            contents = preamble + Jinja2.get_template(fragment).render({'config': config}) + postamble.replace(identifier_end + '\n', '')
+        else:
+            contents = preamble + identifier_start + Jinja2.get_template(fragment).render({'config': config}) + postamble
     file_put_contents(filename, contents)
 
 def load_config():
@@ -41,30 +48,31 @@ def load_config():
 config = load_config()
 
 # update build script
-replacer('configure.ac', config, '#####')
+populate('configure.ac', config, '#####')
 
 # add kems
-replacer('kex.c', config, '/////')
-replacer('kex.h', config, '/////')
-replacer('kexoqs.c', config, '/////')
-replacer('myproposal.h', config, '/////')
-replacer('regress/unittests/kex/test_kex.c', config, '/////')
-replacer('ssh2.h', config, '/////')
+populate('kex.c', config, '/////')
+populate('kex.h', config, '/////')
+populate('kexoqs.c', config, '/////')
+populate('myproposal.h', config, '/////')
+populate('regress/unittests/kex/test_kex.c', config, '/////')
+populate('ssh2.h', config, '/////')
 
 # add sigs
-replacer('oqs-utils.h', config, '/////')
-replacer('pathnames.h', config, '/////')
-replacer('readconf.c', config, '/////')
-replacer('servconf.c', config, '/////')
-replacer('ssh-add.c', config, '/////')
-replacer('ssh-keygen.c', config, '/////')
-replacer('ssh-keyscan.c', config, '/////')
-replacer('ssh-keysign.c', config, '/////')
-replacer('ssh-oqs.c', config, '/////')
-replacer('ssh.c', config, '/////')
-replacer('sshconnect.c', config, '/////')
-replacer('sshkey.c', config, '/////')
-replacer('sshkey.h', config, '/////')
+populate('oqs-utils.h', config, '/////')
+populate('pathnames.h', config, '/////')
+populate('readconf.c', config, '/////')
+populate('servconf.c', config, '/////')
+populate('ssh-add.c', config, '/////')
+populate('ssh-keygen.c', config, '/////')
+populate('ssh-keyscan.c', config, '/////')
+populate('ssh-keysign.c', config, '/////')
+populate('ssh-oqs.c', config, '/////')
+populate('ssh.c', config, '/////')
+populate('sshconnect.c', config, '/////')
+populate('sshkey.c', config, '/////')
+populate('sshkey.h', config, '/////')
 
-# update test suite
-replacer('oqs_test/tests/test_openssh.py', config, '#####')
+# update test suite and README
+populate('oqs_test/tests/test_openssh.py', config, '#####')
+populate('README.md', config, '#####', True)

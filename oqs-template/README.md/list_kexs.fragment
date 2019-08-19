@@ -1,0 +1,7 @@
+{%- for kem in config['kems'] %}
+- **{{ kem['family'] }}**:
+    {%- for variant in kem['variants'] -%}
+        `{{ variant['name']|lower }}`{%- if not loop.last -%},{%- endif %}
+    {%- endfor %}
+{%- endfor %}
+

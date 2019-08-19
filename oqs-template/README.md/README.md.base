@@ -54,15 +54,8 @@ If an algorithm is provided by liboqs but is not listed below, it can still be u
 The following quantum-safe algorithms from liboqs are supported (assuming they have been enabled in liboqs):
 
 - `oqsdefault` (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
-
-- **BIKE**:`bike1_l1`,`bike1_l3`,`bike1_l5`,`bike2_l1`,`bike2_l3`,`bike2_l5`
-- **FRODO**:`frodo_640_aes`,`frodo_976_aes`
-- **KYBER**:`kyber_512`,`kyber_768`,`kyber_1024`
-- **NEWHOPE**:`newhope_512`,`newhope_1024`
-- **NTRU**:`ntru_hps_2048_509`,`ntru_hps_2048_677`
-- **SABER**:`saber_lightsaber`,`saber_saber`,`saber_firesaber`
-- **SIDH**:`sidh_p503`,`sidh_p751`
-- **SIKE**:`sike_503`,`sike_751`
+##### OQS_TEMPLATE_FRAGMENT_LIST_KEXS_START
+##### OQS_TEMPLATE_FRAGMENT_LIST_KEXS_END
 
 The following hybrid algorithms are supported; they combine a quantum-safe algorithm listed above with ECDH that uses NIST's P384 curve:
 
@@ -73,12 +66,8 @@ The following hybrid algorithms are supported; they combine a quantum-safe algor
 The following digital signature algorithms from liboqs are supported (assuming they have been enabled in liboqs):
 
 - `oqsdefault` (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
-
-- **DILITHIUM**:`dilithium_2`,`dilithium_4`
-- **MQDSS**:`mqdss_31_48`
-- **PICNIC**:`picnic_l1fs`,`picnic_l1ur`,`picnic_l3fs`,`picnic_l3ur`,`picnic_l5fs`,`picnic_l5ur`,`picnic2_l1fs`,`picnic2_l3fs`
-- **QTESLA**:`qtesla_i`,`qtesla_iii_size`,`qtesla_iii_speed`
-- **SPHINCS**:`sphincs_haraka_128f_robust`
+##### OQS_TEMPLATE_FRAGMENT_LIST_SIGS_START
+##### OQS_TEMPLATE_FRAGMENT_LIST_SIGS_END
 
 The following hybrid algorithms are supported; they combine a quantum-safe algorithm listed above with a traditional digital signature algorithm (`<SIG>` is any one of the algorithms listed above):
 
