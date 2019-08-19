@@ -33,12 +33,12 @@
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_PQ_KEXS_START
 #ifdef HAVE_BIKE
 #define KEX_PQ_METHOD_BIKE \
-    PQ_OQS_KEX_METHOD("bike1-L1-sha384") \
-    PQ_OQS_KEX_METHOD("bike1-L3-sha384") \
-    PQ_OQS_KEX_METHOD("bike1-L5-sha384") \
-    PQ_OQS_KEX_METHOD("bike2-L1-sha384") \
-    PQ_OQS_KEX_METHOD("bike2-L3-sha384") \
-    PQ_OQS_KEX_METHOD("bike2-L5-sha384")
+    PQ_OQS_KEX_METHOD("bike1-l1-sha384") \
+    PQ_OQS_KEX_METHOD("bike1-l3-sha384") \
+    PQ_OQS_KEX_METHOD("bike1-l5-sha384") \
+    PQ_OQS_KEX_METHOD("bike2-l1-sha384") \
+    PQ_OQS_KEX_METHOD("bike2-l3-sha384") \
+    PQ_OQS_KEX_METHOD("bike2-l5-sha384")
 #else
 #define KEX_PQ_METHOD_BIKE ""
 #endif /* HAVE_BIKE */
@@ -81,15 +81,15 @@
 #endif /* HAVE_SABER */
 #ifdef HAVE_SIDH
 #define KEX_PQ_METHOD_SIDH \
-    PQ_OQS_KEX_METHOD("sidh-503-sha384") \
-    PQ_OQS_KEX_METHOD("sidh-751-sha384")
+    PQ_OQS_KEX_METHOD("sidh-p503-sha384") \
+    PQ_OQS_KEX_METHOD("sidh-p751-sha384")
 #else
 #define KEX_PQ_METHOD_SIDH ""
 #endif /* HAVE_SIDH */
 #ifdef HAVE_SIKE
 #define KEX_PQ_METHOD_SIKE \
-    PQ_OQS_KEX_METHOD("sike-503-sha384") \
-    PQ_OQS_KEX_METHOD("sike-751-sha384")
+    PQ_OQS_KEX_METHOD("sike-p503-sha384") \
+    PQ_OQS_KEX_METHOD("sike-p751-sha384")
 #else
 #define KEX_PQ_METHOD_SIKE ""
 #endif /* HAVE_SIKE */
@@ -126,12 +126,12 @@
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_HYBRID_KEXS_START
 #ifdef HAVE_BIKE
 #define KEX_HYBRID_METHOD_BIKE \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike1-L1-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike1-L3-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike1-L5-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike2-L1-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike2-L3-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike2-L5-sha384")
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike1-l1-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike1-l3-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike1-l5-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike2-l1-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike2-l3-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike2-l5-sha384")
 #else
 #define KEX_HYBRID_METHOD_BIKE ""
 #endif /* HAVE_BIKE */
@@ -174,15 +174,15 @@
 #endif /* HAVE_SABER */
 #ifdef HAVE_SIDH
 #define KEX_HYBRID_METHOD_SIDH \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-503-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-751-sha384")
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-p503-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-p751-sha384")
 #else
 #define KEX_HYBRID_METHOD_SIDH ""
 #endif /* HAVE_SIDH */
 #ifdef HAVE_SIKE
 #define KEX_HYBRID_METHOD_SIKE \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-503-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-751-sha384")
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p503-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p751-sha384")
 #else
 #define KEX_HYBRID_METHOD_SIKE ""
 #endif /* HAVE_SIKE */

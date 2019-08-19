@@ -2,7 +2,7 @@
 {%- if sig['family'] != "OQSDEFAULT" %}
 - **{{ sig['family'] }}**:
     {%- for variant in sig['variants'] -%}
-        `{{ variant['name']|lower }}`{%- if not loop.last -%},{%- endif %}
+        `{{ variant['name']|lower|replace('_','') }}`{%- if not loop.last -%},{%- endif %}
     {%- endfor %}
 {%- endif %}
 {%- endfor %}
