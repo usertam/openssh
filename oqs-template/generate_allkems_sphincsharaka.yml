@@ -61,31 +61,24 @@ kems:
     variants:
       -
         name: "BIKE1_L1"
-        ssh_name: "bike1-L1-sha384"
         oqs_meth: "OQS_KEM_alg_bike1_l1"
       -
         name: "BIKE1_L3"
-        ssh_name: "bike1-L3-sha384"
         oqs_meth: "OQS_KEM_alg_bike1_l3"
       -
         name: "BIKE1_L5"
-        ssh_name: "bike1-L5-sha384"
         oqs_meth: "OQS_KEM_alg_bike1_l5"
       -
         name: "BIKE2_L1"
-        ssh_name: "bike2-L1-sha384"
         oqs_meth: "OQS_KEM_alg_bike2_l1"
       -
         name: "BIKE2_L3"
-        ssh_name: "bike2-L3-sha384"
         oqs_meth: "OQS_KEM_alg_bike2_l3"
       -
         name: "BIKE2_L5"
-        ssh_name: "bike2-L5-sha384"
         oqs_meth: "OQS_KEM_alg_bike2_l5"
       -
         name: "BIKE3_L1"
-        ssh_name: "bike3-L1-sha384"
         oqs_meth: "OQS_KEM_alg_bike3_l1"
       -
         name: "BIKE3_L3"
@@ -93,18 +86,15 @@ kems:
         oqs_meth: "OQS_KEM_alg_bike3_l3"
       -
         name: "BIKE3_L5"
-        ssh_name: "bike3-L5-sha384"
         oqs_meth: "OQS_KEM_alg_bike3_l5"
   -
     family: "FRODO"
     variants:
       -
         name: "FRODO_640_AES"
-        ssh_name: "frodo-640-aes-sha384"
         oqs_meth: "OQS_KEM_alg_frodokem_640_aes"
       -
         name: "FRODO_640_SHAKE"
-        ssh_name: "frodo-640-shake-sha384"
         oqs_meth: "OQS_KEM_alg_frodokem_640_shake"
       -
         name: "FRODO_976_AES"
@@ -112,7 +102,6 @@ kems:
         oqs_meth: "OQS_KEM_alg_frodokem_976_aes"
       -
         name: "FRODO_976_SHAKE"
-        ssh_name: "frodo-976-shake-sha384"
         oqs_meth: "OQS_KEM_alg_frodokem_976_shake"
       -
         name: "FRODO_1344_AES"
@@ -120,103 +109,82 @@ kems:
         oqs_meth: "OQS_KEM_alg_frodokem_1344_aes"
       -
         name: "FRODO_1344_SHAKE"
-        ssh_name: "frodo-1344-shake-sha384"
         oqs_meth: "OQS_KEM_alg_frodokem_1344_shake"
   -
     family: "KYBER"
     variants:
       -
         name: "KYBER_512"
-        ssh_name: "kyber-512-sha384"
         oqs_meth: "OQS_KEM_alg_kyber_512"
       -
         name: "KYBER_768"
-        ssh_name: "kyber-768-sha384"
         oqs_meth: "OQS_KEM_alg_kyber_768"
       -
         name: "KYBER_1024"
-        ssh_name: "kyber-1024-sha384"
         oqs_meth: "OQS_KEM_alg_kyber_1024"
   -
     family: "NEWHOPE"
     variants:
       -
         name: "NEWHOPE_512"
-        ssh_name: "newhope-512-sha384"
         oqs_meth: "OQS_KEM_alg_newhope_512cca"
       -
         name: "NEWHOPE_1024"
-        ssh_name: "newhope-1024-sha384"
         oqs_meth: "OQS_KEM_alg_newhope_1024cca"
   -
     family: "NTRU"
     variants:
       -
         name: "NTRU_HPS_2048_509"
-        ssh_name: "ntru-hps-2048-509-sha384"
         oqs_meth: "OQS_KEM_alg_ntru_hps2048509"
       -
         name: "NTRU_HPS_2048_677"
-        ssh_name: "ntru-hps-2048-677-sha384"
         oqs_meth: "OQS_KEM_alg_ntru_hps2048677"
       -
         name: "NTRU_HPS_4096_821"
-        ssh_name: "ntru-hps-4096-821-sha384"
         oqs_meth: "OQS_KEM_alg_ntru_hps4096821"
       -
         name: "NTRU_HRSS_701"
-        ssh_name: "ntru-hrss-701"
         oqs_meth: "OQS_KEM_alg_ntru_hrss701"
   -
     family: "SABER"
     variants:
       -
         name: "SABER_LIGHTSABER"
-        ssh_name: "saber-lightsaber-sha384"
         oqs_meth: "OQS_KEM_alg_saber_lightsaber"
       -
         name: "SABER_SABER"
-        ssh_name: "saber-saber-sha384"
         oqs_meth: "OQS_KEM_alg_saber_saber"
       -
         name: "SABER_FIRESABER"
-        ssh_name: "saber-firesaber-sha384"
         oqs_meth: "OQS_KEM_alg_saber_firesaber"
   -
     family: "SIDH"
     variants:
       -
         name: "SIDH_p434"
-        ssh_name: "sidh-434-sha384"
         oqs_meth: "OQS_KEM_alg_sidh_p434"
       -
         name: "SIDH_p503"
-        ssh_name: "sidh-p503-sha384"
         oqs_meth: "OQS_KEM_alg_sidh_p503"
       -
         name: "SIDH_p610"
-        ssh_name: "sidh-p610-sha384"
         oqs_meth: "OQS_KEM_alg_sidh_p503"
       -
         name: "SIDH_p751"
-        ssh_name: "sidh-p751-sha384"
         oqs_meth: "OQS_KEM_alg_sidh_p751"
   -
     family: "SIKE"
     variants:
       -
         name: "SIKE_p434"
-        ssh_name: "sike-p434-sha384"
         oqs_meth: "OQS_KEM_alg_sike_p434"
       -
         name: "SIKE_p503"
-        ssh_name: "sike-p503-sha384"
         oqs_meth: "OQS_KEM_alg_sike_p503"
       -
         name: "SIKE_p610"
-        ssh_name: "sike-p610-sha384"
         oqs_meth: "OQS_KEM_alg_sike_p503"
       -
         name: "SIKE_p751"
-        ssh_name: "sike-p751-sha384"
         oqs_meth: "OQS_KEM_alg_sike_p751"

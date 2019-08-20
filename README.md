@@ -147,6 +147,7 @@ Then, build and install our fork of OpenSSH; First, run:
 	autoreconf
 
 Then, on **Ubuntu 16.04** and **macOS**, run the following:
+
 	./configure --with-ssl-dir=<path-to-openssl>/include \
 	            --with-ldflags=-L<path-to-openssl>/lib   \
 	            --prefix=$OPENSSH_INSTALL                \
@@ -155,7 +156,7 @@ Then, on **Ubuntu 16.04** and **macOS**, run the following:
 	make -j
 	make install
 
-On **Ubuntu 18.04**, the steps are slightly different due to the difference in the default OpenSSL version:
+On **Ubuntu 18.04**, the steps are slightly different due to the default OpenSSL version:
 
 	./configure --with-ldflags=-L/usr/lib/ssl1.0      \
 	            --prefix=$OPENSSH_INSTALL             \
