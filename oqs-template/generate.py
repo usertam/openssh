@@ -75,4 +75,3 @@ populate('sshkey.h', config, '/////')
 
 # update test suite and README
 populate('oqs_test/tests/test_openssh.py', config, '#####')
-populate('README.md', config, '#####', True)
