@@ -39,7 +39,7 @@ This fork also contains an experimental (pre-draft) [IETF draft](https://github.
 ### Limitations and security
 As research advances, the supported algorithms may see rapid changes in their security, and may even prove insecure against both classical and quantum computers.
 
-We believe that the NIST Post-Quantum Cryptography standardization project is currently the best avenue to identifying potentially quantum-resistant algorithms, and strongly recommend that applications and protocols rely on the outcomes of the NIST standardization project when deploying post-quantum cryptography.
+We believe that the NIST Post-Quantum Cryptography standardization project is currently the best avenue to identifying potentially quantum-resistant algorithms, and strongly recommend that applications and protocols rely on the outcomes of the NIST standardization project when deploying quantum-safe cryptography.
 
 While at the time of this writing there are no vulnerabilities known in any of the quantum-safe algorithms used in this fork, it is advisable to wait on deploying quantum-safe algorithms until further guidance is provided by the standards community, especially from the NIST standardization project.
 
@@ -54,15 +54,15 @@ If an algorithm is provided by liboqs but is not listed below, it can still be u
 The following quantum-safe algorithms from liboqs are supported (assuming they have been enabled in liboqs):
 
 - `oqsdefault` (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
-- `bike1-L1`, `bike1-L3`, `bike1-L5`
-- `bike2-L1`, `bike2-L3`, `bike2-L3`
-- `frodo-640-aes`, `frodo-976-aes`
-- `kyber-512`, `kyber-768`, `kyber-1024`
-- `newhope-512`, `newhope-1024`
-- `ntru-hps-2048-509`, `ntru-hps-2048-677`
-- `saber-lightsaber`, `saber-saber`, `saber-firesaber`
-- `sidh-503`, `sidh-751`
-- `sike-503`, `sike-751`
+
+- **BIKE**:`bike1-l1`,`bike1-l3`,`bike1-l5`,`bike2-l1`,`bike2-l3`,`bike2-l5`
+- **FrodoKEM**:`frodo-640-aes`,`frodo-976-aes`
+- **Kyber**:`kyber-512`,`kyber-768`,`kyber-1024`
+- **NewHope**:`newhope-512`,`newhope-1024`
+- **NTRU**:`ntru-hps-2048-509`,`ntru-hps-2048-677`
+- **Saber**:`saber-lightsaber`,`saber-saber`,`saber-firesaber`
+- **SIDH**:`sidh-p503`,`sidh-p751`
+- **SIKE**:`sike-p503`,`sike-p751`
 
 The following hybrid algorithms are supported; they combine a quantum-safe algorithm listed above with ECDH that uses NIST's P384 curve:
 
@@ -73,19 +73,18 @@ The following hybrid algorithms are supported; they combine a quantum-safe algor
 The following digital signature algorithms from liboqs are supported (assuming they have been enabled in liboqs):
 
 - `oqsdefault` (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
-- `dilithium2`, `dilithium4`
-- `mqdss3148`
-- `picnicl1fs`, `picnicl1ur`, `picnicl3fs`,`picnicl3ur`, `picnicl5fs`, `picnicl5ur`
-- `picnic2l1fs`, `picnic2l3fs`
-- `qteslai`, `qteslaiiispeed`, `qteslaiiisize`
-- `sphincsharaka128frobust`
 
-The following hybrid algorithms are supported; they combine a quantum-safe algorithm listed above with a traditional digital signature algorithm (`<SIG>` is any one of the algorithm listed above):
+- **Dilithium**:`dilithium2`,`dilithium4`
+- **MQDSS**:`mqdss3148`
+- **Picnic**:`picnicl1fs`,`picnicl1ur`,`picnicl3fs`,`picnicl3ur`,`picnicl5fs`,`picnicl5ur`,`picnic2l1fs`,`picnic2l3fs`
+- **qTesla**:`qteslai`,`qteslaiiisize`,`qteslaiiispeed`
+- **SPHINCS+**:`sphincsharaka128frobust`
+
+The following hybrid algorithms are supported; they combine a quantum-safe algorithm listed above with a traditional digital signature algorithm (`<SIG>` is any one of the algorithms listed above):
 
 - if `<SIG>` has L1 security, then the fork provides the methods `rsa3072-<SIG>` and `p256-<SIG>`, which combine `<SIG>` with RSA3072 and with ECDSA using NIST's P256 curve respectively.
 - if `<SIG>` has L3 security, the fork provides the method `p384-<SIG>`, which combines `<SIG>` with ECDSA using NIST's P384 curve.
 - if `<SIG>` has L5 security, the fork provides the method `p521-<SIG>`, which combines `<SIG>` with ECDSA using NIST's P521 curve.
-
 
 ## Quickstart
 
@@ -95,11 +94,11 @@ The steps below have been confirmed to work on macOS 10.14 (clang 10.0.0), Ubunt
 
 ### Step 0: Install dependencies
 
-For **Ubuntu**, you need to install the following packages:
+On **Ubuntu**, you need to install the following packages:
 
 	sudo apt install autoconf automake gcc libtool libssl-dev make unzip xsltproc zlib1g-dev
 
-For **Ubuntu 18.04**, you need to downgrade the version of OpenSSL.  (Ubuntu 18.04 bundles OpenSSL 1.1.0 by default,  but OpenSSH only supports building against OpenSSL 1.0.2 at present.)
+On **Ubuntu 18.04**, you need to downgrade the version of OpenSSL.  (Ubuntu 18.04 bundles OpenSSL 1.1.0 by default,  but OpenSSH only supports building against OpenSSL 1.0.2 at present.)
 
 	sudo apt install openssl1.0 libssl1.0-dev
 
@@ -116,15 +115,15 @@ On **Linux**, you also may need to do the following:
 		sudo groupadd sshd
 		sudo useradd -g sshd -c 'sshd privsep' -d /var/empty -s /bin/false sshd
 
-For **macOS**, you need to install the following packages using brew (or a package manager of your choice):
+On **macOS**, you need to install the following packages using brew (or a package manager of your choice):
 
 	brew install autoconf automake libtool openssl wget
 
 ### Step 1: Build and install liboqs
 
-You will need to specify a path to install liboqs in during configure time; we recommend that you install in a special-purpose directory, rather than the global `/usr` or `/usr/local` directories.
+You will need to specify a path to install liboqs in during configure time; we recommend that you install in a special-purpose directory, rather than the global `/usr` or `/usr/local` directories. The following instructions install it into a subdirectory inside the OpenSSH source.
 
-	git clone -b master --single-branch https://github.com/open-quantum-safe/liboqs.git
+	git clone --branch master --single-branch https://github.com/open-quantum-safe/liboqs.git
 	cd liboqs
 	autoreconf -i
 	./configure --prefix=<path-to-openssh-dir>/oqs --with-pic=yes --enable-shared=no
@@ -132,19 +131,22 @@ You will need to specify a path to install liboqs in during configure time; we r
 	make install
 	rm -f <path-to-install-liboqs>/lib/liboqs.so*
 
-Building liboqs requires your system to have OpenSSL already installed.  configure will detect it if it is located in a standard location, such as `/usr` or `/usr/local/opt/openssl` (for brew on macOS).  Otherwise, you may need to specify it with `--with-openssl=<path-to-system-openssl-dir>`.
+Building liboqs requires your system to have OpenSSL already installed. `configure` will detect it if it is located in a standard location, such as `/usr` or `/usr/local/opt/openssl` (for brew on macOS).  Otherwise, you may need to specify it with `--with-openssl=<path-to-system-openssl-dir>`.
 
 ### Step 2: Build the fork
 
-Next, build and install our fork of OpenSSH:
+Get the source from Github:
 
+	git clone --branch OQS-master https://github.com/open-quantum-safe/openssh-portable.git
+
+Then, build and install our fork of OpenSSH; First, run:
+
+	cd <path-to-openssh-src>
 	export LIBOQS_INSTALL=<path-to-liboqs>
 	export OPENSSH_INSTALL=<path-to-install-openssh>
-	git clone https://github.com/open-quantum-safe/openssh-portable.git
-	cd openssh-portable
 	autoreconf
 
-For Ubuntu 16.04 and macOS, try the following:
+Then, on **Ubuntu 16.04** and **macOS**, run the following:
 
 	./configure --with-ssl-dir=<path-to-openssl>/include \
 	            --with-ldflags=-L<path-to-openssl>/lib   \
@@ -154,7 +156,7 @@ For Ubuntu 16.04 and macOS, try the following:
 	make -j
 	make install
 
-On Ubuntu 18.04, some modifications are required due to the default OpenSSL version:
+On **Ubuntu 18.04**, the steps are slightly different due to the default OpenSSL version:
 
 	./configure --with-ldflags=-L/usr/lib/ssl1.0      \
 	            --prefix=$OPENSSH_INSTALL             \
@@ -171,9 +173,9 @@ To test the build, run:
 
 The following instructions explain how to establish an SSH connection that uses quantum-safe key exchange and authentication.
 
-#### Generating post-quantum authentication keys
+#### Generating quantum-safe authentication keys
 
-To setup post-quantum authentication, the server (and optionally, the client) need to generate post-quantum keys. In what follows, `<SIG>` is one of the quantum-safe digital signature algorithms listed in [Supported Algorithms](#supported-algorithms) section above.
+To setup quantum-safe authentication, the server (and optionally, the client) need to generate quantum-safe keys. In what follows, `<SIG>` is one of the quantum-safe digital signature algorithms listed in [Supported Algorithms](#supported-algorithms) section above.
 
 The server generates its key files with the right permissions, and then generates its key pair:
 
@@ -205,8 +207,8 @@ In one terminal, run a server (the arguments between `[...]` can be omitted if o
 
 where `<OPENSSH_SIG_ALGORITHM>` is `ssh-<SIG>` (all in lowercase) and `<OPENSSH_KEX_ALGORITM>` can be one of:
 
-- `<KEX>-sha384@openquantumsafe.org` (for post-quantum-only key exchange)
-- `ecdh-nistp384-<KEX>-sha384@openquantumsafe.org` (for hybrid post-quantum and elliptic curve key exchange)
+- `<KEX>-sha384@openquantumsafe.org` (for quantum-safe-only key exchange)
+- `ecdh-nistp384-<KEX>-sha384@openquantumsafe.org` (for hybrid quantum-safe and elliptic curve key exchange)
 
 `<KEX>` and `<SIG>` are respectively one of the key exchange and signature (PQ-only or hybrid) algorithms listed in the [Supported Algorithms](#supported-algorithms) section above.
 
@@ -254,4 +256,4 @@ Financial support for the development of Open Quantum Safe has been provided by 
 
 We'd like to make a special acknowledgement to the companies who have dedicated programmer time to contribute source code to OQS, including Amazon Web Services, evolutionQ, and Microsoft Research.
 
-Research projects which developed specific components of OQS have been supported by various research grants, including funding from the Natural Sciences and Engineering Research Council of Canada (NSERC); see the source papers for funding acknowledgments.
+Research projects which developed specific components of OQS have been supported by various research grants, including funding from the Natural Sciences and Engineering Research Council of Canada (NSERC); see [here](https://openquantumsafe.org/papers/SAC-SteMos16.pdf) and [here](https://openquantumsafe.org/papers/NISTPQC-CroPaqSte19.pdf) for funding acknowledgments.
