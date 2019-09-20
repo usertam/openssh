@@ -61,16 +61,13 @@ const char* get_oqs_alg_name(int openssh_type)
 		case KEY_PICNIC2_L3FS:
 		case KEY_P384_PICNIC2_L3FS:
 			return OQS_SIG_alg_picnic2_L3_FS;
-		case KEY_QTESLA_I:
-		case KEY_RSA3072_QTESLA_I:
-		case KEY_P256_QTESLA_I:
-			return OQS_SIG_alg_qTESLA_I;
-		case KEY_QTESLA_III_SIZE:
-		case KEY_P384_QTESLA_III_SIZE:
-			return OQS_SIG_alg_qTESLA_III_size;
-		case KEY_QTESLA_III_SPEED:
-		case KEY_P384_QTESLA_III_SPEED:
-			return OQS_SIG_alg_qTESLA_III_speed;
+		case KEY_QTESLA_P_I:
+		case KEY_RSA3072_QTESLA_P_I:
+		case KEY_P256_QTESLA_P_I:
+			return OQS_SIG_alg_qTesla_p_I;
+		case KEY_QTESLA_P_III:
+		case KEY_P384_QTESLA_P_III:
+			return OQS_SIG_alg_qTesla_p_III;
 		case KEY_SPHINCS_HARAKA_128F_ROBUST:
 		case KEY_RSA3072_SPHINCS_HARAKA_128F_ROBUST:
 		case KEY_P256_SPHINCS_HARAKA_128F_ROBUST:

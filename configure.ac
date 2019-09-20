@@ -3732,7 +3732,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(ENABLE_SIG_QTESLA) || (defined(OQS_ENABLE_SIG_qTESLA_I) && defined(OQS_ENABLE_SIG_qTESLA_III_size) && defined(OQS_ENABLE_SIG_qTESLA_III_speed))
+					#if defined(ENABLE_SIG_QTESLA) || (defined(OQS_ENABLE_SIG_qTesla_p_I) && defined(OQS_ENABLE_SIG_qTesla_p_III))
 					#else
 					#error "QTESLA is not supported"
 					#endif
