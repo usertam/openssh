@@ -14,6 +14,7 @@ OQS-OpenSSH is a fork of OpenSSH that adds quantum-safe key exchange and signatu
 - [Quickstart](#quickstart)
   * [Building OQS-OpenSSH](#building-oqs-openssh)
   * [Running OQS-OpenSSH](#running-oqs-openssh)
+- [Contributing](#contributing)
 - [License](#license)
 - [Team](#team)
 - [Acknowledgements](#acknowledgements)
@@ -22,21 +23,22 @@ OQS-OpenSSH is a fork of OpenSSH that adds quantum-safe key exchange and signatu
 
 **liboqs** is an open source C library for quantum-resistant cryptographic algorithms. See [here](https://github.com/open-quantum-safe/liboqs/) for more information.
 
-**OQS-OpenSSH** is a fork of OpenSSH that adds quantum-safe key exchange and signature algorithms using liboqs for prototyping purposes.
+**OQS-OpenSSH** is a fork of OpenSSH that adds quantum-safe cryptography to enable its use and evaluation in the SSH protocol.
 
 Both liboqs and this fork are part of the **Open Quantum Safe (OQS) project**, which aims to develop and prototype quantum-safe cryptography. More information about the project can be found [here](https://openquantumsafe.org/).
 
 ## Status
 
-This fork is currently based on OpenSSH version **7.9** (Git tag V_7_9_P1), and is maintained for the purposes of prototyping and evaluating the use of quantum-safe cryptography in SSH. **It is at an experimental stage**, and has not received the same level of auditing and analysis that OpenSSH has received. See the [Limitations and Security](#limitations-and-security) section below for more information.
+This fork is currently based on OpenSSH version **7.9** (Git tag V_7_9_P1); release notes can be found [here](RELEASE.md). **IT IS AT AN EXPERIMENTAL STAGE**, and has not received the same level of auditing and analysis that OpenSSH has received. See the [Limitations and Security](#limitations-and-security) section below for more information.
 
-**We do not recommend relying on this fork in a production environment or to protect any sensitive data.**
+**WE DO NOT RECOMMEND RELYING ON THIS FORK TO PROTECT SENSITIVE DATA.**
 
 liboqs is provided "as is", without warranty of any kind.  See [LICENSE.txt](https://github.com/open-quantum-safe/liboqs/blob/master/LICENSE.txt) for the full disclaimer.
 
 This fork also contains an experimental (pre-draft) [IETF draft](https://github.com/open-quantum-safe/openssh-portable/blob/OQS-master/ietf_pre_draft_sike_bike_hybrid_kex.txt) for hybrid key exchange algorithms ECDH-SIKE and ECDH-BIKE. This document has **not** been submitted to IETF.
 
 ### Limitations and security
+
 As research advances, the supported algorithms may see rapid changes in their security, and may even prove insecure against both classical and quantum computers.
 
 We believe that the NIST Post-Quantum Cryptography standardization project is currently the best avenue to identifying potentially quantum-resistant algorithms, and strongly recommend that applications and protocols rely on the outcomes of the NIST standardization project when deploying quantum-safe cryptography.
@@ -227,6 +229,10 @@ In another terminal, run a client(the arguments between `[...]` can be omitted i
 	    -i ~/ssh_client/id_<SIG>]
 
 The `StrictHostKeyChecking` option is used to allow trusting the newly generated server key; alternatively, the key could be added manually to the client's trusted keys.
+
+## Contributing
+
+Contributions are gratefully welcomed. See our [Contributing Guide](https://github.com/open-quantum-safe/openssh-portable/wiki/Contributing-Guide) for more details.
 
 ## License
 
