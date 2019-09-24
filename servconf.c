@@ -306,11 +306,9 @@ fill_default_server_options(ServerOptions *options)
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_PICNIC2_L3FS_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_QTESLA_I_KEY_FILE);
+		    _PATH_HOST_QTESLA_P_I_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_QTESLA_III_SIZE_KEY_FILE);
-		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_QTESLA_III_SPEED_KEY_FILE);
+		    _PATH_HOST_QTESLA_P_III_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE);
 ///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_HOSTKEYS_END
@@ -354,13 +352,11 @@ fill_default_server_options(ServerOptions *options)
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_P384_PICNIC2_L3FS_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_RSA3072_QTESLA_I_KEY_FILE);
+		    _PATH_HOST_RSA3072_QTESLA_P_I_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_P256_QTESLA_I_KEY_FILE);
+		    _PATH_HOST_P256_QTESLA_P_I_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_P384_QTESLA_III_SIZE_KEY_FILE);
-		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_P384_QTESLA_III_SPEED_KEY_FILE);
+		    _PATH_HOST_P384_QTESLA_P_III_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_RSA3072_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
