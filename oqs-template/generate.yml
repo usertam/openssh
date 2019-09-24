@@ -164,17 +164,53 @@ kems:
     family: "SIDH"
     variants:
       -
+        name: "SIDH_p434"
+        oqs_meth: "OQS_KEM_alg_sidh_p434"
+      -
         name: "SIDH_p503"
         oqs_meth: "OQS_KEM_alg_sidh_p503"
       -
+        name: "SIDH_p610"
+        oqs_meth: "OQS_KEM_alg_sidh_p610"
+      -
         name: "SIDH_p751"
         oqs_meth: "OQS_KEM_alg_sidh_p751"
+      -
+        name: "SIDH_p434_compressed"
+        oqs_meth: "OQS_KEM_alg_sidh_p434_compressed"
+      -
+        name: "SIDH_p503_compressed"
+        oqs_meth: "OQS_KEM_alg_sidh_p503_compressed"
+      -
+        name: "SIDH_p610_compressed"
+        oqs_meth: "OQS_KEM_alg_sidh_p610_compressed"
+      -
+        name: "SIDH_p751_compressed"
+        oqs_meth: "OQS_KEM_alg_sidh_p751_compressed"
   -
     family: "SIKE"
     variants:
       -
+        name: "SIKE_p434"
+        oqs_meth: "OQS_KEM_alg_sike_p434"
+      -
         name: "SIKE_p503"
         oqs_meth: "OQS_KEM_alg_sike_p503"
       -
+        name: "SIKE_p610"
+        oqs_meth: "OQS_KEM_alg_sike_p610"
+      -
         name: "SIKE_p751"
         oqs_meth: "OQS_KEM_alg_sike_p751"
+      -
+        name: "SIKE_p434_compressed"
+        oqs_meth: "OQS_KEM_alg_sike_p434_compressed"
+      -
+        name: "SIKE_p503_compressed"
+        oqs_meth: "OQS_KEM_alg_sike_p503_compressed"
+      -
+        name: "SIKE_p610_compressed"
+        oqs_meth: "OQS_KEM_alg_sike_p610_compressed"
+      -
+        name: "SIKE_p751_compressed"
+        oqs_meth: "OQS_KEM_alg_sike_p751_compressed"

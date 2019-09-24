@@ -63,8 +63,8 @@ The following quantum-safe algorithms from liboqs are supported (assuming they h
 - **NewHope**:`newhope-512`,`newhope-1024`
 - **NTRU**:`ntru-hps-2048-509`,`ntru-hps-2048-677`
 - **Saber**:`saber-lightsaber`,`saber-saber`,`saber-firesaber`
-- **SIDH**:`sidh-p503`,`sidh-p751`
-- **SIKE**:`sike-p503`,`sike-p751`
+- **SIDH**:`sidh-p434`,`sidh-p503`,`sidh-p610`,`sidh-p751`,`sidh-p434-compressed`,`sidh-p503-compressed`,`sidh-p610-compressed`,`sidh-p751-compressed`
+- **SIKE**:`sike-p434`,`sike-p503`,`sike-p610`,`sike-p751`,`sike-p434-compressed`,`sike-p503-compressed`,`sike-p610-compressed`,`sike-p751-compressed`
 
 The following hybrid algorithms are supported; they combine a quantum-safe algorithm listed above with ECDH that uses NIST's P384 curve:
 

@@ -230,12 +230,24 @@ kex_tests(void)
 	do_kex(KEX_ECDH_NISTP384_SABER_FIRESABER_SHA384);
 #endif /* HAVE_SABER */
 #ifdef HAVE_SIDH
+	do_kex(KEX_ECDH_NISTP384_SIDH_p434_SHA384);
 	do_kex(KEX_ECDH_NISTP384_SIDH_p503_SHA384);
+	do_kex(KEX_ECDH_NISTP384_SIDH_p610_SHA384);
 	do_kex(KEX_ECDH_NISTP384_SIDH_p751_SHA384);
+	do_kex(KEX_ECDH_NISTP384_SIDH_p434_compressed_SHA384);
+	do_kex(KEX_ECDH_NISTP384_SIDH_p503_compressed_SHA384);
+	do_kex(KEX_ECDH_NISTP384_SIDH_p610_compressed_SHA384);
+	do_kex(KEX_ECDH_NISTP384_SIDH_p751_compressed_SHA384);
 #endif /* HAVE_SIDH */
 #ifdef HAVE_SIKE
+	do_kex(KEX_ECDH_NISTP384_SIKE_p434_SHA384);
 	do_kex(KEX_ECDH_NISTP384_SIKE_p503_SHA384);
+	do_kex(KEX_ECDH_NISTP384_SIKE_p610_SHA384);
 	do_kex(KEX_ECDH_NISTP384_SIKE_p751_SHA384);
+	do_kex(KEX_ECDH_NISTP384_SIKE_p434_compressed_SHA384);
+	do_kex(KEX_ECDH_NISTP384_SIKE_p503_compressed_SHA384);
+	do_kex(KEX_ECDH_NISTP384_SIKE_p610_compressed_SHA384);
+	do_kex(KEX_ECDH_NISTP384_SIKE_p751_compressed_SHA384);
 #endif /* HAVE_SIKE */
 ///// OQS_TEMPLATE_FRAGMENT_DO_HYBRID_KEXS_END
 #endif /* defined(WITH_OQS) && defined(WITH_HYBRID_KEX) */
@@ -278,12 +290,24 @@ kex_tests(void)
 	do_kex(KEX_SABER_FIRESABER_SHA384);
 #endif /* HAVE_SABER */
 #ifdef HAVE_SIDH
+	do_kex(KEX_SIDH_p434_SHA384);
 	do_kex(KEX_SIDH_p503_SHA384);
+	do_kex(KEX_SIDH_p610_SHA384);
 	do_kex(KEX_SIDH_p751_SHA384);
+	do_kex(KEX_SIDH_p434_compressed_SHA384);
+	do_kex(KEX_SIDH_p503_compressed_SHA384);
+	do_kex(KEX_SIDH_p610_compressed_SHA384);
+	do_kex(KEX_SIDH_p751_compressed_SHA384);
 #endif /* HAVE_SIDH */
 #ifdef HAVE_SIKE
+	do_kex(KEX_SIKE_p434_SHA384);
 	do_kex(KEX_SIKE_p503_SHA384);
+	do_kex(KEX_SIKE_p610_SHA384);
 	do_kex(KEX_SIKE_p751_SHA384);
+	do_kex(KEX_SIKE_p434_compressed_SHA384);
+	do_kex(KEX_SIKE_p503_compressed_SHA384);
+	do_kex(KEX_SIKE_p610_compressed_SHA384);
+	do_kex(KEX_SIKE_p751_compressed_SHA384);
 #endif /* HAVE_SIKE */
 ///// OQS_TEMPLATE_FRAGMENT_DO_PQ_KEXS_END
 #endif /* defined(WITH_OQS) && defined(WITH_PQ_KEX) */
