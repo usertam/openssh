@@ -3661,7 +3661,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(ENABLE_KEM_SIDH) || (defined(OQS_ENABLE_KEM_sidh_p503) && defined(OQS_ENABLE_KEM_sidh_p751))
+					#if defined(ENABLE_KEM_SIDH) || (defined(OQS_ENABLE_KEM_sidh_p434) && defined(OQS_ENABLE_KEM_sidh_p503) && defined(OQS_ENABLE_KEM_sidh_p610) && defined(OQS_ENABLE_KEM_sidh_p751) && defined(OQS_ENABLE_KEM_sidh_p434_compressed) && defined(OQS_ENABLE_KEM_sidh_p503_compressed) && defined(OQS_ENABLE_KEM_sidh_p610_compressed) && defined(OQS_ENABLE_KEM_sidh_p751_compressed))
 					#else
 					#error "SIDH is not supported"
 					#endif
@@ -3675,7 +3675,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(ENABLE_KEM_SIKE) || (defined(OQS_ENABLE_KEM_sike_p503) && defined(OQS_ENABLE_KEM_sike_p751))
+					#if defined(ENABLE_KEM_SIKE) || (defined(OQS_ENABLE_KEM_sike_p434) && defined(OQS_ENABLE_KEM_sike_p503) && defined(OQS_ENABLE_KEM_sike_p610) && defined(OQS_ENABLE_KEM_sike_p751) && defined(OQS_ENABLE_KEM_sike_p434_compressed) && defined(OQS_ENABLE_KEM_sike_p503_compressed) && defined(OQS_ENABLE_KEM_sike_p610_compressed) && defined(OQS_ENABLE_KEM_sike_p751_compressed))
 					#else
 					#error "SIKE is not supported"
 					#endif

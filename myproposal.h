@@ -81,15 +81,27 @@
 #endif /* HAVE_SABER */
 #ifdef HAVE_SIDH
 #define KEX_PQ_METHOD_SIDH \
+    PQ_OQS_KEX_METHOD("sidh-p434-sha384") \
     PQ_OQS_KEX_METHOD("sidh-p503-sha384") \
-    PQ_OQS_KEX_METHOD("sidh-p751-sha384")
+    PQ_OQS_KEX_METHOD("sidh-p610-sha384") \
+    PQ_OQS_KEX_METHOD("sidh-p751-sha384") \
+    PQ_OQS_KEX_METHOD("sidh-p434-compressed-sha384") \
+    PQ_OQS_KEX_METHOD("sidh-p503-compressed-sha384") \
+    PQ_OQS_KEX_METHOD("sidh-p610-compressed-sha384") \
+    PQ_OQS_KEX_METHOD("sidh-p751-compressed-sha384")
 #else
 #define KEX_PQ_METHOD_SIDH ""
 #endif /* HAVE_SIDH */
 #ifdef HAVE_SIKE
 #define KEX_PQ_METHOD_SIKE \
+    PQ_OQS_KEX_METHOD("sike-p434-sha384") \
     PQ_OQS_KEX_METHOD("sike-p503-sha384") \
-    PQ_OQS_KEX_METHOD("sike-p751-sha384")
+    PQ_OQS_KEX_METHOD("sike-p610-sha384") \
+    PQ_OQS_KEX_METHOD("sike-p751-sha384") \
+    PQ_OQS_KEX_METHOD("sike-p434-compressed-sha384") \
+    PQ_OQS_KEX_METHOD("sike-p503-compressed-sha384") \
+    PQ_OQS_KEX_METHOD("sike-p610-compressed-sha384") \
+    PQ_OQS_KEX_METHOD("sike-p751-compressed-sha384")
 #else
 #define KEX_PQ_METHOD_SIKE ""
 #endif /* HAVE_SIKE */
@@ -174,15 +186,27 @@
 #endif /* HAVE_SABER */
 #ifdef HAVE_SIDH
 #define KEX_HYBRID_METHOD_SIDH \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-p434-sha384") \
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-p503-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-p751-sha384")
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-p610-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-p751-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-p434-compressed-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-p503-compressed-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-p610-compressed-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sidh-p751-compressed-sha384")
 #else
 #define KEX_HYBRID_METHOD_SIDH ""
 #endif /* HAVE_SIDH */
 #ifdef HAVE_SIKE
 #define KEX_HYBRID_METHOD_SIKE \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p434-sha384") \
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p503-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p751-sha384")
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p610-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p751-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p434-compressed-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p503-compressed-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p610-compressed-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p751-compressed-sha384")
 #else
 #define KEX_HYBRID_METHOD_SIKE ""
 #endif /* HAVE_SIKE */
