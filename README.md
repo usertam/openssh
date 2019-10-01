@@ -150,6 +150,7 @@ Then, on **Ubuntu 16.04** and **macOS**, run the following:
 
 	./configure --with-ssl-dir=<path-to-openssl>/include \
 	            --with-ldflags=-L<path-to-openssl>/lib   \
+	            --with-libs=-lm                          \
 	            --prefix=$OPENSSH_INSTALL                \
 	            --sysconfdir=$OPENSSH_INSTALL            \
 	            --with-liboqs-dir=$LIBOQS_INSTALL
@@ -159,6 +160,7 @@ Then, on **Ubuntu 16.04** and **macOS**, run the following:
 On **Ubuntu 18.04**, the steps are slightly different due to the default OpenSSL version:
 
 	./configure --with-ldflags=-L/usr/lib/ssl1.0      \
+	            --with-libs=-lm                       \
 	            --prefix=$OPENSSH_INSTALL             \
 	            --sysconfdir=$OPENSSH_INSTALL         \
 	            --with-liboqs-dir=$LIBOQS_INSTALL
