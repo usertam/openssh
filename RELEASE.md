@@ -1,4 +1,4 @@
-OQS-openssh snapshot 2019-08 (release candidate 1)
+OQS-openssh snapshot 2019-09-rc1
 ============================
 
 About
