@@ -129,7 +129,6 @@ You will need to specify a path to install liboqs in during configure time; we r
 	./configure --prefix=<path-to-openssh-dir>/oqs --with-pic=yes --enable-shared=no
 	make -j
 	make install
-	rm -f <path-to-install-liboqs>/lib/liboqs.so*
 
 Building liboqs requires your system to have OpenSSL already installed. `configure` will detect it if it is located in a standard location, such as `/usr` or `/usr/local/opt/openssl` (for brew on macOS).  Otherwise, you may need to specify it with `--with-openssl=<path-to-system-openssl-dir>`.
 
