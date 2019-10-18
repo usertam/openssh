@@ -56,7 +56,7 @@ If an algorithm is provided by liboqs but is not listed below, it can still be u
 The following quantum-safe algorithms from liboqs are supported (assuming they have been enabled in liboqs):
 
 - `oqsdefault` (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
-- **BIKE**:`bike1-l1`, `bike1-l3`, `bike1-l5`, `bike2-l1`, `bike2-l3`, `bike2-l5`
+- **BIKE**:`bike1-l1-cpa`, `bike1-l3-cpa`, `bike1-l1-fo`, `bike2-l3-fo`
 - **FrodoKEM**:`frodo-640-aes`, `frodo-976-aes`
 - **Kyber**:`kyber-512`, `kyber-768`, `kyber-1024`
 - **NewHope**:`newhope-512`, `newhope-1024`
