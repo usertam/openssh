@@ -1,4 +1,4 @@
-OQS-openssh snapshot 2019-09-rc1
+OQS-openssh snapshot 2019-11-dev
 ============================
 
 About
@@ -13,27 +13,25 @@ The **Open Quantum Safe (OQS) project** has the goal of developing and prototypi
 Release notes
 =============
 
-This snapshot of the OQS fork of OpenSSH was released on TODO.  Its release page on Github is https://github.com/open-quantum-safe/openssh-portable/releases/tag/OQS-OpenSSH-snapshot-2019-08.
+This snapshot of the OQS fork of OpenSSH was released on TODO.  Its release page on Github is https://github.com/open-quantum-safe/openssh-portable/releases/tag/OQS-OpenSSH-snapshot-2019-11.
 
 What's New
 ----------
 
-This is the second snapshot release of the OQS fork of OpenSSH.  It is based on the upstream OpenSSH 7.9 portable 1 release.
+This is the third snapshot release of the OQS fork of OpenSSH.  It is based on the upstream OpenSSH 7.9 portable 1 release.
 
 What's New
 ----------
 
-Update to use NIST Round 2 submissions added to liboqs 0.2.0.
+Update to use NIST Round 2 submissions added to liboqs 0.2.1.
 
 ### Key encapsulation mechanisms
 
-- Update FrodoKEM, NewHope, and SIDH/SIKE to NIST Round 2 submissions
-- Add Kyber, NTRU, and Saber NIST Round 2 submissions
+- Update BIKE to Round 2 submission; removes `BIKE2-*`, `BIKE3-*`, `BIKE1-L5`, renames `BIKE1-L1` and `BIKE1-L3` to `BIKE1-L1-CPA` and `BIKE1-L3-CPA`, and adds `BIKE1-L1-FO` and `BIKE-L3-FO`
 
 ### Digital signature schemes
 
-- Update Picnic to NIST Round 2 submissions
-- Add Dilithium, MQDSS, Rainbow, and SPHINCS+ NIST Round 2 submissions
+- TBA
 
 Future work
 -----------
