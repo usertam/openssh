@@ -88,7 +88,7 @@ The following hybrid algorithms are supported; they combine a quantum-safe algor
 
 ## Quickstart
 
-The steps below have been confirmed to work on macOS 10.14 (clang 10.0.0), Ubuntu 14.04 (gcc-5), Ubuntu 16.04 (gcc-5), and Ubuntu 18.04.1 (gcc-7).
+The steps below have been confirmed to work on macOS 10.14 (clang 10.0.0) and Ubuntu 18.04.1 Bionic (gcc-7).
 
 ### Building OQS-OpenSSH
 
@@ -111,7 +111,7 @@ On **Linux**, you also may need to do the following:
 
 On **macOS**, you need to install the following packages using brew (or a package manager of your choice):
 
-	brew install autoconf automake libtool openssl wget
+	brew install autoconf automake libtool openssl@1.1 wget
 
 ### Step 1: Build and install liboqs
 
@@ -124,7 +124,7 @@ You will need to specify a path to install liboqs in during configure time; we r
 	make -j
 	make install
 
-Building liboqs requires your system to have OpenSSL already installed. `configure` will detect it if it is located in a standard location, such as `/usr` or `/usr/local/opt/openssl` (for brew on macOS).  Otherwise, you may need to specify it with `--with-openssl=<path-to-system-openssl-dir>`.
+Building liboqs requires your system to have OpenSSL 1.1 or higher already installed. `configure` will detect it if it is located in a standard location, such as `/usr` or `/usr/local/opt/openssl@1.1` (for brew on macOS).  Otherwise, you may need to specify it with `--with-openssl=<path-to-system-openssl-dir>`.
 
 ### Step 2: Build the fork
 
