@@ -106,6 +106,12 @@
 #define KEX_SIKE_p503_compressed_SHA384 PQ_OQS_KEX_SUFFIX("sike-p503-compressed-sha384")
 #define KEX_SIKE_p610_compressed_SHA384 PQ_OQS_KEX_SUFFIX("sike-p610-compressed-sha384")
 #define KEX_SIKE_p751_compressed_SHA384 PQ_OQS_KEX_SUFFIX("sike-p751-compressed-sha384")
+#define KEX_BABYBEAR_SHA384 PQ_OQS_KEX_SUFFIX("babybear-sha384")
+#define KEX_BABYBEAR_EPHEM_SHA384 PQ_OQS_KEX_SUFFIX("babybear-ephem-sha384")
+#define KEX_MAMABEAR_SHA384 PQ_OQS_KEX_SUFFIX("mamabear-sha384")
+#define KEX_MAMABEAR_EPHEM_SHA384 PQ_OQS_KEX_SUFFIX("mamabear-ephem-sha384")
+#define KEX_PAPABEAR_SHA384 PQ_OQS_KEX_SUFFIX("papabear-sha384")
+#define KEX_PAPABEAR_EPHEM_SHA384 PQ_OQS_KEX_SUFFIX("papabear-ephem-sha384")
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_PQ_KEXS_END
 
 #endif /* defined(WITH_OQS) && defined(WITH_PQ_KEX) */
@@ -149,6 +155,12 @@
 #define KEX_ECDH_NISTP384_SIKE_p503_compressed_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-sike-p503-compressed-sha384")
 #define KEX_ECDH_NISTP384_SIKE_p610_compressed_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-sike-p610-compressed-sha384")
 #define KEX_ECDH_NISTP384_SIKE_p751_compressed_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-sike-p751-compressed-sha384")
+#define KEX_ECDH_NISTP384_BABYBEAR_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-babybear-sha384")
+#define KEX_ECDH_NISTP384_BABYBEAR_EPHEM_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-babybear-ephem-sha384")
+#define KEX_ECDH_NISTP384_MAMABEAR_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-mamabear-sha384")
+#define KEX_ECDH_NISTP384_MAMABEAR_EPHEM_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-mamabear-ephem-sha384")
+#define KEX_ECDH_NISTP384_PAPABEAR_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-papabear-sha384")
+#define KEX_ECDH_NISTP384_PAPABEAR_EPHEM_SHA384 HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-papabear-ephem-sha384")
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_HYBRID_KEXS_END
 
 #endif /* defined(WITH_OQS) && defined(WITH_HYBRID_KEX) */

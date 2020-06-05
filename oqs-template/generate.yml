@@ -216,3 +216,24 @@ kems:
       -
         name: "SIKE_p751_compressed"
         oqs_meth: "OQS_KEM_alg_sike_p751_compressed"
+  -
+    family: "THREEBEARS"
+    variants:
+      -
+        name: "BABYBEAR"
+        oqs_meth: "OQS_KEM_alg_threebears_babybear"
+      -
+        name: "BABYBEAR_EPHEM"
+        oqs_meth: "OQS_KEM_alg_threebears_babybear_ephem"
+      -
+        name: "MAMABEAR"
+        oqs_meth: "OQS_KEM_alg_threebears_mamabear"
+      -
+        name: "MAMABEAR_EPHEM"
+        oqs_meth: "OQS_KEM_alg_threebears_mamabear_ephem"
+      -
+        name: "PAPABEAR"
+        oqs_meth: "OQS_KEM_alg_threebears_papabear"
+      -
+        name: "PAPABEAR_EPHEM"
+        oqs_meth: "OQS_KEM_alg_threebears_papabear_ephem"

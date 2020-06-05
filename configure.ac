@@ -3685,6 +3685,20 @@ if test "x$with_liboqs" = "xyes" ; then
 			], [AC_MSG_RESULT([no])
 	])
 
+	AC_MSG_CHECKING([for libOQS THREEBEARS support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/oqs.h>
+			]], [[
+					#if defined(ENABLE_KEM_THREEBEARS) || (defined(OQS_ENABLE_KEM_threebears_babybear) && defined(OQS_ENABLE_KEM_threebears_babybear_ephem) && defined(OQS_ENABLE_KEM_threebears_mamabear) && defined(OQS_ENABLE_KEM_threebears_mamabear_ephem) && defined(OQS_ENABLE_KEM_threebears_papabear) && defined(OQS_ENABLE_KEM_threebears_papabear_ephem))
+					#else
+					#error "THREEBEARS is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_THREEBEARS], [1], [Define to 1 if LibOQS library is compiled with support for THREEBEARS])
+			], [AC_MSG_RESULT([no])
+	])
+
 
 	AC_MSG_CHECKING([for libOQS DILITHIUM support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[

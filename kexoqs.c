@@ -129,6 +129,20 @@ static const OQS_ALG oqs_alg_mapping[] = {
 	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-sike-p751-compressed-sha384"), OQS_KEM_alg_sike_p751_compressed,
 	SSH2_MSG_HY_ECDH_SIKE_INIT, SSH2_MSG_HY_ECDH_SIKE_REPLY},
 #endif /* HAVE_SIKE */
+#ifdef HAVE_THREEBEARS
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-babybear-sha384"), OQS_KEM_alg_threebears_babybear,
+	SSH2_MSG_HY_ECDH_THREEBEARS_INIT, SSH2_MSG_HY_ECDH_THREEBEARS_REPLY},
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-babybear-ephem-sha384"), OQS_KEM_alg_threebears_babybear_ephem,
+	SSH2_MSG_HY_ECDH_THREEBEARS_INIT, SSH2_MSG_HY_ECDH_THREEBEARS_REPLY},
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-mamabear-sha384"), OQS_KEM_alg_threebears_mamabear,
+	SSH2_MSG_HY_ECDH_THREEBEARS_INIT, SSH2_MSG_HY_ECDH_THREEBEARS_REPLY},
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-mamabear-ephem-sha384"), OQS_KEM_alg_threebears_mamabear_ephem,
+	SSH2_MSG_HY_ECDH_THREEBEARS_INIT, SSH2_MSG_HY_ECDH_THREEBEARS_REPLY},
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-papabear-sha384"), OQS_KEM_alg_threebears_papabear,
+	SSH2_MSG_HY_ECDH_THREEBEARS_INIT, SSH2_MSG_HY_ECDH_THREEBEARS_REPLY},
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-papabear-ephem-sha384"), OQS_KEM_alg_threebears_papabear_ephem,
+	SSH2_MSG_HY_ECDH_THREEBEARS_INIT, SSH2_MSG_HY_ECDH_THREEBEARS_REPLY},
+#endif /* HAVE_THREEBEARS */
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_HYBRID_KEXS_END
 #endif /* defined(OPENSSL_HAS_ECC) && defined(WITH_HYBRID_KEX) */
 /* PQ-only key exchange methods */
@@ -222,6 +236,20 @@ static const OQS_ALG oqs_alg_mapping[] = {
 	{PQ_OQS_KEX_SUFFIX("sike-p751-compressed-sha384"), OQS_KEM_alg_sike_p751_compressed,
 	SSH2_MSG_PQ_SIKE_INIT, SSH2_MSG_PQ_SIKE_REPLY},
 #endif /* HAVE_SIKE */
+#ifdef HAVE_THREEBEARS
+	{PQ_OQS_KEX_SUFFIX("babybear-sha384"), OQS_KEM_alg_threebears_babybear,
+	SSH2_MSG_PQ_THREEBEARS_INIT, SSH2_MSG_PQ_THREEBEARS_REPLY},
+	{PQ_OQS_KEX_SUFFIX("babybear-ephem-sha384"), OQS_KEM_alg_threebears_babybear_ephem,
+	SSH2_MSG_PQ_THREEBEARS_INIT, SSH2_MSG_PQ_THREEBEARS_REPLY},
+	{PQ_OQS_KEX_SUFFIX("mamabear-sha384"), OQS_KEM_alg_threebears_mamabear,
+	SSH2_MSG_PQ_THREEBEARS_INIT, SSH2_MSG_PQ_THREEBEARS_REPLY},
+	{PQ_OQS_KEX_SUFFIX("mamabear-ephem-sha384"), OQS_KEM_alg_threebears_mamabear_ephem,
+	SSH2_MSG_PQ_THREEBEARS_INIT, SSH2_MSG_PQ_THREEBEARS_REPLY},
+	{PQ_OQS_KEX_SUFFIX("papabear-sha384"), OQS_KEM_alg_threebears_papabear,
+	SSH2_MSG_PQ_THREEBEARS_INIT, SSH2_MSG_PQ_THREEBEARS_REPLY},
+	{PQ_OQS_KEX_SUFFIX("papabear-ephem-sha384"), OQS_KEM_alg_threebears_papabear_ephem,
+	SSH2_MSG_PQ_THREEBEARS_INIT, SSH2_MSG_PQ_THREEBEARS_REPLY},
+#endif /* HAVE_THREEBEARS */
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_PQ_KEXS_END
 #endif /* WITH_PQ_KEX */
 	{NULL,NULL,0,0} /* End of list */
