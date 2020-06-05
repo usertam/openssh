@@ -29,9 +29,13 @@ sigs:
     variants:
       -
         name: "MQDSS_31_48"
-        oqs_meth: "OQS_SIG_alg_mqdss_31_64"
+        oqs_meth: "OQS_SIG_alg_mqdss_31_48"
         mix_with: [{'name':'rsa3072'},
                    {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
+      -
+        name: "MQDSS_31_64"
+        oqs_meth: "OQS_SIG_alg_mqdss_31_64"
+        mix_with: [{'name': 'p384', 'curve':'NID_secp384r1'}]
   -
     family: "PICNIC"
     variants:

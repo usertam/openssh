@@ -35,6 +35,7 @@
 				alg == KEY_P256_QTESLA_P_I || \
 				alg == KEY_P256_SPHINCS_HARAKA_128F_ROBUST || \
 				alg == KEY_P384_DILITHIUM_4 || \
+				alg == KEY_P384_MQDSS_31_64 || \
 				alg == KEY_P384_PICNIC_L3FS || \
 				alg == KEY_P384_PICNIC_L3UR || \
 				alg == KEY_P384_PICNIC2_L3FS || \
@@ -52,6 +53,7 @@
 				(type) == KEY_DILITHIUM_3 || \
 				(type) == KEY_DILITHIUM_4 || \
 				(type) == KEY_MQDSS_31_48 || \
+				(type) == KEY_MQDSS_31_64 || \
 				(type) == KEY_PICNIC_L1FS || \
 				(type) == KEY_PICNIC_L1UR || \
 				(type) == KEY_PICNIC_L3FS || \
@@ -73,6 +75,7 @@
 	case KEY_DILITHIUM_3: \
 	case KEY_DILITHIUM_4: \
 	case KEY_MQDSS_31_48: \
+	case KEY_MQDSS_31_64: \
 	case KEY_PICNIC_L1FS: \
 	case KEY_PICNIC_L1UR: \
 	case KEY_PICNIC_L3FS: \
@@ -109,6 +112,7 @@
 	case KEY_P256_QTESLA_P_I: \
 	case KEY_P256_SPHINCS_HARAKA_128F_ROBUST: \
 	case KEY_P384_DILITHIUM_4: \
+	case KEY_P384_MQDSS_31_64: \
 	case KEY_P384_PICNIC_L3FS: \
 	case KEY_P384_PICNIC_L3UR: \
 	case KEY_P384_PICNIC2_L3FS: \

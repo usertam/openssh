@@ -37,6 +37,9 @@ const char* get_oqs_alg_name(int openssh_type)
 		case KEY_MQDSS_31_48:
 		case KEY_RSA3072_MQDSS_31_48:
 		case KEY_P256_MQDSS_31_48:
+			return OQS_SIG_alg_mqdss_31_48;
+		case KEY_MQDSS_31_64:
+		case KEY_P384_MQDSS_31_64:
 			return OQS_SIG_alg_mqdss_31_64;
 		case KEY_PICNIC_L1FS:
 		case KEY_RSA3072_PICNIC_L1FS:

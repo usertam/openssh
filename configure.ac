@@ -3718,7 +3718,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(ENABLE_SIG_MQDSS) || (defined(OQS_ENABLE_SIG_mqdss_31_64))
+					#if defined(ENABLE_SIG_MQDSS) || (defined(OQS_ENABLE_SIG_mqdss_31_48) && defined(OQS_ENABLE_SIG_mqdss_31_64))
 					#else
 					#error "MQDSS is not supported"
 					#endif

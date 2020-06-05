@@ -292,6 +292,8 @@ fill_default_server_options(ServerOptions *options)
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_MQDSS_31_48_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_MQDSS_31_64_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_PICNIC_L1FS_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_PICNIC_L1UR_KEY_FILE);
@@ -335,6 +337,8 @@ fill_default_server_options(ServerOptions *options)
 		    _PATH_HOST_RSA3072_MQDSS_31_48_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_P256_MQDSS_31_48_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P384_MQDSS_31_64_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_RSA3072_PICNIC_L1FS_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,

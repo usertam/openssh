@@ -240,6 +240,7 @@ type_bits_valid(int type, const char *name, u_int32_t *bitsp)
 		switch (type) {
 ///// OQS_TEMPLATE_FRAGMENT_SET_BITS_START
 		case KEY_P384_DILITHIUM_4:
+		case KEY_P384_MQDSS_31_64:
 		case KEY_P384_PICNIC_L3FS:
 		case KEY_P384_PICNIC_L3UR:
 		case KEY_P384_PICNIC2_L3FS:
@@ -326,6 +327,9 @@ ask_filename(struct passwd *pw, const char *prompt)
 			break;
 		case KEY_MQDSS_31_48:
 			name = _PATH_SSH_CLIENT_ID_MQDSS_31_48;
+			break;
+		case KEY_MQDSS_31_64:
+			name = _PATH_SSH_CLIENT_ID_MQDSS_31_64;
 			break;
 		case KEY_PICNIC_L1FS:
 			name = _PATH_SSH_CLIENT_ID_PICNIC_L1FS;
@@ -1100,6 +1104,7 @@ do_gen_all_hostkeys(struct passwd *pw)
 		{ "dilithium3", "DILITHIUM_3", _PATH_HOST_DILITHIUM_3_KEY_FILE },
 		{ "dilithium4", "DILITHIUM_4", _PATH_HOST_DILITHIUM_4_KEY_FILE },
 		{ "mqdss3148", "MQDSS_31_48", _PATH_HOST_MQDSS_31_48_KEY_FILE },
+		{ "mqdss3164", "MQDSS_31_64", _PATH_HOST_MQDSS_31_64_KEY_FILE },
 		{ "picnicl1fs", "PICNIC_L1FS", _PATH_HOST_PICNIC_L1FS_KEY_FILE },
 		{ "picnicl1ur", "PICNIC_L1UR", _PATH_HOST_PICNIC_L1UR_KEY_FILE },
 		{ "picnicl3fs", "PICNIC_L3FS", _PATH_HOST_PICNIC_L3FS_KEY_FILE },
@@ -1131,6 +1136,7 @@ do_gen_all_hostkeys(struct passwd *pw)
 		{ "p256_dilithium3", "P256_DILITHIUM_3", _PATH_HOST_P256_DILITHIUM_3_KEY_FILE },
 		{ "p384_dilithium4", "P384_DILITHIUM_4", _PATH_HOST_P384_DILITHIUM_4_KEY_FILE },
 		{ "p256_mqdss3148", "P256_MQDSS_31_48", _PATH_HOST_P256_MQDSS_31_48_KEY_FILE },
+		{ "p384_mqdss3164", "P384_MQDSS_31_64", _PATH_HOST_P384_MQDSS_31_64_KEY_FILE },
 		{ "p256_picnicl1fs", "P256_PICNIC_L1FS", _PATH_HOST_P256_PICNIC_L1FS_KEY_FILE },
 		{ "p256_picnicl1ur", "P256_PICNIC_L1UR", _PATH_HOST_P256_PICNIC_L1UR_KEY_FILE },
 		{ "p384_picnicl3fs", "P384_PICNIC_L3FS", _PATH_HOST_P384_PICNIC_L3FS_KEY_FILE },
@@ -2915,6 +2921,8 @@ main(int argc, char **argv)
                  _PATH_HOST_DILITHIUM_4_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
                  _PATH_HOST_MQDSS_31_48_KEY_FILE, rr_hostname);
+			n += do_print_resource_record(pw,
+                 _PATH_HOST_MQDSS_31_64_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
                  _PATH_HOST_PICNIC_L1FS_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
