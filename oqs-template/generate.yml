@@ -123,6 +123,15 @@ kems:
       -
         name: "KYBER_1024"
         oqs_meth: "OQS_KEM_alg_kyber_1024"
+      -
+        name: "KYBER_512_90S"
+        oqs_meth: "OQS_KEM_alg_kyber_512_90s"
+      -
+        name: "KYBER_768_90S"
+        oqs_meth: "OQS_KEM_alg_kyber_768_90s"
+      -
+        name: "KYBER_1024_90S"
+        oqs_meth: "OQS_KEM_alg_kyber_1024_90s"
   -
     family: "NEWHOPE"
     variants:

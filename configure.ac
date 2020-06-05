@@ -3605,7 +3605,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(ENABLE_KEM_KYBER) || (defined(OQS_ENABLE_KEM_kyber_512) && defined(OQS_ENABLE_KEM_kyber_768) && defined(OQS_ENABLE_KEM_kyber_1024))
+					#if defined(ENABLE_KEM_KYBER) || (defined(OQS_ENABLE_KEM_kyber_512) && defined(OQS_ENABLE_KEM_kyber_768) && defined(OQS_ENABLE_KEM_kyber_1024) && defined(OQS_ENABLE_KEM_kyber_512_90s) && defined(OQS_ENABLE_KEM_kyber_768_90s) && defined(OQS_ENABLE_KEM_kyber_1024_90s))
 					#else
 					#error "KYBER is not supported"
 					#endif

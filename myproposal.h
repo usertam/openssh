@@ -51,7 +51,10 @@
 #define KEX_PQ_METHOD_KYBER \
     PQ_OQS_KEX_METHOD("kyber-512-sha384") \
     PQ_OQS_KEX_METHOD("kyber-768-sha384") \
-    PQ_OQS_KEX_METHOD("kyber-1024-sha384")
+    PQ_OQS_KEX_METHOD("kyber-1024-sha384") \
+    PQ_OQS_KEX_METHOD("kyber-512-90s-sha384") \
+    PQ_OQS_KEX_METHOD("kyber-768-90s-sha384") \
+    PQ_OQS_KEX_METHOD("kyber-1024-90s-sha384")
 #else
 #define KEX_PQ_METHOD_KYBER ""
 #endif /* HAVE_KYBER */
@@ -154,7 +157,10 @@
 #define KEX_HYBRID_METHOD_KYBER \
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-kyber-512-sha384") \
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-kyber-768-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-kyber-1024-sha384")
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-kyber-1024-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-kyber-512-90s-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-kyber-768-90s-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-kyber-1024-90s-sha384")
 #else
 #define KEX_HYBRID_METHOD_KYBER ""
 #endif /* HAVE_KYBER */

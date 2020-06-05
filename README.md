@@ -58,7 +58,7 @@ The following quantum-safe algorithms from liboqs are supported (assuming they h
 - `oqsdefault` (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
 - **BIKE**:`bike1-l1-cpa`, `bike1-l3-cpa`, `bike1-l1-fo`, `bike2-l3-fo`
 - **FrodoKEM**:`frodo-640-aes`, `frodo-976-aes`
-- **Kyber**:`kyber-512`, `kyber-768`, `kyber-1024`
+- **Kyber**:`kyber-512`, `kyber-768`, `kyber-1024`, `kyber-512-90s`, `kyber-768-90s`, `kyber-1024-90s`
 - **NewHope**:`newhope-512`, `newhope-1024`
 - **NTRU**:`ntru-hps-2048-509`, `ntru-hps-2048-677`
 - **Saber**:`saber-lightsaber`, `saber-saber`, `saber-firesaber`
