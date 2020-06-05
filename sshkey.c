@@ -129,6 +129,7 @@ static const struct keytype keytypes[] = {
 ///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_KT_START
 	{ "ssh-oqsdefault", "OQSDEFAULT", NULL, KEY_OQSDEFAULT, 0, 0, 0 },
 	{ "ssh-dilithium2", "DILITHIUM2", NULL, KEY_DILITHIUM_2, 0, 0, 0 },
+	{ "ssh-dilithium3", "DILITHIUM3", NULL, KEY_DILITHIUM_3, 0, 0, 0 },
 	{ "ssh-dilithium4", "DILITHIUM4", NULL, KEY_DILITHIUM_4, 0, 0, 0 },
 	{ "ssh-mqdss3148", "MQDSS3148", NULL, KEY_MQDSS_31_48, 0, 0, 0 },
 	{ "ssh-picnicl1fs", "PICNICL1FS", NULL, KEY_PICNIC_L1FS, 0, 0, 0 },
@@ -150,6 +151,8 @@ static const struct keytype keytypes[] = {
 	{ "ssh-p256-oqsdefault", "P256_OQSDEFAULT", NULL, KEY_P256_OQSDEFAULT, NID_X9_62_prime256v1, 0, 0 },
 	{ "ssh-rsa3072-dilithium2", "RSA3072_DILITHIUM2", NULL, KEY_RSA3072_DILITHIUM_2, 0, 0, 0 },
 	{ "ssh-p256-dilithium2", "P256_DILITHIUM2", NULL, KEY_P256_DILITHIUM_2, NID_X9_62_prime256v1, 0, 0 },
+	{ "ssh-rsa3072-dilithium3", "RSA3072_DILITHIUM3", NULL, KEY_RSA3072_DILITHIUM_3, 0, 0, 0 },
+	{ "ssh-p256-dilithium3", "P256_DILITHIUM3", NULL, KEY_P256_DILITHIUM_3, NID_X9_62_prime256v1, 0, 0 },
 	{ "ssh-p384-dilithium4", "P384_DILITHIUM4", NULL, KEY_P384_DILITHIUM_4, NID_secp384r1, 0, 0 },
 	{ "ssh-rsa3072-mqdss3148", "RSA3072_MQDSS3148", NULL, KEY_RSA3072_MQDSS_31_48, 0, 0, 0 },
 	{ "ssh-p256-mqdss3148", "P256_MQDSS3148", NULL, KEY_P256_MQDSS_31_48, NID_X9_62_prime256v1, 0, 0 },

@@ -318,6 +318,9 @@ ask_filename(struct passwd *pw, const char *prompt)
 		case KEY_DILITHIUM_2:
 			name = _PATH_SSH_CLIENT_ID_DILITHIUM_2;
 			break;
+		case KEY_DILITHIUM_3:
+			name = _PATH_SSH_CLIENT_ID_DILITHIUM_3;
+			break;
 		case KEY_DILITHIUM_4:
 			name = _PATH_SSH_CLIENT_ID_DILITHIUM_4;
 			break;
@@ -1094,6 +1097,7 @@ do_gen_all_hostkeys(struct passwd *pw)
 ///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_KT_START
 		{ "oqsdefault", "OQSDEFAULT", _PATH_HOST_OQSDEFAULT_KEY_FILE },
 		{ "dilithium2", "DILITHIUM_2", _PATH_HOST_DILITHIUM_2_KEY_FILE },
+		{ "dilithium3", "DILITHIUM_3", _PATH_HOST_DILITHIUM_3_KEY_FILE },
 		{ "dilithium4", "DILITHIUM_4", _PATH_HOST_DILITHIUM_4_KEY_FILE },
 		{ "mqdss3148", "MQDSS_31_48", _PATH_HOST_MQDSS_31_48_KEY_FILE },
 		{ "picnicl1fs", "PICNIC_L1FS", _PATH_HOST_PICNIC_L1FS_KEY_FILE },
@@ -1114,6 +1118,7 @@ do_gen_all_hostkeys(struct passwd *pw)
 #ifdef WITH_OPENSSL
 		{ "rsa3072_oqsdefault", "RSA3072_OQSDEFAULT", _PATH_HOST_RSA3072_OQSDEFAULT_KEY_FILE },
 		{ "rsa3072_dilithium2", "RSA3072_DILITHIUM_2", _PATH_HOST_RSA3072_DILITHIUM_2_KEY_FILE },
+		{ "rsa3072_dilithium3", "RSA3072_DILITHIUM_3", _PATH_HOST_RSA3072_DILITHIUM_3_KEY_FILE },
 		{ "rsa3072_mqdss3148", "RSA3072_MQDSS_31_48", _PATH_HOST_RSA3072_MQDSS_31_48_KEY_FILE },
 		{ "rsa3072_picnicl1fs", "RSA3072_PICNIC_L1FS", _PATH_HOST_RSA3072_PICNIC_L1FS_KEY_FILE },
 		{ "rsa3072_picnicl1ur", "RSA3072_PICNIC_L1UR", _PATH_HOST_RSA3072_PICNIC_L1UR_KEY_FILE },
@@ -1123,6 +1128,7 @@ do_gen_all_hostkeys(struct passwd *pw)
 #ifdef OPENSSL_HAS_ECC
 		{ "p256_oqsdefault", "P256_OQSDEFAULT", _PATH_HOST_P256_OQSDEFAULT_KEY_FILE },
 		{ "p256_dilithium2", "P256_DILITHIUM_2", _PATH_HOST_P256_DILITHIUM_2_KEY_FILE },
+		{ "p256_dilithium3", "P256_DILITHIUM_3", _PATH_HOST_P256_DILITHIUM_3_KEY_FILE },
 		{ "p384_dilithium4", "P384_DILITHIUM_4", _PATH_HOST_P384_DILITHIUM_4_KEY_FILE },
 		{ "p256_mqdss3148", "P256_MQDSS_31_48", _PATH_HOST_P256_MQDSS_31_48_KEY_FILE },
 		{ "p256_picnicl1fs", "P256_PICNIC_L1FS", _PATH_HOST_P256_PICNIC_L1FS_KEY_FILE },
@@ -2903,6 +2909,8 @@ main(int argc, char **argv)
                  _PATH_HOST_OQSDEFAULT_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
                  _PATH_HOST_DILITHIUM_2_KEY_FILE, rr_hostname);
+			n += do_print_resource_record(pw,
+                 _PATH_HOST_DILITHIUM_3_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
                  _PATH_HOST_DILITHIUM_4_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,

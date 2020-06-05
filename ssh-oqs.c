@@ -27,6 +27,10 @@ const char* get_oqs_alg_name(int openssh_type)
 		case KEY_RSA3072_DILITHIUM_2:
 		case KEY_P256_DILITHIUM_2:
 			return OQS_SIG_alg_dilithium_2;
+		case KEY_DILITHIUM_3:
+		case KEY_RSA3072_DILITHIUM_3:
+		case KEY_P256_DILITHIUM_3:
+			return OQS_SIG_alg_dilithium_3;
 		case KEY_DILITHIUM_4:
 		case KEY_P384_DILITHIUM_4:
 			return OQS_SIG_alg_dilithium_4;

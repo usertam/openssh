@@ -62,42 +62,45 @@ int ssh_port = SSH_DEFAULT_PORT;
 ///// OQS_TEMPLATE_FRAGMENT_ASSIGN_KT_MARKERS_START
 #define KT_OQSDEFAULT ((uint64_t)1<<5)
 #define KT_DILITHIUM_2 ((uint64_t)1<<6)
-#define KT_DILITHIUM_4 ((uint64_t)1<<7)
-#define KT_MQDSS_31_48 ((uint64_t)1<<8)
-#define KT_PICNIC_L1FS ((uint64_t)1<<9)
-#define KT_PICNIC_L1UR ((uint64_t)1<<10)
-#define KT_PICNIC_L3FS ((uint64_t)1<<11)
-#define KT_PICNIC_L3UR ((uint64_t)1<<12)
-#define KT_PICNIC_L5FS ((uint64_t)1<<13)
-#define KT_PICNIC_L5UR ((uint64_t)1<<14)
-#define KT_PICNIC2_L1FS ((uint64_t)1<<15)
-#define KT_PICNIC2_L3FS ((uint64_t)1<<16)
-#define KT_QTESLA_P_I ((uint64_t)1<<17)
-#define KT_QTESLA_P_III ((uint64_t)1<<18)
-#define KT_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<19)
-#define KT_RSA3072_OQSDEFAULT ((uint64_t)1<<20)
-#define KT_P256_OQSDEFAULT ((uint64_t)1<<21)
-#define KT_RSA3072_DILITHIUM_2 ((uint64_t)1<<22)
-#define KT_P256_DILITHIUM_2 ((uint64_t)1<<23)
-#define KT_P384_DILITHIUM_4 ((uint64_t)1<<24)
-#define KT_RSA3072_MQDSS_31_48 ((uint64_t)1<<25)
-#define KT_P256_MQDSS_31_48 ((uint64_t)1<<26)
-#define KT_RSA3072_PICNIC_L1FS ((uint64_t)1<<27)
-#define KT_P256_PICNIC_L1FS ((uint64_t)1<<28)
-#define KT_RSA3072_PICNIC_L1UR ((uint64_t)1<<29)
-#define KT_P256_PICNIC_L1UR ((uint64_t)1<<30)
-#define KT_P384_PICNIC_L3FS ((uint64_t)1<<31)
-#define KT_P384_PICNIC_L3UR ((uint64_t)1<<32)
-#define KT_P521_PICNIC_L5FS ((uint64_t)1<<33)
-#define KT_P521_PICNIC_L5UR ((uint64_t)1<<34)
-#define KT_RSA3072_PICNIC2_L1FS ((uint64_t)1<<35)
-#define KT_P256_PICNIC2_L1FS ((uint64_t)1<<36)
-#define KT_P384_PICNIC2_L3FS ((uint64_t)1<<37)
-#define KT_RSA3072_QTESLA_P_I ((uint64_t)1<<38)
-#define KT_P256_QTESLA_P_I ((uint64_t)1<<39)
-#define KT_P384_QTESLA_P_III ((uint64_t)1<<40)
-#define KT_RSA3072_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<41)
-#define KT_P256_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<42)
+#define KT_DILITHIUM_3 ((uint64_t)1<<7)
+#define KT_DILITHIUM_4 ((uint64_t)1<<8)
+#define KT_MQDSS_31_48 ((uint64_t)1<<9)
+#define KT_PICNIC_L1FS ((uint64_t)1<<10)
+#define KT_PICNIC_L1UR ((uint64_t)1<<11)
+#define KT_PICNIC_L3FS ((uint64_t)1<<12)
+#define KT_PICNIC_L3UR ((uint64_t)1<<13)
+#define KT_PICNIC_L5FS ((uint64_t)1<<14)
+#define KT_PICNIC_L5UR ((uint64_t)1<<15)
+#define KT_PICNIC2_L1FS ((uint64_t)1<<16)
+#define KT_PICNIC2_L3FS ((uint64_t)1<<17)
+#define KT_QTESLA_P_I ((uint64_t)1<<18)
+#define KT_QTESLA_P_III ((uint64_t)1<<19)
+#define KT_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<20)
+#define KT_RSA3072_OQSDEFAULT ((uint64_t)1<<21)
+#define KT_P256_OQSDEFAULT ((uint64_t)1<<22)
+#define KT_RSA3072_DILITHIUM_2 ((uint64_t)1<<23)
+#define KT_P256_DILITHIUM_2 ((uint64_t)1<<24)
+#define KT_RSA3072_DILITHIUM_3 ((uint64_t)1<<25)
+#define KT_P256_DILITHIUM_3 ((uint64_t)1<<26)
+#define KT_P384_DILITHIUM_4 ((uint64_t)1<<27)
+#define KT_RSA3072_MQDSS_31_48 ((uint64_t)1<<28)
+#define KT_P256_MQDSS_31_48 ((uint64_t)1<<29)
+#define KT_RSA3072_PICNIC_L1FS ((uint64_t)1<<30)
+#define KT_P256_PICNIC_L1FS ((uint64_t)1<<31)
+#define KT_RSA3072_PICNIC_L1UR ((uint64_t)1<<32)
+#define KT_P256_PICNIC_L1UR ((uint64_t)1<<33)
+#define KT_P384_PICNIC_L3FS ((uint64_t)1<<34)
+#define KT_P384_PICNIC_L3UR ((uint64_t)1<<35)
+#define KT_P521_PICNIC_L5FS ((uint64_t)1<<36)
+#define KT_P521_PICNIC_L5UR ((uint64_t)1<<37)
+#define KT_RSA3072_PICNIC2_L1FS ((uint64_t)1<<38)
+#define KT_P256_PICNIC2_L1FS ((uint64_t)1<<39)
+#define KT_P384_PICNIC2_L3FS ((uint64_t)1<<40)
+#define KT_RSA3072_QTESLA_P_I ((uint64_t)1<<41)
+#define KT_P256_QTESLA_P_I ((uint64_t)1<<42)
+#define KT_P384_QTESLA_P_III ((uint64_t)1<<43)
+#define KT_RSA3072_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<44)
+#define KT_P256_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<45)
 
 #define KT_MIN KT_DSA
 #define KT_MAX KT_P256_SPHINCS_HARAKA_128F_ROBUST
@@ -108,6 +111,7 @@ uint64_t get_keytypes = KT_RSA|KT_ECDSA|KT_ED25519| \
 ///// OQS_TEMPLATE_FRAGMENT_GET_KT_START
                    KT_OQSDEFAULT| \
                    KT_DILITHIUM_2| \
+                   KT_DILITHIUM_3| \
                    KT_DILITHIUM_4| \
                    KT_MQDSS_31_48| \
                    KT_PICNIC_L1FS| \
@@ -125,6 +129,8 @@ uint64_t get_keytypes = KT_RSA|KT_ECDSA|KT_ED25519| \
                    KT_P256_OQSDEFAULT| \
                    KT_RSA3072_DILITHIUM_2| \
                    KT_P256_DILITHIUM_2| \
+                   KT_RSA3072_DILITHIUM_3| \
+                   KT_P256_DILITHIUM_3| \
                    KT_P384_DILITHIUM_4| \
                    KT_RSA3072_MQDSS_31_48| \
                    KT_P256_MQDSS_31_48| \
@@ -815,6 +821,9 @@ main(int argc, char **argv)
 				case KEY_DILITHIUM_2:
 					get_keytypes |= KT_DILITHIUM_2;
 					break;
+				case KEY_DILITHIUM_3:
+					get_keytypes |= KT_DILITHIUM_3;
+					break;
 				case KEY_DILITHIUM_4:
 					get_keytypes |= KT_DILITHIUM_4;
 					break;
@@ -865,6 +874,12 @@ main(int argc, char **argv)
 					break;
 				case KEY_P256_DILITHIUM_2:
 					get_keytypes |= KT_P256_DILITHIUM_2;
+					break;
+				case KEY_RSA3072_DILITHIUM_3:
+					get_keytypes |= KT_RSA3072_DILITHIUM_3;
+					break;
+				case KEY_P256_DILITHIUM_3:
+					get_keytypes |= KT_P256_DILITHIUM_3;
 					break;
 				case KEY_P384_DILITHIUM_4:
 					get_keytypes |= KT_P384_DILITHIUM_4;

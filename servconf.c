@@ -286,6 +286,8 @@ fill_default_server_options(ServerOptions *options)
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_DILITHIUM_2_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_DILITHIUM_3_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_DILITHIUM_4_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_MQDSS_31_48_KEY_FILE);
@@ -323,6 +325,10 @@ fill_default_server_options(ServerOptions *options)
 		    _PATH_HOST_RSA3072_DILITHIUM_2_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_P256_DILITHIUM_2_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_RSA3072_DILITHIUM_3_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P256_DILITHIUM_3_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_P384_DILITHIUM_4_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,

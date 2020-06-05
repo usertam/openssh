@@ -16,6 +16,11 @@ sigs:
         mix_with: [{'name':'rsa3072'},
                    {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
       -
+        name: "DILITHIUM_3"
+        oqs_meth: "OQS_SIG_alg_dilithium_3"
+        mix_with: [{'name':'rsa3072'},
+                   {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
+      -
         name: "DILITHIUM_4"
         oqs_meth: "OQS_SIG_alg_dilithium_4"
         mix_with: [{'name': 'p384', 'curve':'NID_secp384r1'}]

@@ -2030,6 +2030,7 @@ fill_default_options(Options * options)
 ///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_ID_FILES_START
 		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_OQSDEFAULT, 0);
 		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_DILITHIUM_2, 0);
+		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_DILITHIUM_3, 0);
 		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_DILITHIUM_4, 0);
 		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_MQDSS_31_48, 0);
 		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_PICNIC_L1FS, 0);
@@ -2051,6 +2052,8 @@ fill_default_options(Options * options)
 		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_P256_OQSDEFAULT, 0);
 		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_RSA3072_DILITHIUM_2, 0);
 		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_P256_DILITHIUM_2, 0);
+		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_RSA3072_DILITHIUM_3, 0);
+		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_P256_DILITHIUM_3, 0);
 		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_P384_DILITHIUM_4, 0);
 		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_RSA3072_MQDSS_31_48, 0);
 		add_identity_file(options, "~/", _PATH_SSH_CLIENT_ID_P256_MQDSS_31_48, 0);

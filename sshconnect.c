@@ -1459,6 +1459,7 @@ show_other_keys(struct hostkeys *hostkeys, struct sshkey *key)
 ///// OQS_TEMPLATE_FRAGMENT_LIST_KT_START
 		KEY_OQSDEFAULT,
 		KEY_DILITHIUM_2,
+		KEY_DILITHIUM_3,
 		KEY_DILITHIUM_4,
 		KEY_MQDSS_31_48,
 		KEY_PICNIC_L1FS,
@@ -1476,6 +1477,8 @@ show_other_keys(struct hostkeys *hostkeys, struct sshkey *key)
 		KEY_P256_OQSDEFAULT,
 		KEY_RSA3072_DILITHIUM_2,
 		KEY_P256_DILITHIUM_2,
+		KEY_RSA3072_DILITHIUM_3,
+		KEY_P256_DILITHIUM_3,
 		KEY_P384_DILITHIUM_4,
 		KEY_RSA3072_MQDSS_31_48,
 		KEY_P256_MQDSS_31_48,
