@@ -143,6 +143,7 @@ static const struct keytype keytypes[] = {
 	{ "ssh-picnic2l3fs", "PICNIC2L3FS", NULL, KEY_PICNIC2_L3FS, 0, 0, 0 },
 	{ "ssh-qteslapi", "QTESLAPI", NULL, KEY_QTESLA_P_I, 0, 0, 0 },
 	{ "ssh-qteslapiii", "QTESLAPIII", NULL, KEY_QTESLA_P_III, 0, 0, 0 },
+	{ "ssh-rainbowiaclassic", "RAINBOWIACLASSIC", NULL, KEY_RAINBOW_IA_CLASSIC, 0, 0, 0 },
 	{ "ssh-sphincsharaka128frobust", "SPHINCSHARAKA128FROBUST", NULL, KEY_SPHINCS_HARAKA_128F_ROBUST, 0, 0, 0 },
 ///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_KT_END
 #endif /* WITH_PQ_AUTH */
@@ -172,6 +173,8 @@ static const struct keytype keytypes[] = {
 	{ "ssh-rsa3072-qteslapi", "RSA3072_QTESLAPI", NULL, KEY_RSA3072_QTESLA_P_I, 0, 0, 0 },
 	{ "ssh-p256-qteslapi", "P256_QTESLAPI", NULL, KEY_P256_QTESLA_P_I, NID_X9_62_prime256v1, 0, 0 },
 	{ "ssh-p384-qteslapiii", "P384_QTESLAPIII", NULL, KEY_P384_QTESLA_P_III, NID_secp384r1, 0, 0 },
+	{ "ssh-rsa3072-rainbowiaclassic", "RSA3072_RAINBOWIACLASSIC", NULL, KEY_RSA3072_RAINBOW_IA_CLASSIC, 0, 0, 0 },
+	{ "ssh-p256-rainbowiaclassic", "P256_RAINBOWIACLASSIC", NULL, KEY_P256_RAINBOW_IA_CLASSIC, NID_X9_62_prime256v1, 0, 0 },
 	{ "ssh-rsa3072-sphincsharaka128frobust", "RSA3072_SPHINCSHARAKA128FROBUST", NULL, KEY_RSA3072_SPHINCS_HARAKA_128F_ROBUST, 0, 0, 0 },
 	{ "ssh-p256-sphincsharaka128frobust", "P256_SPHINCSHARAKA128FROBUST", NULL, KEY_P256_SPHINCS_HARAKA_128F_ROBUST, NID_X9_62_prime256v1, 0, 0 },
 ///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_KT_END

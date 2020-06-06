@@ -361,6 +361,9 @@ ask_filename(struct passwd *pw, const char *prompt)
 		case KEY_QTESLA_P_III:
 			name = _PATH_SSH_CLIENT_ID_QTESLA_P_III;
 			break;
+		case KEY_RAINBOW_IA_CLASSIC:
+			name = _PATH_SSH_CLIENT_ID_RAINBOW_IA_CLASSIC;
+			break;
 		case KEY_SPHINCS_HARAKA_128F_ROBUST:
 			name = _PATH_SSH_CLIENT_ID_SPHINCS_HARAKA_128F_ROBUST;
 			break;
@@ -1115,6 +1118,7 @@ do_gen_all_hostkeys(struct passwd *pw)
 		{ "picnic2l3fs", "PICNIC2_L3FS", _PATH_HOST_PICNIC2_L3FS_KEY_FILE },
 		{ "qteslapi", "QTESLA_P_I", _PATH_HOST_QTESLA_P_I_KEY_FILE },
 		{ "qteslapiii", "QTESLA_P_III", _PATH_HOST_QTESLA_P_III_KEY_FILE },
+		{ "rainbowiaclassic", "RAINBOW_IA_CLASSIC", _PATH_HOST_RAINBOW_IA_CLASSIC_KEY_FILE },
 		{ "sphincsharaka128frobust", "SPHINCS_HARAKA_128F_ROBUST", _PATH_HOST_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE },
 ///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_KT_END
 #endif /* WITH_PQ_AUTH */
@@ -1129,6 +1133,7 @@ do_gen_all_hostkeys(struct passwd *pw)
 		{ "rsa3072_picnicl1ur", "RSA3072_PICNIC_L1UR", _PATH_HOST_RSA3072_PICNIC_L1UR_KEY_FILE },
 		{ "rsa3072_picnic2l1fs", "RSA3072_PICNIC2_L1FS", _PATH_HOST_RSA3072_PICNIC2_L1FS_KEY_FILE },
 		{ "rsa3072_qteslapi", "RSA3072_QTESLA_P_I", _PATH_HOST_RSA3072_QTESLA_P_I_KEY_FILE },
+		{ "rsa3072_rainbowiaclassic", "RSA3072_RAINBOW_IA_CLASSIC", _PATH_HOST_RSA3072_RAINBOW_IA_CLASSIC_KEY_FILE },
 		{ "rsa3072_sphincsharaka128frobust", "RSA3072_SPHINCS_HARAKA_128F_ROBUST", _PATH_HOST_RSA3072_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE },
 #ifdef OPENSSL_HAS_ECC
 		{ "p256_oqsdefault", "P256_OQSDEFAULT", _PATH_HOST_P256_OQSDEFAULT_KEY_FILE },
@@ -1147,6 +1152,7 @@ do_gen_all_hostkeys(struct passwd *pw)
 		{ "p384_picnic2l3fs", "P384_PICNIC2_L3FS", _PATH_HOST_P384_PICNIC2_L3FS_KEY_FILE },
 		{ "p256_qteslapi", "P256_QTESLA_P_I", _PATH_HOST_P256_QTESLA_P_I_KEY_FILE },
 		{ "p384_qteslapiii", "P384_QTESLA_P_III", _PATH_HOST_P384_QTESLA_P_III_KEY_FILE },
+		{ "p256_rainbowiaclassic", "P256_RAINBOW_IA_CLASSIC", _PATH_HOST_P256_RAINBOW_IA_CLASSIC_KEY_FILE },
 		{ "p256_sphincsharaka128frobust", "P256_SPHINCS_HARAKA_128F_ROBUST", _PATH_HOST_P256_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE },
 #endif /* OPENSSL_HAS_ECC */
 #endif /* WITH_OPENSSL */
@@ -2943,6 +2949,8 @@ main(int argc, char **argv)
                  _PATH_HOST_QTESLA_P_I_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
                  _PATH_HOST_QTESLA_P_III_KEY_FILE, rr_hostname);
+			n += do_print_resource_record(pw,
+                 _PATH_HOST_RAINBOW_IA_CLASSIC_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
                  _PATH_HOST_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE, rr_hostname);
 ///// OQS_TEMPLATE_FRAGMENT_PRINT_PQ_RR_END

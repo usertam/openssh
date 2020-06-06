@@ -75,6 +75,10 @@ const char* get_oqs_alg_name(int openssh_type)
 		case KEY_QTESLA_P_III:
 		case KEY_P384_QTESLA_P_III:
 			return OQS_SIG_alg_qTesla_p_III;
+		case KEY_RAINBOW_IA_CLASSIC:
+		case KEY_RSA3072_RAINBOW_IA_CLASSIC:
+		case KEY_P256_RAINBOW_IA_CLASSIC:
+			return OQS_SIG_alg_rainbow_Ia_classic;
 		case KEY_SPHINCS_HARAKA_128F_ROBUST:
 		case KEY_RSA3072_SPHINCS_HARAKA_128F_ROBUST:
 		case KEY_P256_SPHINCS_HARAKA_128F_ROBUST:
