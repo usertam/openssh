@@ -11,7 +11,6 @@
 				strcmp(alg, "ssh-rsa3072-picnicl1ur") == 0 || \
 				strcmp(alg, "ssh-rsa3072-picnic2l1fs") == 0 || \
 				strcmp(alg, "ssh-rsa3072-qteslapi") == 0 || \
-				strcmp(alg, "ssh-rsa3072-rainbowiaclassic") == 0 || \
 				strcmp(alg, "ssh-rsa3072-sphincsharaka128frobust") == 0)
 
 #define IS_RSA_HYBRID(alg) ( \
@@ -23,7 +22,6 @@
 				alg == KEY_RSA3072_PICNIC_L1UR || \
 				alg == KEY_RSA3072_PICNIC2_L1FS || \
 				alg == KEY_RSA3072_QTESLA_P_I || \
-				alg == KEY_RSA3072_RAINBOW_IA_CLASSIC || \
 				alg == KEY_RSA3072_SPHINCS_HARAKA_128F_ROBUST)
 
 #define IS_ECDSA_HYBRID(alg) ( \
@@ -35,7 +33,6 @@
 				alg == KEY_P256_PICNIC_L1UR || \
 				alg == KEY_P256_PICNIC2_L1FS || \
 				alg == KEY_P256_QTESLA_P_I || \
-				alg == KEY_P256_RAINBOW_IA_CLASSIC || \
 				alg == KEY_P256_SPHINCS_HARAKA_128F_ROBUST || \
 				alg == KEY_P384_DILITHIUM_4 || \
 				alg == KEY_P384_MQDSS_31_64 || \
@@ -67,7 +64,6 @@
 				(type) == KEY_PICNIC2_L3FS || \
 				(type) == KEY_QTESLA_P_I || \
 				(type) == KEY_QTESLA_P_III || \
-				(type) == KEY_RAINBOW_IA_CLASSIC || \
 				(type) == KEY_SPHINCS_HARAKA_128F_ROBUST || \
 				IS_HYBRID(type))
 ///// OQS_TEMPLATE_FRAGMENT_ASSIGN_PQ_KT_END
@@ -90,7 +86,6 @@
 	case KEY_PICNIC2_L3FS: \
 	case KEY_QTESLA_P_I: \
 	case KEY_QTESLA_P_III: \
-	case KEY_RAINBOW_IA_CLASSIC: \
 	case KEY_SPHINCS_HARAKA_128F_ROBUST
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_PQ_SWITCH_CASES_END
 
@@ -104,7 +99,6 @@
 	case KEY_RSA3072_PICNIC_L1UR: \
 	case KEY_RSA3072_PICNIC2_L1FS: \
 	case KEY_RSA3072_QTESLA_P_I: \
-	case KEY_RSA3072_RAINBOW_IA_CLASSIC: \
 	case KEY_RSA3072_SPHINCS_HARAKA_128F_ROBUST
 
 #define CASE_KEY_ECDSA_HYBRID \
@@ -116,7 +110,6 @@
 	case KEY_P256_PICNIC_L1UR: \
 	case KEY_P256_PICNIC2_L1FS: \
 	case KEY_P256_QTESLA_P_I: \
-	case KEY_P256_RAINBOW_IA_CLASSIC: \
 	case KEY_P256_SPHINCS_HARAKA_128F_ROBUST: \
 	case KEY_P384_DILITHIUM_4: \
 	case KEY_P384_MQDSS_31_64: \
