@@ -314,7 +314,13 @@ fill_default_server_options(ServerOptions *options)
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_QTESLA_P_III_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE);
+		    _PATH_HOST_SPHINCS_HARAKA_128F_SIMPLE_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_SPHINCS_HARAKA_128S_SIMPLE_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_SPHINCS_SHA256_128F_SIMPLE_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_SPHINCS_SHA256_128S_SIMPLE_KEY_FILE);
 ///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_HOSTKEYS_END
 #endif /* WITH_PQ_AUTH */
 #ifdef WITH_HYBRID_AUTH
@@ -368,9 +374,21 @@ fill_default_server_options(ServerOptions *options)
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_P384_QTESLA_P_III_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_RSA3072_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE);
+		    _PATH_HOST_RSA3072_SPHINCS_HARAKA_128F_SIMPLE_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_P256_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE);
+		    _PATH_HOST_P256_SPHINCS_HARAKA_128F_SIMPLE_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_RSA3072_SPHINCS_HARAKA_128S_SIMPLE_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P256_SPHINCS_HARAKA_128S_SIMPLE_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_RSA3072_SPHINCS_SHA256_128F_SIMPLE_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P256_SPHINCS_SHA256_128F_SIMPLE_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_RSA3072_SPHINCS_SHA256_128S_SIMPLE_KEY_FILE);
+		servconf_add_hostkey("[default]", 0, options,
+		    _PATH_HOST_P256_SPHINCS_SHA256_128S_SIMPLE_KEY_FILE);
 ///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_HOSTKEYS_END
 #endif /* WITH_HYBRID_AUTH */
 	}

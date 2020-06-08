@@ -11,7 +11,10 @@
 				strcmp(alg, "ssh-rsa3072-picnicl1ur") == 0 || \
 				strcmp(alg, "ssh-rsa3072-picnic2l1fs") == 0 || \
 				strcmp(alg, "ssh-rsa3072-qteslapi") == 0 || \
-				strcmp(alg, "ssh-rsa3072-sphincsharaka128frobust") == 0)
+				strcmp(alg, "ssh-rsa3072-sphincsharaka128fsimple") == 0 || \
+				strcmp(alg, "ssh-rsa3072-sphincsharaka128ssimple") == 0 || \
+				strcmp(alg, "ssh-rsa3072-sphincssha256128fsimple") == 0 || \
+				strcmp(alg, "ssh-rsa3072-sphincssha256128ssimple") == 0)
 
 #define IS_RSA_HYBRID(alg) ( \
 				alg == KEY_RSA3072_OQSDEFAULT || \
@@ -22,7 +25,10 @@
 				alg == KEY_RSA3072_PICNIC_L1UR || \
 				alg == KEY_RSA3072_PICNIC2_L1FS || \
 				alg == KEY_RSA3072_QTESLA_P_I || \
-				alg == KEY_RSA3072_SPHINCS_HARAKA_128F_ROBUST)
+				alg == KEY_RSA3072_SPHINCS_HARAKA_128F_SIMPLE || \
+				alg == KEY_RSA3072_SPHINCS_HARAKA_128S_SIMPLE || \
+				alg == KEY_RSA3072_SPHINCS_SHA256_128F_SIMPLE || \
+				alg == KEY_RSA3072_SPHINCS_SHA256_128S_SIMPLE)
 
 #define IS_ECDSA_HYBRID(alg) ( \
 				alg == KEY_P256_OQSDEFAULT || \
@@ -33,7 +39,10 @@
 				alg == KEY_P256_PICNIC_L1UR || \
 				alg == KEY_P256_PICNIC2_L1FS || \
 				alg == KEY_P256_QTESLA_P_I || \
-				alg == KEY_P256_SPHINCS_HARAKA_128F_ROBUST || \
+				alg == KEY_P256_SPHINCS_HARAKA_128F_SIMPLE || \
+				alg == KEY_P256_SPHINCS_HARAKA_128S_SIMPLE || \
+				alg == KEY_P256_SPHINCS_SHA256_128F_SIMPLE || \
+				alg == KEY_P256_SPHINCS_SHA256_128S_SIMPLE || \
 				alg == KEY_P384_DILITHIUM_4 || \
 				alg == KEY_P384_MQDSS_31_64 || \
 				alg == KEY_P384_PICNIC_L3FS || \
@@ -64,7 +73,10 @@
 				(type) == KEY_PICNIC2_L3FS || \
 				(type) == KEY_QTESLA_P_I || \
 				(type) == KEY_QTESLA_P_III || \
-				(type) == KEY_SPHINCS_HARAKA_128F_ROBUST || \
+				(type) == KEY_SPHINCS_HARAKA_128F_SIMPLE || \
+				(type) == KEY_SPHINCS_HARAKA_128S_SIMPLE || \
+				(type) == KEY_SPHINCS_SHA256_128F_SIMPLE || \
+				(type) == KEY_SPHINCS_SHA256_128S_SIMPLE || \
 				IS_HYBRID(type))
 ///// OQS_TEMPLATE_FRAGMENT_ASSIGN_PQ_KT_END
 
@@ -86,7 +98,10 @@
 	case KEY_PICNIC2_L3FS: \
 	case KEY_QTESLA_P_I: \
 	case KEY_QTESLA_P_III: \
-	case KEY_SPHINCS_HARAKA_128F_ROBUST
+	case KEY_SPHINCS_HARAKA_128F_SIMPLE: \
+	case KEY_SPHINCS_HARAKA_128S_SIMPLE: \
+	case KEY_SPHINCS_SHA256_128F_SIMPLE: \
+	case KEY_SPHINCS_SHA256_128S_SIMPLE
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_PQ_SWITCH_CASES_END
 
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_HYBRID_SWITCH_CASES_START
@@ -99,7 +114,10 @@
 	case KEY_RSA3072_PICNIC_L1UR: \
 	case KEY_RSA3072_PICNIC2_L1FS: \
 	case KEY_RSA3072_QTESLA_P_I: \
-	case KEY_RSA3072_SPHINCS_HARAKA_128F_ROBUST
+	case KEY_RSA3072_SPHINCS_HARAKA_128F_SIMPLE: \
+	case KEY_RSA3072_SPHINCS_HARAKA_128S_SIMPLE: \
+	case KEY_RSA3072_SPHINCS_SHA256_128F_SIMPLE: \
+	case KEY_RSA3072_SPHINCS_SHA256_128S_SIMPLE
 
 #define CASE_KEY_ECDSA_HYBRID \
 	case KEY_P256_OQSDEFAULT: \
@@ -110,7 +128,10 @@
 	case KEY_P256_PICNIC_L1UR: \
 	case KEY_P256_PICNIC2_L1FS: \
 	case KEY_P256_QTESLA_P_I: \
-	case KEY_P256_SPHINCS_HARAKA_128F_ROBUST: \
+	case KEY_P256_SPHINCS_HARAKA_128F_SIMPLE: \
+	case KEY_P256_SPHINCS_HARAKA_128S_SIMPLE: \
+	case KEY_P256_SPHINCS_SHA256_128F_SIMPLE: \
+	case KEY_P256_SPHINCS_SHA256_128S_SIMPLE: \
 	case KEY_P384_DILITHIUM_4: \
 	case KEY_P384_MQDSS_31_64: \
 	case KEY_P384_PICNIC_L3FS: \

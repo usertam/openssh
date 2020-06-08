@@ -90,11 +90,25 @@ sigs:
     family: "SPHINCS"
     variants:
       -
-        name: "SPHINCS_HARAKA_128F_ROBUST"
-        oqs_meth: "OQS_SIG_alg_sphincs_haraka_128f_robust"
+        name: "SPHINCS_HARAKA_128F_SIMPLE"
+        oqs_meth: "OQS_SIG_alg_sphincs_haraka_128f_simple"
         mix_with: [{'name':'rsa3072'},
                    {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
-
+      -
+        name: "SPHINCS_HARAKA_128S_SIMPLE"
+        oqs_meth: "OQS_SIG_alg_sphincs_haraka_128s_simple"
+        mix_with: [{'name':'rsa3072'},
+                   {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
+      -
+        name: "SPHINCS_SHA256_128F_SIMPLE"
+        oqs_meth: "OQS_SIG_alg_sphincs_sha256_128f_simple"
+        mix_with: [{'name':'rsa3072'},
+                   {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
+      -
+        name: "SPHINCS_SHA256_128S_SIMPLE"
+        oqs_meth: "OQS_SIG_alg_sphincs_sha256_128s_simple"
+        mix_with: [{'name':'rsa3072'},
+                   {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
 kems:
   -
     family: "BIKE"

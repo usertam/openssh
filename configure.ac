@@ -3760,7 +3760,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(ENABLE_SIG_SPHINCS) || (defined(OQS_ENABLE_SIG_sphincs_haraka_128f_robust))
+					#if defined(ENABLE_SIG_SPHINCS) || (defined(OQS_ENABLE_SIG_sphincs_haraka_128f_simple) && defined(OQS_ENABLE_SIG_sphincs_haraka_128s_simple) && defined(OQS_ENABLE_SIG_sphincs_sha256_128f_simple) && defined(OQS_ENABLE_SIG_sphincs_sha256_128s_simple))
 					#else
 					#error "SPHINCS is not supported"
 					#endif

@@ -76,36 +76,45 @@ int ssh_port = SSH_DEFAULT_PORT;
 #define KT_PICNIC2_L3FS ((uint64_t)1<<18)
 #define KT_QTESLA_P_I ((uint64_t)1<<19)
 #define KT_QTESLA_P_III ((uint64_t)1<<20)
-#define KT_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<21)
-#define KT_RSA3072_OQSDEFAULT ((uint64_t)1<<22)
-#define KT_P256_OQSDEFAULT ((uint64_t)1<<23)
-#define KT_RSA3072_DILITHIUM_2 ((uint64_t)1<<24)
-#define KT_P256_DILITHIUM_2 ((uint64_t)1<<25)
-#define KT_RSA3072_DILITHIUM_3 ((uint64_t)1<<26)
-#define KT_P256_DILITHIUM_3 ((uint64_t)1<<27)
-#define KT_P384_DILITHIUM_4 ((uint64_t)1<<28)
-#define KT_RSA3072_MQDSS_31_48 ((uint64_t)1<<29)
-#define KT_P256_MQDSS_31_48 ((uint64_t)1<<30)
-#define KT_P384_MQDSS_31_64 ((uint64_t)1<<31)
-#define KT_RSA3072_PICNIC_L1FS ((uint64_t)1<<32)
-#define KT_P256_PICNIC_L1FS ((uint64_t)1<<33)
-#define KT_RSA3072_PICNIC_L1UR ((uint64_t)1<<34)
-#define KT_P256_PICNIC_L1UR ((uint64_t)1<<35)
-#define KT_P384_PICNIC_L3FS ((uint64_t)1<<36)
-#define KT_P384_PICNIC_L3UR ((uint64_t)1<<37)
-#define KT_P521_PICNIC_L5FS ((uint64_t)1<<38)
-#define KT_P521_PICNIC_L5UR ((uint64_t)1<<39)
-#define KT_RSA3072_PICNIC2_L1FS ((uint64_t)1<<40)
-#define KT_P256_PICNIC2_L1FS ((uint64_t)1<<41)
-#define KT_P384_PICNIC2_L3FS ((uint64_t)1<<42)
-#define KT_RSA3072_QTESLA_P_I ((uint64_t)1<<43)
-#define KT_P256_QTESLA_P_I ((uint64_t)1<<44)
-#define KT_P384_QTESLA_P_III ((uint64_t)1<<45)
-#define KT_RSA3072_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<46)
-#define KT_P256_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<47)
+#define KT_SPHINCS_HARAKA_128F_SIMPLE ((uint64_t)1<<21)
+#define KT_SPHINCS_HARAKA_128S_SIMPLE ((uint64_t)1<<22)
+#define KT_SPHINCS_SHA256_128F_SIMPLE ((uint64_t)1<<23)
+#define KT_SPHINCS_SHA256_128S_SIMPLE ((uint64_t)1<<24)
+#define KT_RSA3072_OQSDEFAULT ((uint64_t)1<<25)
+#define KT_P256_OQSDEFAULT ((uint64_t)1<<26)
+#define KT_RSA3072_DILITHIUM_2 ((uint64_t)1<<27)
+#define KT_P256_DILITHIUM_2 ((uint64_t)1<<28)
+#define KT_RSA3072_DILITHIUM_3 ((uint64_t)1<<29)
+#define KT_P256_DILITHIUM_3 ((uint64_t)1<<30)
+#define KT_P384_DILITHIUM_4 ((uint64_t)1<<31)
+#define KT_RSA3072_MQDSS_31_48 ((uint64_t)1<<32)
+#define KT_P256_MQDSS_31_48 ((uint64_t)1<<33)
+#define KT_P384_MQDSS_31_64 ((uint64_t)1<<34)
+#define KT_RSA3072_PICNIC_L1FS ((uint64_t)1<<35)
+#define KT_P256_PICNIC_L1FS ((uint64_t)1<<36)
+#define KT_RSA3072_PICNIC_L1UR ((uint64_t)1<<37)
+#define KT_P256_PICNIC_L1UR ((uint64_t)1<<38)
+#define KT_P384_PICNIC_L3FS ((uint64_t)1<<39)
+#define KT_P384_PICNIC_L3UR ((uint64_t)1<<40)
+#define KT_P521_PICNIC_L5FS ((uint64_t)1<<41)
+#define KT_P521_PICNIC_L5UR ((uint64_t)1<<42)
+#define KT_RSA3072_PICNIC2_L1FS ((uint64_t)1<<43)
+#define KT_P256_PICNIC2_L1FS ((uint64_t)1<<44)
+#define KT_P384_PICNIC2_L3FS ((uint64_t)1<<45)
+#define KT_RSA3072_QTESLA_P_I ((uint64_t)1<<46)
+#define KT_P256_QTESLA_P_I ((uint64_t)1<<47)
+#define KT_P384_QTESLA_P_III ((uint64_t)1<<48)
+#define KT_RSA3072_SPHINCS_HARAKA_128F_SIMPLE ((uint64_t)1<<49)
+#define KT_P256_SPHINCS_HARAKA_128F_SIMPLE ((uint64_t)1<<50)
+#define KT_RSA3072_SPHINCS_HARAKA_128S_SIMPLE ((uint64_t)1<<51)
+#define KT_P256_SPHINCS_HARAKA_128S_SIMPLE ((uint64_t)1<<52)
+#define KT_RSA3072_SPHINCS_SHA256_128F_SIMPLE ((uint64_t)1<<53)
+#define KT_P256_SPHINCS_SHA256_128F_SIMPLE ((uint64_t)1<<54)
+#define KT_RSA3072_SPHINCS_SHA256_128S_SIMPLE ((uint64_t)1<<55)
+#define KT_P256_SPHINCS_SHA256_128S_SIMPLE ((uint64_t)1<<56)
 
 #define KT_MIN KT_DSA
-#define KT_MAX KT_P256_SPHINCS_HARAKA_128F_ROBUST
+#define KT_MAX KT_P256_SPHINCS_SHA256_128S_SIMPLE
 ///// OQS_TEMPLATE_FRAGMENT_ASSIGN_KT_MARKERS_END
 
 int get_cert = 0;
@@ -127,7 +136,10 @@ uint64_t get_keytypes = KT_RSA|KT_ECDSA|KT_ED25519| \
                    KT_PICNIC2_L3FS| \
                    KT_QTESLA_P_I| \
                    KT_QTESLA_P_III| \
-                   KT_SPHINCS_HARAKA_128F_ROBUST| \
+                   KT_SPHINCS_HARAKA_128F_SIMPLE| \
+                   KT_SPHINCS_HARAKA_128S_SIMPLE| \
+                   KT_SPHINCS_SHA256_128F_SIMPLE| \
+                   KT_SPHINCS_SHA256_128S_SIMPLE| \
                    KT_RSA3072_OQSDEFAULT| \
                    KT_P256_OQSDEFAULT| \
                    KT_RSA3072_DILITHIUM_2| \
@@ -152,8 +164,14 @@ uint64_t get_keytypes = KT_RSA|KT_ECDSA|KT_ED25519| \
                    KT_RSA3072_QTESLA_P_I| \
                    KT_P256_QTESLA_P_I| \
                    KT_P384_QTESLA_P_III| \
-                   KT_RSA3072_SPHINCS_HARAKA_128F_ROBUST| \
-                   KT_P256_SPHINCS_HARAKA_128F_ROBUST;
+                   KT_RSA3072_SPHINCS_HARAKA_128F_SIMPLE| \
+                   KT_P256_SPHINCS_HARAKA_128F_SIMPLE| \
+                   KT_RSA3072_SPHINCS_HARAKA_128S_SIMPLE| \
+                   KT_P256_SPHINCS_HARAKA_128S_SIMPLE| \
+                   KT_RSA3072_SPHINCS_SHA256_128F_SIMPLE| \
+                   KT_P256_SPHINCS_SHA256_128F_SIMPLE| \
+                   KT_RSA3072_SPHINCS_SHA256_128S_SIMPLE| \
+                   KT_P256_SPHINCS_SHA256_128S_SIMPLE;
 ///// OQS_TEMPLATE_FRAGMENT_GET_KT_END
 
 int hash_hosts = 0;		/* Hash hostname on output */
@@ -867,8 +885,17 @@ main(int argc, char **argv)
 				case KEY_QTESLA_P_III:
 					get_keytypes |= KT_QTESLA_P_III;
 					break;
-				case KEY_SPHINCS_HARAKA_128F_ROBUST:
-					get_keytypes |= KT_SPHINCS_HARAKA_128F_ROBUST;
+				case KEY_SPHINCS_HARAKA_128F_SIMPLE:
+					get_keytypes |= KT_SPHINCS_HARAKA_128F_SIMPLE;
+					break;
+				case KEY_SPHINCS_HARAKA_128S_SIMPLE:
+					get_keytypes |= KT_SPHINCS_HARAKA_128S_SIMPLE;
+					break;
+				case KEY_SPHINCS_SHA256_128F_SIMPLE:
+					get_keytypes |= KT_SPHINCS_SHA256_128F_SIMPLE;
+					break;
+				case KEY_SPHINCS_SHA256_128S_SIMPLE:
+					get_keytypes |= KT_SPHINCS_SHA256_128S_SIMPLE;
 					break;
 				case KEY_RSA3072_OQSDEFAULT:
 					get_keytypes |= KT_RSA3072_OQSDEFAULT;
@@ -942,11 +969,29 @@ main(int argc, char **argv)
 				case KEY_P384_QTESLA_P_III:
 					get_keytypes |= KT_P384_QTESLA_P_III;
 					break;
-				case KEY_RSA3072_SPHINCS_HARAKA_128F_ROBUST:
-					get_keytypes |= KT_RSA3072_SPHINCS_HARAKA_128F_ROBUST;
+				case KEY_RSA3072_SPHINCS_HARAKA_128F_SIMPLE:
+					get_keytypes |= KT_RSA3072_SPHINCS_HARAKA_128F_SIMPLE;
 					break;
-				case KEY_P256_SPHINCS_HARAKA_128F_ROBUST:
-					get_keytypes |= KT_P256_SPHINCS_HARAKA_128F_ROBUST;
+				case KEY_P256_SPHINCS_HARAKA_128F_SIMPLE:
+					get_keytypes |= KT_P256_SPHINCS_HARAKA_128F_SIMPLE;
+					break;
+				case KEY_RSA3072_SPHINCS_HARAKA_128S_SIMPLE:
+					get_keytypes |= KT_RSA3072_SPHINCS_HARAKA_128S_SIMPLE;
+					break;
+				case KEY_P256_SPHINCS_HARAKA_128S_SIMPLE:
+					get_keytypes |= KT_P256_SPHINCS_HARAKA_128S_SIMPLE;
+					break;
+				case KEY_RSA3072_SPHINCS_SHA256_128F_SIMPLE:
+					get_keytypes |= KT_RSA3072_SPHINCS_SHA256_128F_SIMPLE;
+					break;
+				case KEY_P256_SPHINCS_SHA256_128F_SIMPLE:
+					get_keytypes |= KT_P256_SPHINCS_SHA256_128F_SIMPLE;
+					break;
+				case KEY_RSA3072_SPHINCS_SHA256_128S_SIMPLE:
+					get_keytypes |= KT_RSA3072_SPHINCS_SHA256_128S_SIMPLE;
+					break;
+				case KEY_P256_SPHINCS_SHA256_128S_SIMPLE:
+					get_keytypes |= KT_P256_SPHINCS_SHA256_128S_SIMPLE;
 					break;
 ///// OQS_TEMPLATE_FRAGMENT_SWITCH_KT_END
 				case KEY_UNSPEC:

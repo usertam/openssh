@@ -79,7 +79,7 @@ The following digital signature algorithms from liboqs are supported (assuming t
 - **MQDSS**:`mqdss3148`, `mqdss3164`
 - **Picnic**:`picnicl1fs`, `picnicl1ur`, `picnicl3fs`, `picnicl3ur`, `picnicl5fs`, `picnicl5ur`, `picnic2l1fs`, `picnic2l3fs`
 - **qTesla**:`qteslapi`, `qteslapiii`
-- **SPHINCS+**:`sphincsharaka128frobust`
+- **SPHINCS+**:`sphincsharaka128fsimple`,`sphincsharaka128ssimple`,`sphincssha256128fsimple`,`sphincssha256128ssimple`
 
 The following hybrid algorithms are supported; they combine a quantum-safe algorithm listed above with a traditional digital signature algorithm (`<SIG>` is any one of the algorithms listed above):
 
