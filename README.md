@@ -58,12 +58,13 @@ The following quantum-safe algorithms from liboqs are supported (assuming they h
 - `oqsdefault` (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
 - **BIKE**:`bike1-l1-cpa`, `bike1-l3-cpa`, `bike1-l1-fo`, `bike2-l3-fo`
 - **FrodoKEM**:`frodo-640-aes`, `frodo-976-aes`
-- **Kyber**:`kyber-512`, `kyber-768`, `kyber-1024`
+- **Kyber**:`kyber-512`, `kyber-768`, `kyber-1024`, `kyber-512-90s`, `kyber-768-90s`, `kyber-1024-90s`
 - **NewHope**:`newhope-512`, `newhope-1024`
 - **NTRU**:`ntru-hps-2048-509`, `ntru-hps-2048-677`
 - **Saber**:`saber-lightsaber`, `saber-saber`, `saber-firesaber`
 - **SIDH**:`sidh-p434`, `sidh-p503`, `sidh-p610`, `sidh-p751`, `sidh-p434-compressed`, `sidh-p503-compressed`, `sidh-p610-compressed`, `sidh-p751-compressed`
 - **SIKE**:`sike-p434`, `sike-p503`, `sike-p610`, `sike-p751`, `sike-p434-compressed`, `sike-p503-compressed`, `sike-p610-compressed`, `sike-p751-compressed`
+- **ThreeBears**:`babybear`, `mamabear`, `papabear`, `babybear_ephem`, `mamabear_ephem`, `papabear_ephem`
 
 The following hybrid algorithms are supported; they combine a quantum-safe algorithm listed above with ECDH that uses NIST's P384 curve:
 
@@ -74,11 +75,11 @@ The following hybrid algorithms are supported; they combine a quantum-safe algor
 The following digital signature algorithms from liboqs are supported (assuming they have been enabled in liboqs):
 
 - `oqsdefault` (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
-- **Dilithium**:`dilithium2`, `dilithium4`
-- **MQDSS**:`mqdss3148`
+- **Dilithium**:`dilithium2`, `dilithium3`, `dilithium4`
+- **MQDSS**:`mqdss3148`, `mqdss3164`
 - **Picnic**:`picnicl1fs`, `picnicl1ur`, `picnicl3fs`, `picnicl3ur`, `picnicl5fs`, `picnicl5ur`, `picnic2l1fs`, `picnic2l3fs`
 - **qTesla**:`qteslapi`, `qteslapiii`
-- **SPHINCS+**:`sphincsharaka128frobust`
+- **SPHINCS+**:`sphincsharaka128fsimple`,`sphincsharaka128ssimple`,`sphincssha256128fsimple`,`sphincssha256128ssimple`
 
 The following hybrid algorithms are supported; they combine a quantum-safe algorithm listed above with a traditional digital signature algorithm (`<SIG>` is any one of the algorithms listed above):
 

@@ -3605,7 +3605,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(ENABLE_KEM_KYBER) || (defined(OQS_ENABLE_KEM_kyber_512) && defined(OQS_ENABLE_KEM_kyber_768) && defined(OQS_ENABLE_KEM_kyber_1024))
+					#if defined(ENABLE_KEM_KYBER) || (defined(OQS_ENABLE_KEM_kyber_512) && defined(OQS_ENABLE_KEM_kyber_768) && defined(OQS_ENABLE_KEM_kyber_1024) && defined(OQS_ENABLE_KEM_kyber_512_90s) && defined(OQS_ENABLE_KEM_kyber_768_90s) && defined(OQS_ENABLE_KEM_kyber_1024_90s))
 					#else
 					#error "KYBER is not supported"
 					#endif
@@ -3685,12 +3685,26 @@ if test "x$with_liboqs" = "xyes" ; then
 			], [AC_MSG_RESULT([no])
 	])
 
+	AC_MSG_CHECKING([for libOQS THREEBEARS support])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+				#include <oqs/oqs.h>
+			]], [[
+					#if defined(ENABLE_KEM_THREEBEARS) || (defined(OQS_ENABLE_KEM_threebears_babybear) && defined(OQS_ENABLE_KEM_threebears_babybear_ephem) && defined(OQS_ENABLE_KEM_threebears_mamabear) && defined(OQS_ENABLE_KEM_threebears_mamabear_ephem) && defined(OQS_ENABLE_KEM_threebears_papabear) && defined(OQS_ENABLE_KEM_threebears_papabear_ephem))
+					#else
+					#error "THREEBEARS is not supported"
+					#endif
+			]])],
+			[ AC_MSG_RESULT([yes])
+				AC_DEFINE([HAVE_THREEBEARS], [1], [Define to 1 if LibOQS library is compiled with support for THREEBEARS])
+			], [AC_MSG_RESULT([no])
+	])
+
 
 	AC_MSG_CHECKING([for libOQS DILITHIUM support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(ENABLE_SIG_DILITHIUM) || (defined(OQS_ENABLE_SIG_dilithium_2) && defined(OQS_ENABLE_SIG_dilithium_4))
+					#if defined(ENABLE_SIG_DILITHIUM) || (defined(OQS_ENABLE_SIG_dilithium_2) && defined(OQS_ENABLE_SIG_dilithium_3) && defined(OQS_ENABLE_SIG_dilithium_4))
 					#else
 					#error "DILITHIUM is not supported"
 					#endif
@@ -3704,7 +3718,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(ENABLE_SIG_MQDSS) || (defined(OQS_ENABLE_SIG_mqdss_31_64))
+					#if defined(ENABLE_SIG_MQDSS) || (defined(OQS_ENABLE_SIG_mqdss_31_48) && defined(OQS_ENABLE_SIG_mqdss_31_64))
 					#else
 					#error "MQDSS is not supported"
 					#endif
@@ -3746,7 +3760,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(ENABLE_SIG_SPHINCS) || (defined(OQS_ENABLE_SIG_sphincs_haraka_128f_robust))
+					#if defined(ENABLE_SIG_SPHINCS) || (defined(OQS_ENABLE_SIG_sphincs_haraka_128f_simple) && defined(OQS_ENABLE_SIG_sphincs_haraka_128s_simple) && defined(OQS_ENABLE_SIG_sphincs_sha256_128f_simple) && defined(OQS_ENABLE_SIG_sphincs_sha256_128s_simple))
 					#else
 					#error "SPHINCS is not supported"
 					#endif

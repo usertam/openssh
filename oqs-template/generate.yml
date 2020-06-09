@@ -16,6 +16,11 @@ sigs:
         mix_with: [{'name':'rsa3072'},
                    {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
       -
+        name: "DILITHIUM_3"
+        oqs_meth: "OQS_SIG_alg_dilithium_3"
+        mix_with: [{'name':'rsa3072'},
+                   {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
+      -
         name: "DILITHIUM_4"
         oqs_meth: "OQS_SIG_alg_dilithium_4"
         mix_with: [{'name': 'p384', 'curve':'NID_secp384r1'}]
@@ -24,9 +29,13 @@ sigs:
     variants:
       -
         name: "MQDSS_31_48"
-        oqs_meth: "OQS_SIG_alg_mqdss_31_64"
+        oqs_meth: "OQS_SIG_alg_mqdss_31_48"
         mix_with: [{'name':'rsa3072'},
                    {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
+      -
+        name: "MQDSS_31_64"
+        oqs_meth: "OQS_SIG_alg_mqdss_31_64"
+        mix_with: [{'name': 'p384', 'curve':'NID_secp384r1'}]
   -
     family: "PICNIC"
     variants:
@@ -81,11 +90,25 @@ sigs:
     family: "SPHINCS"
     variants:
       -
-        name: "SPHINCS_HARAKA_128F_ROBUST"
-        oqs_meth: "OQS_SIG_alg_sphincs_haraka_128f_robust"
+        name: "SPHINCS_HARAKA_128F_SIMPLE"
+        oqs_meth: "OQS_SIG_alg_sphincs_haraka_128f_simple"
         mix_with: [{'name':'rsa3072'},
                    {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
-
+      -
+        name: "SPHINCS_HARAKA_128S_SIMPLE"
+        oqs_meth: "OQS_SIG_alg_sphincs_haraka_128s_simple"
+        mix_with: [{'name':'rsa3072'},
+                   {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
+      -
+        name: "SPHINCS_SHA256_128F_SIMPLE"
+        oqs_meth: "OQS_SIG_alg_sphincs_sha256_128f_simple"
+        mix_with: [{'name':'rsa3072'},
+                   {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
+      -
+        name: "SPHINCS_SHA256_128S_SIMPLE"
+        oqs_meth: "OQS_SIG_alg_sphincs_sha256_128s_simple"
+        mix_with: [{'name':'rsa3072'},
+                   {'name': 'p256', 'curve':'NID_X9_62_prime256v1'}]
 kems:
   -
     family: "BIKE"
@@ -123,6 +146,15 @@ kems:
       -
         name: "KYBER_1024"
         oqs_meth: "OQS_KEM_alg_kyber_1024"
+      -
+        name: "KYBER_512_90S"
+        oqs_meth: "OQS_KEM_alg_kyber_512_90s"
+      -
+        name: "KYBER_768_90S"
+        oqs_meth: "OQS_KEM_alg_kyber_768_90s"
+      -
+        name: "KYBER_1024_90S"
+        oqs_meth: "OQS_KEM_alg_kyber_1024_90s"
   -
     family: "NEWHOPE"
     variants:
@@ -207,3 +239,24 @@ kems:
       -
         name: "SIKE_p751_compressed"
         oqs_meth: "OQS_KEM_alg_sike_p751_compressed"
+  -
+    family: "THREEBEARS"
+    variants:
+      -
+        name: "BABYBEAR"
+        oqs_meth: "OQS_KEM_alg_threebears_babybear"
+      -
+        name: "BABYBEAR_EPHEM"
+        oqs_meth: "OQS_KEM_alg_threebears_babybear_ephem"
+      -
+        name: "MAMABEAR"
+        oqs_meth: "OQS_KEM_alg_threebears_mamabear"
+      -
+        name: "MAMABEAR_EPHEM"
+        oqs_meth: "OQS_KEM_alg_threebears_mamabear_ephem"
+      -
+        name: "PAPABEAR"
+        oqs_meth: "OQS_KEM_alg_threebears_papabear"
+      -
+        name: "PAPABEAR_EPHEM"
+        oqs_meth: "OQS_KEM_alg_threebears_papabear_ephem"
