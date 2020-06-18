@@ -40,10 +40,29 @@
 #else
 #define KEX_PQ_METHOD_BIKE ""
 #endif /* HAVE_BIKE */
+#ifdef HAVE_CLASSIC_MCELIECE
+#define KEX_PQ_METHOD_CLASSIC_MCELIECE \
+    PQ_OQS_KEX_METHOD("classic-mceliece-348864-sha384") \
+    PQ_OQS_KEX_METHOD("classic-mceliece-348864f-sha384") \
+    PQ_OQS_KEX_METHOD("classic-mceliece-460896-sha384") \
+    PQ_OQS_KEX_METHOD("classic-mceliece-460896f-sha384") \
+    PQ_OQS_KEX_METHOD("classic-mceliece-6688128-sha384") \
+    PQ_OQS_KEX_METHOD("classic-mceliece-6688128f-sha384") \
+    PQ_OQS_KEX_METHOD("classic-mceliece-6960119-sha384") \
+    PQ_OQS_KEX_METHOD("classic-mceliece-6960119f-sha384") \
+    PQ_OQS_KEX_METHOD("classic-mceliece-8192128-sha384") \
+    PQ_OQS_KEX_METHOD("classic-mceliece-8192128f-sha384")
+#else
+#define KEX_PQ_METHOD_CLASSIC_MCELIECE ""
+#endif /* HAVE_CLASSIC_MCELIECE */
 #ifdef HAVE_FRODO
 #define KEX_PQ_METHOD_FRODO \
     PQ_OQS_KEX_METHOD("frodo-640-aes-sha384") \
-    PQ_OQS_KEX_METHOD("frodo-976-aes-sha384")
+    PQ_OQS_KEX_METHOD("frodo-640-shake-sha384") \
+    PQ_OQS_KEX_METHOD("frodo-976-aes-sha384") \
+    PQ_OQS_KEX_METHOD("frodo-976-shake-sha384") \
+    PQ_OQS_KEX_METHOD("frodo-1344-aes-sha384") \
+    PQ_OQS_KEX_METHOD("frodo-1344-shake-sha384")
 #else
 #define KEX_PQ_METHOD_FRODO ""
 #endif /* HAVE_FRODO */
@@ -68,7 +87,9 @@
 #ifdef HAVE_NTRU
 #define KEX_PQ_METHOD_NTRU \
     PQ_OQS_KEX_METHOD("ntru-hps-2048-509-sha384") \
-    PQ_OQS_KEX_METHOD("ntru-hps-2048-677-sha384")
+    PQ_OQS_KEX_METHOD("ntru-hps-2048-677-sha384") \
+    PQ_OQS_KEX_METHOD("ntru-hrss-701-sha384") \
+    PQ_OQS_KEX_METHOD("ntru-hps-4096-821-sha384")
 #else
 #define KEX_PQ_METHOD_NTRU ""
 #endif /* HAVE_NTRU */
@@ -99,7 +120,7 @@
     PQ_OQS_KEX_METHOD("sike-p503-sha384") \
     PQ_OQS_KEX_METHOD("sike-p610-sha384") \
     PQ_OQS_KEX_METHOD("sike-p751-sha384") \
-    PQ_OQS_KEX_METHOD("sike-p434-compressed-sha384") \
+    PQ_OQS_KEX_METHOD("-sha384") \
     PQ_OQS_KEX_METHOD("sike-p503-compressed-sha384") \
     PQ_OQS_KEX_METHOD("sike-p610-compressed-sha384") \
     PQ_OQS_KEX_METHOD("sike-p751-compressed-sha384")
@@ -121,6 +142,7 @@
 #else /* defined(WITH_OQS) && defined(WITH_PQ_KEX) */
 ///// OQS_TEMPLATE_FRAGMENT_UNDEFINE_PQ_KEXS_START
 #define KEX_PQ_METHOD_BIKE ""
+#define KEX_PQ_METHOD_CLASSIC_MCELIECE ""
 #define KEX_PQ_METHOD_FRODO ""
 #define KEX_PQ_METHOD_KYBER ""
 #define KEX_PQ_METHOD_NEWHOPE ""
@@ -136,6 +158,7 @@
 #define KEX_PQ_METHODS \
     PQ_OQS_KEX_METHOD("oqsdefault-sha384") \
     KEX_PQ_METHOD_BIKE \
+    KEX_PQ_METHOD_CLASSIC_MCELIECE \
     KEX_PQ_METHOD_FRODO \
     KEX_PQ_METHOD_KYBER \
     KEX_PQ_METHOD_NEWHOPE \
@@ -159,10 +182,29 @@
 #else
 #define KEX_HYBRID_METHOD_BIKE ""
 #endif /* HAVE_BIKE */
+#ifdef HAVE_CLASSIC_MCELIECE
+#define KEX_HYBRID_METHOD_CLASSIC_MCELIECE \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-classic-mceliece-348864-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-classic-mceliece-348864f-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-classic-mceliece-460896-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-classic-mceliece-460896f-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-classic-mceliece-6688128-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-classic-mceliece-6688128f-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-classic-mceliece-6960119-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-classic-mceliece-6960119f-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-classic-mceliece-8192128-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-classic-mceliece-8192128f-sha384")
+#else
+#define KEX_HYBRID_METHOD_CLASSIC_MCELIECE ""
+#endif /* HAVE_CLASSIC_MCELIECE */
 #ifdef HAVE_FRODO
 #define KEX_HYBRID_METHOD_FRODO \
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-frodo-640-aes-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-frodo-976-aes-sha384")
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-frodo-640-shake-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-frodo-976-aes-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-frodo-976-shake-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-frodo-1344-aes-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-frodo-1344-shake-sha384")
 #else
 #define KEX_HYBRID_METHOD_FRODO ""
 #endif /* HAVE_FRODO */
@@ -187,7 +229,9 @@
 #ifdef HAVE_NTRU
 #define KEX_HYBRID_METHOD_NTRU \
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-ntru-hps-2048-509-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-ntru-hps-2048-677-sha384")
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-ntru-hps-2048-677-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-ntru-hrss-701-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-ntru-hps-4096-821-sha384")
 #else
 #define KEX_HYBRID_METHOD_NTRU ""
 #endif /* HAVE_NTRU */
@@ -218,7 +262,7 @@
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p503-sha384") \
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p610-sha384") \
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p751-sha384") \
-    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p434-compressed-sha384") \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384--sha384") \
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p503-compressed-sha384") \
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p610-compressed-sha384") \
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-sike-p751-compressed-sha384")
@@ -240,6 +284,7 @@
 #else /* defined(WITH_OQS) && defined(WITH_HYBRID_KEX) */
 ///// OQS_TEMPLATE_FRAGMENT_UNDEFINE_HYBRID_KEXS_START
 #define KEX_HYBRID_METHOD_BIKE ""
+#define KEX_HYBRID_METHOD_CLASSIC_MCELIECE ""
 #define KEX_HYBRID_METHOD_FRODO ""
 #define KEX_HYBRID_METHOD_KYBER ""
 #define KEX_HYBRID_METHOD_NEWHOPE ""
@@ -255,6 +300,7 @@
 #define KEX_HYBRID_METHODS \
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-oqsdefault-sha384") \
     KEX_HYBRID_METHOD_BIKE \
+    KEX_HYBRID_METHOD_CLASSIC_MCELIECE \
     KEX_HYBRID_METHOD_FRODO \
     KEX_HYBRID_METHOD_KYBER \
     KEX_HYBRID_METHOD_NEWHOPE \

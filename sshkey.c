@@ -129,24 +129,16 @@ static const struct keytype keytypes[] = {
 ///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_KT_START
 	{ "ssh-oqsdefault", "OQSDEFAULT", NULL, KEY_OQSDEFAULT, 0, 0, 0 },
 	{ "ssh-dilithium2", "DILITHIUM2", NULL, KEY_DILITHIUM_2, 0, 0, 0 },
-	{ "ssh-dilithium3", "DILITHIUM3", NULL, KEY_DILITHIUM_3, 0, 0, 0 },
-	{ "ssh-dilithium4", "DILITHIUM4", NULL, KEY_DILITHIUM_4, 0, 0, 0 },
+	{ "ssh-falcon512", "FALCON512", NULL, KEY_FALCON_512, 0, 0, 0 },
 	{ "ssh-mqdss3148", "MQDSS3148", NULL, KEY_MQDSS_31_48, 0, 0, 0 },
-	{ "ssh-mqdss3164", "MQDSS3164", NULL, KEY_MQDSS_31_64, 0, 0, 0 },
-	{ "ssh-picnicl1fs", "PICNICL1FS", NULL, KEY_PICNIC_L1FS, 0, 0, 0 },
 	{ "ssh-picnicl1ur", "PICNICL1UR", NULL, KEY_PICNIC_L1UR, 0, 0, 0 },
-	{ "ssh-picnicl3fs", "PICNICL3FS", NULL, KEY_PICNIC_L3FS, 0, 0, 0 },
-	{ "ssh-picnicl3ur", "PICNICL3UR", NULL, KEY_PICNIC_L3UR, 0, 0, 0 },
-	{ "ssh-picnicl5fs", "PICNICL5FS", NULL, KEY_PICNIC_L5FS, 0, 0, 0 },
-	{ "ssh-picnicl5ur", "PICNICL5UR", NULL, KEY_PICNIC_L5UR, 0, 0, 0 },
-	{ "ssh-picnic2l1fs", "PICNIC2L1FS", NULL, KEY_PICNIC2_L1FS, 0, 0, 0 },
-	{ "ssh-picnic2l3fs", "PICNIC2L3FS", NULL, KEY_PICNIC2_L3FS, 0, 0, 0 },
 	{ "ssh-qteslapi", "QTESLAPI", NULL, KEY_QTESLA_P_I, 0, 0, 0 },
-	{ "ssh-qteslapiii", "QTESLAPIII", NULL, KEY_QTESLA_P_III, 0, 0, 0 },
-	{ "ssh-sphincsharaka128fsimple", "SPHINCSHARAKA128FSIMPLE", NULL, KEY_SPHINCS_HARAKA_128F_SIMPLE, 0, 0, 0 },
-	{ "ssh-sphincsharaka128ssimple", "SPHINCSHARAKA128SSIMPLE", NULL, KEY_SPHINCS_HARAKA_128S_SIMPLE, 0, 0, 0 },
-	{ "ssh-sphincssha256128fsimple", "SPHINCSSHA256128FSIMPLE", NULL, KEY_SPHINCS_SHA256_128F_SIMPLE, 0, 0, 0 },
-	{ "ssh-sphincssha256128ssimple", "SPHINCSSHA256128SSIMPLE", NULL, KEY_SPHINCS_SHA256_128S_SIMPLE, 0, 0, 0 },
+	{ "ssh-rainbowiaclassic", "RAINBOWIACLASSIC", NULL, KEY_RAINBOW_IA_CLASSIC, 0, 0, 0 },
+	{ "ssh-rainbowiiicclassic", "RAINBOWIIICCLASSIC", NULL, KEY_RAINBOW_IIIC_CLASSIC, 0, 0, 0 },
+	{ "ssh-rainbowvcclassic", "RAINBOWVCCLASSIC", NULL, KEY_RAINBOW_VC_CLASSIC, 0, 0, 0 },
+	{ "ssh-sphincsharaka128frobust", "SPHINCSHARAKA128FROBUST", NULL, KEY_SPHINCS_HARAKA_128F_ROBUST, 0, 0, 0 },
+	{ "ssh-sphincssha256128frobust", "SPHINCSSHA256128FROBUST", NULL, KEY_SPHINCS_SHA256_128F_ROBUST, 0, 0, 0 },
+	{ "ssh-sphincsshake256128frobust", "SPHINCSSHAKE256128FROBUST", NULL, KEY_SPHINCS_SHAKE256_128F_ROBUST, 0, 0, 0 },
 ///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_KT_END
 #endif /* WITH_PQ_AUTH */
 #ifdef WITH_HYBRID_AUTH
@@ -155,34 +147,24 @@ static const struct keytype keytypes[] = {
 	{ "ssh-p256-oqsdefault", "P256_OQSDEFAULT", NULL, KEY_P256_OQSDEFAULT, NID_X9_62_prime256v1, 0, 0 },
 	{ "ssh-rsa3072-dilithium2", "RSA3072_DILITHIUM2", NULL, KEY_RSA3072_DILITHIUM_2, 0, 0, 0 },
 	{ "ssh-p256-dilithium2", "P256_DILITHIUM2", NULL, KEY_P256_DILITHIUM_2, NID_X9_62_prime256v1, 0, 0 },
-	{ "ssh-rsa3072-dilithium3", "RSA3072_DILITHIUM3", NULL, KEY_RSA3072_DILITHIUM_3, 0, 0, 0 },
-	{ "ssh-p256-dilithium3", "P256_DILITHIUM3", NULL, KEY_P256_DILITHIUM_3, NID_X9_62_prime256v1, 0, 0 },
-	{ "ssh-p384-dilithium4", "P384_DILITHIUM4", NULL, KEY_P384_DILITHIUM_4, NID_secp384r1, 0, 0 },
+	{ "ssh-rsa3072-falcon512", "RSA3072_FALCON512", NULL, KEY_RSA3072_FALCON_512, 0, 0, 0 },
+	{ "ssh-p256-falcon512", "P256_FALCON512", NULL, KEY_P256_FALCON_512, NID_X9_62_prime256v1, 0, 0 },
 	{ "ssh-rsa3072-mqdss3148", "RSA3072_MQDSS3148", NULL, KEY_RSA3072_MQDSS_31_48, 0, 0, 0 },
 	{ "ssh-p256-mqdss3148", "P256_MQDSS3148", NULL, KEY_P256_MQDSS_31_48, NID_X9_62_prime256v1, 0, 0 },
-	{ "ssh-p384-mqdss3164", "P384_MQDSS3164", NULL, KEY_P384_MQDSS_31_64, NID_secp384r1, 0, 0 },
-	{ "ssh-rsa3072-picnicl1fs", "RSA3072_PICNICL1FS", NULL, KEY_RSA3072_PICNIC_L1FS, 0, 0, 0 },
-	{ "ssh-p256-picnicl1fs", "P256_PICNICL1FS", NULL, KEY_P256_PICNIC_L1FS, NID_X9_62_prime256v1, 0, 0 },
 	{ "ssh-rsa3072-picnicl1ur", "RSA3072_PICNICL1UR", NULL, KEY_RSA3072_PICNIC_L1UR, 0, 0, 0 },
 	{ "ssh-p256-picnicl1ur", "P256_PICNICL1UR", NULL, KEY_P256_PICNIC_L1UR, NID_X9_62_prime256v1, 0, 0 },
-	{ "ssh-p384-picnicl3fs", "P384_PICNICL3FS", NULL, KEY_P384_PICNIC_L3FS, NID_secp384r1, 0, 0 },
-	{ "ssh-p384-picnicl3ur", "P384_PICNICL3UR", NULL, KEY_P384_PICNIC_L3UR, NID_secp384r1, 0, 0 },
-	{ "ssh-p521-picnicl5fs", "P521_PICNICL5FS", NULL, KEY_P521_PICNIC_L5FS, NID_secp521r1, 0, 0 },
-	{ "ssh-p521-picnicl5ur", "P521_PICNICL5UR", NULL, KEY_P521_PICNIC_L5UR, NID_secp521r1, 0, 0 },
-	{ "ssh-rsa3072-picnic2l1fs", "RSA3072_PICNIC2L1FS", NULL, KEY_RSA3072_PICNIC2_L1FS, 0, 0, 0 },
-	{ "ssh-p256-picnic2l1fs", "P256_PICNIC2L1FS", NULL, KEY_P256_PICNIC2_L1FS, NID_X9_62_prime256v1, 0, 0 },
-	{ "ssh-p384-picnic2l3fs", "P384_PICNIC2L3FS", NULL, KEY_P384_PICNIC2_L3FS, NID_secp384r1, 0, 0 },
 	{ "ssh-rsa3072-qteslapi", "RSA3072_QTESLAPI", NULL, KEY_RSA3072_QTESLA_P_I, 0, 0, 0 },
 	{ "ssh-p256-qteslapi", "P256_QTESLAPI", NULL, KEY_P256_QTESLA_P_I, NID_X9_62_prime256v1, 0, 0 },
-	{ "ssh-p384-qteslapiii", "P384_QTESLAPIII", NULL, KEY_P384_QTESLA_P_III, NID_secp384r1, 0, 0 },
-	{ "ssh-rsa3072-sphincsharaka128fsimple", "RSA3072_SPHINCSHARAKA128FSIMPLE", NULL, KEY_RSA3072_SPHINCS_HARAKA_128F_SIMPLE, 0, 0, 0 },
-	{ "ssh-p256-sphincsharaka128fsimple", "P256_SPHINCSHARAKA128FSIMPLE", NULL, KEY_P256_SPHINCS_HARAKA_128F_SIMPLE, NID_X9_62_prime256v1, 0, 0 },
-	{ "ssh-rsa3072-sphincsharaka128ssimple", "RSA3072_SPHINCSHARAKA128SSIMPLE", NULL, KEY_RSA3072_SPHINCS_HARAKA_128S_SIMPLE, 0, 0, 0 },
-	{ "ssh-p256-sphincsharaka128ssimple", "P256_SPHINCSHARAKA128SSIMPLE", NULL, KEY_P256_SPHINCS_HARAKA_128S_SIMPLE, NID_X9_62_prime256v1, 0, 0 },
-	{ "ssh-rsa3072-sphincssha256128fsimple", "RSA3072_SPHINCSSHA256128FSIMPLE", NULL, KEY_RSA3072_SPHINCS_SHA256_128F_SIMPLE, 0, 0, 0 },
-	{ "ssh-p256-sphincssha256128fsimple", "P256_SPHINCSSHA256128FSIMPLE", NULL, KEY_P256_SPHINCS_SHA256_128F_SIMPLE, NID_X9_62_prime256v1, 0, 0 },
-	{ "ssh-rsa3072-sphincssha256128ssimple", "RSA3072_SPHINCSSHA256128SSIMPLE", NULL, KEY_RSA3072_SPHINCS_SHA256_128S_SIMPLE, 0, 0, 0 },
-	{ "ssh-p256-sphincssha256128ssimple", "P256_SPHINCSSHA256128SSIMPLE", NULL, KEY_P256_SPHINCS_SHA256_128S_SIMPLE, NID_X9_62_prime256v1, 0, 0 },
+	{ "ssh-rsa3072-rainbowiaclassic", "RSA3072_RAINBOWIACLASSIC", NULL, KEY_RSA3072_RAINBOW_IA_CLASSIC, 0, 0, 0 },
+	{ "ssh-p256-rainbowiaclassic", "P256_RAINBOWIACLASSIC", NULL, KEY_P256_RAINBOW_IA_CLASSIC, NID_X9_62_prime256v1, 0, 0 },
+	{ "ssh-p384-rainbowiiicclassic", "P384_RAINBOWIIICCLASSIC", NULL, KEY_P384_RAINBOW_IIIC_CLASSIC, NID_secp384r1, 0, 0 },
+	{ "ssh-p521-rainbowvcclassic", "P521_RAINBOWVCCLASSIC", NULL, KEY_P521_RAINBOW_VC_CLASSIC, NID_secp521r1, 0, 0 },
+	{ "ssh-rsa3072-sphincsharaka128frobust", "RSA3072_SPHINCSHARAKA128FROBUST", NULL, KEY_RSA3072_SPHINCS_HARAKA_128F_ROBUST, 0, 0, 0 },
+	{ "ssh-p256-sphincsharaka128frobust", "P256_SPHINCSHARAKA128FROBUST", NULL, KEY_P256_SPHINCS_HARAKA_128F_ROBUST, NID_X9_62_prime256v1, 0, 0 },
+	{ "ssh-rsa3072-sphincssha256128frobust", "RSA3072_SPHINCSSHA256128FROBUST", NULL, KEY_RSA3072_SPHINCS_SHA256_128F_ROBUST, 0, 0, 0 },
+	{ "ssh-p256-sphincssha256128frobust", "P256_SPHINCSSHA256128FROBUST", NULL, KEY_P256_SPHINCS_SHA256_128F_ROBUST, NID_X9_62_prime256v1, 0, 0 },
+	{ "ssh-rsa3072-sphincsshake256128frobust", "RSA3072_SPHINCSSHAKE256128FROBUST", NULL, KEY_RSA3072_SPHINCS_SHAKE256_128F_ROBUST, 0, 0, 0 },
+	{ "ssh-p256-sphincsshake256128frobust", "P256_SPHINCSSHAKE256128FROBUST", NULL, KEY_P256_SPHINCS_SHAKE256_128F_ROBUST, NID_X9_62_prime256v1, 0, 0 },
 ///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_KT_END
 #endif /* WITH_HYBRID_AUTH */
 #ifdef WITH_OPENSSL
@@ -4083,17 +4065,28 @@ sshkey_private_to_blob2(const struct sshkey *prv, struct sshbuf *blob,
 		goto out;
 	}
 
+	/* OQS note: We have changed the logic below to write "b64" out
+	 * in bursts of 70 characters to "blob", as opposed to writing it out
+	 * character by character. This greatly speeds up key-generation for the
+	 * Rainbow variants, for which b64 can be many millions of bytes.*/
 	sshbuf_reset(blob);
 	if ((r = sshbuf_put(blob, MARK_BEGIN, MARK_BEGIN_LEN)) != 0)
 		goto out;
-	for (i = 0; i < strlen(b64); i++) {
-		if ((r = sshbuf_put_u8(blob, b64[i])) != 0)
+	size_t b64_len = strlen(b64);
+	char *b64_ptr = b64;
+
+    while(b64_len >= 70) {
+		if ((r = sshbuf_put(blob, b64_ptr, 70)) != 0)
 			goto out;
-		/* insert line breaks */
-		if (i % 70 == 69 && (r = sshbuf_put_u8(blob, '\n')) != 0)
+		b64_ptr += 70;
+        b64_len -= 70;
+		if ((r = sshbuf_put_u8(blob, '\n')) != 0)
 			goto out;
+    }
+	if (b64_len > 0 && (r = sshbuf_put(blob, b64_ptr, b64_len)) != 0) {
+		goto out;
 	}
-	if (i % 70 != 69 && (r = sshbuf_put_u8(blob, '\n')) != 0)
+	if (b64_len > 0 && (r = sshbuf_put_u8(blob, '\n')) != 0)
 		goto out;
 	if ((r = sshbuf_put(blob, MARK_END, MARK_END_LEN)) != 0)
 		goto out;

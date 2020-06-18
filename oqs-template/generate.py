@@ -43,6 +43,9 @@ def populate(filename, config, delimiter, overwrite=False):
 def load_config():
     config = file_get_contents(os.path.join('oqs-template', 'generate.yml'), encoding='utf-8')
     config = yaml.safe_load(config)
+    for sig in config['sigs']:
+        sig['variants'] = [variant for variant in sig['variants'] if variant['enable']]
+    config['sigs'] = [sig for sig in config['sigs'] if sig['variants']]
     return config
 
 config = load_config()
@@ -73,5 +76,5 @@ populate('sshconnect.c', config, '/////')
 populate('sshkey.c', config, '/////')
 populate('sshkey.h', config, '/////')
 
-# update test suite and README
-populate('oqs_test/tests/test_openssh.py', config, '#####')
+# update test suite
+populate('oqs-test/test_openssh.py', config, '#####')
