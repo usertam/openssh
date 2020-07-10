@@ -1,5 +1,5 @@
-OQS-OpenSSH snapshot 2020-06-rc1
-================================
+OQS-OpenSSH snapshot 2020-07
+============================
 
 About
 -----
@@ -13,7 +13,7 @@ The **Open Quantum Safe (OQS) project** has the goal of developing and prototypi
 Release notes
 =============
 
-This is release candidate 1 for the 2020-06 snapshot release of OQS-OpenSSH. This release candidate was released on June 23, 2020. Its release page on GitHub is https://github.com/open-quantum-safe/openssh/releases/tag/OQS-OpenSSH-snapshot-2020-06-rc1.
+This is the 2020-07 snapshot release of OQS-OpenSSH, released on July 10, 2020. Its release page on GitHub is https://github.com/open-quantum-safe/openssh/releases/tag/OQS-OpenSSH-snapshot-2020-07. This release is intended to be used with liboqs version 0.3.0.
 
 What's New
 ----------
