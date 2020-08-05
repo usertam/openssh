@@ -58,7 +58,8 @@ The following quantum-safe algorithms from liboqs are supported (assuming they h
 - `oqsdefault` (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
 - **BIKE**:`bike1-l1-cpa`, `bike1-l3-cpa`, `bike1-l1-fo`, `bike2-l3-fo`
 - **Classic McEliece**: `classic-mceliece-348864`, `classic-mceliece-348864f`, `classic-mceliece-460896`, `classic-mceliece-460896f`, `classic-mceliece-6688128`, `classic-mceliece-6688128f`, `classic-mceliece-6960119`, `classic-mceliece-6960119f`, `classic-mceliece-8192128`, `classic-mceliece-8192128f`
-- **FrodoKEM**:`frodo-640-aes`, `frodo-976-aes`
+- **FrodoKEM**:`frodo-640-aes`, `frodo-976-aes`, `frodo-1344-aes`
+- **HQC**: HQC-128-1-CCA2, HQC-192-1-CCA2, HQC-192-2-CCA2, HQC-256-1-CCA2†, HQC-256-2-CCA2†, HQC-256-3-CCA2†
 - **Kyber**:`kyber-512`, `kyber-768`, `kyber-1024`, `kyber-512-90s`, `kyber-768-90s`, `kyber-1024-90s`
 - **NewHope**:`newhope-512`, `newhope-1024`
 - **NTRU**:`ntru-hps-2048-509`, `ntru-hps-2048-677`
@@ -70,6 +71,8 @@ The following quantum-safe algorithms from liboqs are supported (assuming they h
 The following hybrid algorithms are supported; they combine a quantum-safe algorithm listed above with ECDH that uses NIST's P384 curve:
 
 - `ecdh-nistp384-<KEX>`, where ``<KEX>`` is any one of the algorithms listed above.
+
+Note that algorithms marked with a dagger (†) have large stack usage and may cause failures when run on threads or in constrained environments.
 
 #### Digital Signature
 
@@ -90,6 +93,7 @@ The following hybrid algorithms are supported; they combine a quantum-safe algor
 - if `<SIG>` has L1 security, then the fork provides the methods `rsa3072-<SIG>` and `p256-<SIG>`, which combine `<SIG>` with RSA3072 and with ECDSA using NIST's P256 curve respectively.
 - if `<SIG>` has L3 security, the fork provides the method `p384-<SIG>`, which combines `<SIG>` with ECDSA using NIST's P384 curve.
 - if `<SIG>` has L5 security, the fork provides the method `p521-<SIG>`, which combines `<SIG>` with ECDSA using NIST's P521 curve.
+
 
 ## Quickstart
 
