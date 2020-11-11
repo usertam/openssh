@@ -33,7 +33,7 @@ This fork is currently based on OpenSSH version **7.9** (Git tag V_7_9_P1); rele
 
 **WE DO NOT RECOMMEND RELYING ON THIS FORK TO PROTECT SENSITIVE DATA.**
 
-liboqs is provided "as is", without warranty of any kind.  See [LICENSE.txt](https://github.com/open-quantum-safe/liboqs/blob/master/LICENSE.txt) for the full disclaimer.
+liboqs is provided "as is", without warranty of any kind.  See [LICENSE.txt](https://github.com/open-quantum-safe/liboqs/blob/main/LICENSE.txt) for the full disclaimer.
 
 This fork also contains an experimental (pre-draft) [IETF draft](https://github.com/open-quantum-safe/openssh-portable/blob/OQS-master/ietf_pre_draft_sike_bike_hybrid_kex.txt) for hybrid key exchange algorithms ECDH-SIKE and ECDH-BIKE. This document has **not** been submitted to IETF.
 
@@ -62,6 +62,7 @@ The following quantum-safe algorithms from liboqs are supported (assuming they h
 - **HQC**: `hqc-128-1-cca2`, `hqc-192-1-cca2`, `hqc-192-2-cca2`, `hqc-256-1-cca2`†, `hqc-256-2-cca2`†, `hqc-256-3-cca2`†
 - **Kyber**:`kyber-512`, `kyber-768`, `kyber-1024`, `kyber-512-90s`, `kyber-768-90s`, `kyber-1024-90s`
 - **NTRU**:`ntru-hps-2048-509`, `ntru-hps-2048-677`
+- **NTRU-Prime**: `ntrulpr-653`, `ntrulpr-761`, `ntrulpr-857`, `sntrup-653`, `sntrup-761`, `sntrup-857`
 - **Saber**:`saber-lightsaber`, `saber-saber`, `saber-firesaber`
 - **SIDH**:`sidh-p434`, `sidh-p503`, `sidh-p610`, `sidh-p751`, `sidh-p434-compressed`, `sidh-p503-compressed`, `sidh-p610-compressed`, `sidh-p751-compressed`
 - **SIKE**:`sike-p434`, `sike-p503`, `sike-p610`, `sike-p751`, `sike-p434-compressed`, `sike-p503-compressed`, `sike-p610-compressed`, `sike-p751-compressed`
@@ -122,7 +123,7 @@ On **macOS**, you need to install the following packages using brew (or a packag
 The following instructions install liboqs into a subdirectory inside the OpenSSH source. If `<OPENSSH_ROOT>` is the root of the OpenSSH source:
 
 ```
-git clone --branch master --single-branch --depth 1 https://github.com/open-quantum-safe/liboqs.git
+git clone --branch main --single-branch --depth 1 https://github.com/open-quantum-safe/liboqs.git
 cd liboqs
 mkdir build && cd build
 cmake .. -GNinja -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_INSTALL_PREFIX=<OPENSSH_ROOT>/oqs
