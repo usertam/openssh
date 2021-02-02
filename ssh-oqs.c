@@ -164,9 +164,7 @@ ssh_oqs_verify(const struct sshkey *key,
 	struct sshbuf *b = NULL;
 	char *ktype = NULL;
 	const u_char *sigblob;
-	u_char *m = NULL;
 	size_t slen;
-	unsigned long long smlen = 0;
 	int ret;
 
 	if (key == NULL ||
@@ -201,10 +199,6 @@ ssh_oqs_verify(const struct sshkey *key,
 	/* success */
 	ret = 0;
  out:
-	if (m != NULL) {
-		explicit_bzero(m, smlen);
-		free(m);
-	}
 	sshbuf_free(b);
 	free(ktype);
 	return ret;
