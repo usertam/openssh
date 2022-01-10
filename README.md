@@ -57,7 +57,7 @@ The following quantum-safe algorithms from liboqs are supported (assuming they h
 
 - `oqsdefault` (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
 <!--- OQS_TEMPLATE_FRAGMENT_LIST_KEXS_START -->
-- **BIKE**: `bike1-l1-cpa`, `bike1-l3-cpa`, `bike1-l1-fo`, `bike1-l3-fo`
+- **BIKE**: `bike-l3`
 - **CLASSIC-MCELIECE**: `classic-mceliece-348864`, `classic-mceliece-348864f`, `classic-mceliece-460896`, `classic-mceliece-460896f`, `classic-mceliece-6688128`, `classic-mceliece-6688128f`, `classic-mceliece-6960119`, `classic-mceliece-6960119f`, `classic-mceliece-8192128`, `classic-mceliece-8192128f`
 - **FRODO**: `frodo-640-aes`, `frodo-640-shake`, `frodo-976-aes`, `frodo-976-shake`, `frodo-1344-aes`, `frodo-1344-shake`
 - **KYBER**: `kyber-512`, `kyber-768`, `kyber-1024`, `kyber-512-90s`, `kyber-768-90s`, `kyber-1024-90s`
@@ -81,7 +81,6 @@ The following digital signature algorithms from liboqs are supported (assuming t
 
 - `oqsdefault`* (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
 <!--- OQS_TEMPLATE_FRAGMENT_LIST_SIGS_START -->
-- **DILITHIUM**:`dilithium2`*, `dilithium3`, `dilithium4`
 - **FALCON**:`falcon512`*, `falcon1024`
 - **PICNIC**:`picnicl1fs`, `picnicl1ur`, `picnicl1full`*, `picnicl3fs`, `picnicl3ur`, `picnicl3full`, `picnicl5fs`, `picnicl5ur`, `picnicl5full`, `picnic3l1`*, `picnic3l3`, `picnic3l5`
 - **RAINBOW**:`rainbowiclassic`, `rainbowicircumzenithal`, `rainbowicompressed`, `rainbowiiiclassic`, `rainbowiiicircumzenithal`, `rainbowiiicompressed`, `rainbowvclassic`, `rainbowvcircumzenithal`, `rainbowvcompressed`

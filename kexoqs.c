@@ -40,17 +40,9 @@
 static const OQS_ALG oqs_alg_mapping[] = {
 /* Hybrid key exchange methods */
 #if defined(OPENSSL_HAS_ECC) && defined(WITH_HYBRID_KEX)
-	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-oqsdefault-sha384"), OQS_KEM_alg_default,
-	SSH2_MSG_HY_ECDH_OQSDEFAULT_INIT, SSH2_MSG_HY_ECDH_OQSDEFAULT_REPLY},
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_HYBRID_KEXS_START
 #ifdef HAVE_BIKE
-	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-bike1-l1-cpa-sha384"), OQS_KEM_alg_bike1_l1_cpa,
-	SSH2_MSG_HY_ECDH_BIKE_INIT, SSH2_MSG_HY_ECDH_BIKE_REPLY},
-	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-bike1-l3-cpa-sha384"), OQS_KEM_alg_bike1_l3_cpa,
-	SSH2_MSG_HY_ECDH_BIKE_INIT, SSH2_MSG_HY_ECDH_BIKE_REPLY},
-	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-bike1-l1-fo-sha384"), OQS_KEM_alg_bike1_l1_fo,
-	SSH2_MSG_HY_ECDH_BIKE_INIT, SSH2_MSG_HY_ECDH_BIKE_REPLY},
-	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-bike1-l3-fo-sha384"), OQS_KEM_alg_bike1_l3_fo,
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-bike-l3-sha384"), OQS_KEM_alg_bike_l3,
 	SSH2_MSG_HY_ECDH_BIKE_INIT, SSH2_MSG_HY_ECDH_BIKE_REPLY},
 #endif /* HAVE_BIKE */
 #ifdef HAVE_CLASSIC_MCELIECE
@@ -183,17 +175,9 @@ static const OQS_ALG oqs_alg_mapping[] = {
 #endif /* defined(OPENSSL_HAS_ECC) && defined(WITH_HYBRID_KEX) */
 /* PQ-only key exchange methods */
 #ifdef WITH_PQ_KEX
-	{PQ_OQS_KEX_SUFFIX("oqsdefault-sha384"), OQS_KEM_alg_default,
-	SSH2_MSG_PQ_OQSDEFAULT_INIT, SSH2_MSG_PQ_OQSDEFAULT_REPLY},
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_PQ_KEXS_START
 #ifdef HAVE_BIKE
-	{PQ_OQS_KEX_SUFFIX("bike1-l1-cpa-sha384"), OQS_KEM_alg_bike1_l1_cpa,
-	SSH2_MSG_PQ_BIKE_INIT, SSH2_MSG_PQ_BIKE_REPLY},
-	{PQ_OQS_KEX_SUFFIX("bike1-l3-cpa-sha384"), OQS_KEM_alg_bike1_l3_cpa,
-	SSH2_MSG_PQ_BIKE_INIT, SSH2_MSG_PQ_BIKE_REPLY},
-	{PQ_OQS_KEX_SUFFIX("bike1-l1-fo-sha384"), OQS_KEM_alg_bike1_l1_fo,
-	SSH2_MSG_PQ_BIKE_INIT, SSH2_MSG_PQ_BIKE_REPLY},
-	{PQ_OQS_KEX_SUFFIX("bike1-l3-fo-sha384"), OQS_KEM_alg_bike1_l3_fo,
+	{PQ_OQS_KEX_SUFFIX("bike-l3-sha384"), OQS_KEM_alg_bike_l3,
 	SSH2_MSG_PQ_BIKE_INIT, SSH2_MSG_PQ_BIKE_REPLY},
 #endif /* HAVE_BIKE */
 #ifdef HAVE_CLASSIC_MCELIECE

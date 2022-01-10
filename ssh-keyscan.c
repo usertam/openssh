@@ -60,30 +60,27 @@ int ssh_port = SSH_DEFAULT_PORT;
 #define KT_ED25519		(1<<3)
 #define KT_XMSS			(1<<4)
 ///// OQS_TEMPLATE_FRAGMENT_ASSIGN_KT_MARKERS_START
-#define KT_OQSDEFAULT ((uint64_t)1<<5)
-#define KT_DILITHIUM_2 ((uint64_t)1<<6)
-#define KT_FALCON_512 ((uint64_t)1<<7)
-#define KT_PICNIC_L1FULL ((uint64_t)1<<8)
-#define KT_PICNIC3_L1 ((uint64_t)1<<9)
-#define KT_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<10)
-#define KT_SPHINCS_SHA256_128F_ROBUST ((uint64_t)1<<11)
-#define KT_SPHINCS_SHAKE256_128F_ROBUST ((uint64_t)1<<12)
-#define KT_RSA3072_OQSDEFAULT ((uint64_t)1<<13)
-#define KT_P256_OQSDEFAULT ((uint64_t)1<<14)
-#define KT_RSA3072_DILITHIUM_2 ((uint64_t)1<<15)
-#define KT_P256_DILITHIUM_2 ((uint64_t)1<<16)
-#define KT_RSA3072_FALCON_512 ((uint64_t)1<<17)
-#define KT_P256_FALCON_512 ((uint64_t)1<<18)
-#define KT_RSA3072_PICNIC_L1FULL ((uint64_t)1<<19)
-#define KT_P256_PICNIC_L1FULL ((uint64_t)1<<20)
-#define KT_RSA3072_PICNIC3_L1 ((uint64_t)1<<21)
-#define KT_P256_PICNIC3_L1 ((uint64_t)1<<22)
-#define KT_RSA3072_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<23)
-#define KT_P256_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<24)
-#define KT_RSA3072_SPHINCS_SHA256_128F_ROBUST ((uint64_t)1<<25)
-#define KT_P256_SPHINCS_SHA256_128F_ROBUST ((uint64_t)1<<26)
-#define KT_RSA3072_SPHINCS_SHAKE256_128F_ROBUST ((uint64_t)1<<27)
-#define KT_P256_SPHINCS_SHAKE256_128F_ROBUST ((uint64_t)1<<28)
+#define KT_DILITHIUM_2 ((uint64_t)1<<5)
+#define KT_FALCON_512 ((uint64_t)1<<6)
+#define KT_PICNIC_L1FULL ((uint64_t)1<<7)
+#define KT_PICNIC3_L1 ((uint64_t)1<<8)
+#define KT_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<9)
+#define KT_SPHINCS_SHA256_128F_ROBUST ((uint64_t)1<<10)
+#define KT_SPHINCS_SHAKE256_128F_ROBUST ((uint64_t)1<<11)
+#define KT_RSA3072_DILITHIUM_2 ((uint64_t)1<<12)
+#define KT_P256_DILITHIUM_2 ((uint64_t)1<<13)
+#define KT_RSA3072_FALCON_512 ((uint64_t)1<<14)
+#define KT_P256_FALCON_512 ((uint64_t)1<<15)
+#define KT_RSA3072_PICNIC_L1FULL ((uint64_t)1<<16)
+#define KT_P256_PICNIC_L1FULL ((uint64_t)1<<17)
+#define KT_RSA3072_PICNIC3_L1 ((uint64_t)1<<18)
+#define KT_P256_PICNIC3_L1 ((uint64_t)1<<19)
+#define KT_RSA3072_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<20)
+#define KT_P256_SPHINCS_HARAKA_128F_ROBUST ((uint64_t)1<<21)
+#define KT_RSA3072_SPHINCS_SHA256_128F_ROBUST ((uint64_t)1<<22)
+#define KT_P256_SPHINCS_SHA256_128F_ROBUST ((uint64_t)1<<23)
+#define KT_RSA3072_SPHINCS_SHAKE256_128F_ROBUST ((uint64_t)1<<24)
+#define KT_P256_SPHINCS_SHAKE256_128F_ROBUST ((uint64_t)1<<25)
 
 #define KT_MIN KT_DSA
 #define KT_MAX KT_P256_SPHINCS_SHAKE256_128F_ROBUST
@@ -92,7 +89,6 @@ int ssh_port = SSH_DEFAULT_PORT;
 int get_cert = 0;
 uint64_t get_keytypes = KT_RSA|KT_ECDSA|KT_ED25519| \
 ///// OQS_TEMPLATE_FRAGMENT_GET_KT_START
-                   KT_OQSDEFAULT| \
                    KT_DILITHIUM_2| \
                    KT_FALCON_512| \
                    KT_PICNIC_L1FULL| \
@@ -100,8 +96,6 @@ uint64_t get_keytypes = KT_RSA|KT_ECDSA|KT_ED25519| \
                    KT_SPHINCS_HARAKA_128F_ROBUST| \
                    KT_SPHINCS_SHA256_128F_ROBUST| \
                    KT_SPHINCS_SHAKE256_128F_ROBUST| \
-                   KT_RSA3072_OQSDEFAULT| \
-                   KT_P256_OQSDEFAULT| \
                    KT_RSA3072_DILITHIUM_2| \
                    KT_P256_DILITHIUM_2| \
                    KT_RSA3072_FALCON_512| \
@@ -781,9 +775,6 @@ main(int argc, char **argv)
 					get_keytypes |= KT_XMSS;
 					break;
 ///// OQS_TEMPLATE_FRAGMENT_SWITCH_KT_START
-				case KEY_OQSDEFAULT:
-					get_keytypes |= KT_OQSDEFAULT;
-					break;
 				case KEY_DILITHIUM_2:
 					get_keytypes |= KT_DILITHIUM_2;
 					break;
@@ -804,12 +795,6 @@ main(int argc, char **argv)
 					break;
 				case KEY_SPHINCS_SHAKE256_128F_ROBUST:
 					get_keytypes |= KT_SPHINCS_SHAKE256_128F_ROBUST;
-					break;
-				case KEY_RSA3072_OQSDEFAULT:
-					get_keytypes |= KT_RSA3072_OQSDEFAULT;
-					break;
-				case KEY_P256_OQSDEFAULT:
-					get_keytypes |= KT_P256_OQSDEFAULT;
 					break;
 				case KEY_RSA3072_DILITHIUM_2:
 					get_keytypes |= KT_RSA3072_DILITHIUM_2;

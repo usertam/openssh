@@ -167,7 +167,7 @@ main(int argc, char **argv)
 	struct sshbuf *b;
 	Options options;
 ///// OQS_TEMPLATE_FRAGMENT_COUNT_KT_START
-#define NUM_KEYTYPES 29
+#define NUM_KEYTYPES 26
 ///// OQS_TEMPLATE_FRAGMENT_COUNT_KT_END
 	struct sshkey *keys[NUM_KEYTYPES], *key = NULL;
 	struct passwd *pw;
@@ -193,7 +193,6 @@ main(int argc, char **argv)
 	i = 0;
 	/* XXX This really needs to read sshd_config for the paths */
 ///// OQS_TEMPLATE_FRAGMENT_OPEN_KEYFILES_START
-	key_fd[i++] = open(_PATH_HOST_OQSDEFAULT_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_DILITHIUM_2_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_FALCON_512_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_PICNIC_L1FULL_KEY_FILE, O_RDONLY);
@@ -201,8 +200,6 @@ main(int argc, char **argv)
 	key_fd[i++] = open(_PATH_HOST_SPHINCS_HARAKA_128F_ROBUST_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_SPHINCS_SHA256_128F_ROBUST_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_SPHINCS_SHAKE256_128F_ROBUST_KEY_FILE, O_RDONLY);
-	key_fd[i++] = open(_PATH_HOST_RSA3072_OQSDEFAULT_KEY_FILE, O_RDONLY);
-	key_fd[i++] = open(_PATH_HOST_P256_OQSDEFAULT_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_RSA3072_DILITHIUM_2_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_P256_DILITHIUM_2_KEY_FILE, O_RDONLY);
 	key_fd[i++] = open(_PATH_HOST_RSA3072_FALCON_512_KEY_FILE, O_RDONLY);
