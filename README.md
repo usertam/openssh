@@ -81,6 +81,7 @@ The following digital signature algorithms from liboqs are supported (assuming t
 
 - `oqsdefault`* (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
 <!--- OQS_TEMPLATE_FRAGMENT_LIST_SIGS_START -->
+- **DILITHIUM**:`dilithium2`*, `dilithium3`, `dilithium4`
 - **FALCON**:`falcon512`*, `falcon1024`
 - **PICNIC**:`picnicl1fs`, `picnicl1ur`, `picnicl1full`*, `picnicl3fs`, `picnicl3ur`, `picnicl3full`, `picnicl5fs`, `picnicl5ur`, `picnicl5full`, `picnic3l1`*, `picnic3l3`, `picnic3l5`
 - **RAINBOW**:`rainbowiclassic`, `rainbowicircumzenithal`, `rainbowicompressed`, `rainbowiiiclassic`, `rainbowiiicircumzenithal`, `rainbowiiicompressed`, `rainbowvclassic`, `rainbowvcircumzenithal`, `rainbowvcompressed`
