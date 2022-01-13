@@ -48,7 +48,3 @@ workflows:
       - ubuntu_bionic:
           name: with-openssl
           context: openquantumsafe
-      - ubuntu_bionic:
-          name: without-openssl
-          context: openquantumsafe
-          WITH_OPENSSL: false
