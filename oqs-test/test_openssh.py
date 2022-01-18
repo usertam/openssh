@@ -56,17 +56,11 @@ def test_connection():
     global sig_algs, kex_algs
     port = 22345
     for sig_alg in sig_algs:
-        if 'rainbow' in sig_alg:
-            # TODO: Revisit this after round 3 candidates come out
-            if 'classic-mceliece-8192128f-sha384@openquantumsafe.org' in kex_algs:
-                yield(run_connection, sig_alg, 'classic-mceliece-8192128f-sha384@openquantumsafe.org', port)
-            else:
-                yield(run_connection, sig_alg, kex_algs[0], port)
-            port = port + 1
-        else:
-            for kex_alg in kex_algs:
-                if ('WITH_OPENSSL' in os.environ and os.environ['WITH_OPENSSL'] != 'true') and ('ecdh' in kex_alg):
-                    continue
+        for kex_alg in kex_algs:
+            if ('WITH_OPENSSL' in os.environ and os.environ['WITH_OPENSSL'] != 'true') and ('ecdh' in kex_alg):
+                continue
+            # Due to limits on CircleCI test run time, use the "do one" strategy for the (sigs x kexs) test matrix
+            if (kex_alg == kex_algs[0] or sig_alg == sig_algs[0]):
                 yield(run_connection, sig_alg, kex_alg, port)
                 port = port + 1
 
