@@ -33,6 +33,7 @@
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_PQ_KEXS_START
 #ifdef HAVE_BIKE
 #define KEX_PQ_METHOD_BIKE \
+    PQ_OQS_KEX_METHOD("bike-l1-sha384") \
     PQ_OQS_KEX_METHOD("bike-l3-sha384")
 #else
 #define KEX_PQ_METHOD_BIKE ""
@@ -173,6 +174,7 @@
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_HYBRID_KEXS_START
 #ifdef HAVE_BIKE
 #define KEX_HYBRID_METHOD_BIKE \
+    HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike-l1-sha384") \
     HYBRID_ECDH_OQS_METHOD("ecdh-nistp384-bike-l3-sha384")
 #else
 #define KEX_HYBRID_METHOD_BIKE ""

@@ -42,6 +42,8 @@ static const OQS_ALG oqs_alg_mapping[] = {
 #if defined(OPENSSL_HAS_ECC) && defined(WITH_HYBRID_KEX)
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_HYBRID_KEXS_START
 #ifdef HAVE_BIKE
+	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-bike-l1-sha384"), OQS_KEM_alg_bike_l1,
+	SSH2_MSG_HY_ECDH_BIKE_INIT, SSH2_MSG_HY_ECDH_BIKE_REPLY},
 	{HYBRID_ECDH_OQS_KEX_SUFFIX("ecdh-nistp384-bike-l3-sha384"), OQS_KEM_alg_bike_l3,
 	SSH2_MSG_HY_ECDH_BIKE_INIT, SSH2_MSG_HY_ECDH_BIKE_REPLY},
 #endif /* HAVE_BIKE */
@@ -177,6 +179,8 @@ static const OQS_ALG oqs_alg_mapping[] = {
 #ifdef WITH_PQ_KEX
 ///// OQS_TEMPLATE_FRAGMENT_DEFINE_PQ_KEXS_START
 #ifdef HAVE_BIKE
+	{PQ_OQS_KEX_SUFFIX("bike-l1-sha384"), OQS_KEM_alg_bike_l1,
+	SSH2_MSG_PQ_BIKE_INIT, SSH2_MSG_PQ_BIKE_REPLY},
 	{PQ_OQS_KEX_SUFFIX("bike-l3-sha384"), OQS_KEM_alg_bike_l3,
 	SSH2_MSG_PQ_BIKE_INIT, SSH2_MSG_PQ_BIKE_REPLY},
 #endif /* HAVE_BIKE */

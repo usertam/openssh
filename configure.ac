@@ -3577,7 +3577,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(OQS_ENABLE_KEM_BIKE) || (defined(OQS_ENABLE_KEM_bike_l3))
+					#if defined(OQS_ENABLE_KEM_BIKE) || (defined(OQS_ENABLE_KEM_bike_l1) && defined(OQS_ENABLE_KEM_bike_l3))
 					#else
 					#error "BIKE is not supported"
 					#endif
