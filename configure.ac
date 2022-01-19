@@ -3577,7 +3577,7 @@ if test "x$with_liboqs" = "xyes" ; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 				#include <oqs/oqs.h>
 			]], [[
-					#if defined(OQS_ENABLE_KEM_BIKE) || (defined(OQS_ENABLE_KEM_bike1_l1_cpa) && defined(OQS_ENABLE_KEM_bike1_l3_cpa) && defined(OQS_ENABLE_KEM_bike1_l1_fo) && defined(OQS_ENABLE_KEM_bike1_l3_fo))
+					#if defined(OQS_ENABLE_KEM_BIKE) || (defined(OQS_ENABLE_KEM_bike_l1) && defined(OQS_ENABLE_KEM_bike_l3))
 					#else
 					#error "BIKE is not supported"
 					#endif
@@ -3712,7 +3712,6 @@ if test "x$with_liboqs" = "xyes" ; then
 				AC_DEFINE([HAVE_NTRU_PRIME], [1], [Define to 1 if LibOQS library is compiled with support for NTRU_PRIME])
 			], [AC_MSG_RESULT([no])
 	])
-
 
 	AC_MSG_CHECKING([for libOQS DILITHIUM support])
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[

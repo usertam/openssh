@@ -282,8 +282,6 @@ fill_default_server_options(ServerOptions *options)
 #ifdef WITH_PQ_AUTH
 ///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_HOSTKEYS_START
 		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_OQSDEFAULT_KEY_FILE);
-		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_DILITHIUM_2_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_FALCON_512_KEY_FILE);
@@ -301,10 +299,6 @@ fill_default_server_options(ServerOptions *options)
 #endif /* WITH_PQ_AUTH */
 #ifdef WITH_HYBRID_AUTH
 ///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_HOSTKEYS_START
-		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_RSA3072_OQSDEFAULT_KEY_FILE);
-		servconf_add_hostkey("[default]", 0, options,
-		    _PATH_HOST_P256_OQSDEFAULT_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,
 		    _PATH_HOST_RSA3072_DILITHIUM_2_KEY_FILE);
 		servconf_add_hostkey("[default]", 0, options,

@@ -300,9 +300,6 @@ ask_filename(struct passwd *pw, const char *prompt)
 			name = _PATH_SSH_CLIENT_ID_XMSS;
 			break;
 ///// OQS_TEMPLATE_FRAGMENT_ASSIGN_PQ_ID_PATHS_START
-		case KEY_OQSDEFAULT:
-			name = _PATH_SSH_CLIENT_ID_OQSDEFAULT;
-			break;
 		case KEY_DILITHIUM_2:
 			name = _PATH_SSH_CLIENT_ID_DILITHIUM_2;
 			break;
@@ -1059,7 +1056,6 @@ do_gen_all_hostkeys(struct passwd *pw)
 #endif /* WITH_XMSS */
 #ifdef WITH_PQ_AUTH
 ///// OQS_TEMPLATE_FRAGMENT_ADD_PQ_KT_START
-		{ "oqsdefault", "OQSDEFAULT", _PATH_HOST_OQSDEFAULT_KEY_FILE },
 		{ "dilithium2", "DILITHIUM_2", _PATH_HOST_DILITHIUM_2_KEY_FILE },
 		{ "falcon512", "FALCON_512", _PATH_HOST_FALCON_512_KEY_FILE },
 		{ "picnicl1full", "PICNIC_L1FULL", _PATH_HOST_PICNIC_L1FULL_KEY_FILE },
@@ -1072,7 +1068,6 @@ do_gen_all_hostkeys(struct passwd *pw)
 #ifdef WITH_HYBRID_AUTH
 ///// OQS_TEMPLATE_FRAGMENT_ADD_HYBRID_KT_START
 #ifdef WITH_OPENSSL
-		{ "rsa3072_oqsdefault", "RSA3072_OQSDEFAULT", _PATH_HOST_RSA3072_OQSDEFAULT_KEY_FILE },
 		{ "rsa3072_dilithium2", "RSA3072_DILITHIUM_2", _PATH_HOST_RSA3072_DILITHIUM_2_KEY_FILE },
 		{ "rsa3072_falcon512", "RSA3072_FALCON_512", _PATH_HOST_RSA3072_FALCON_512_KEY_FILE },
 		{ "rsa3072_picnicl1full", "RSA3072_PICNIC_L1FULL", _PATH_HOST_RSA3072_PICNIC_L1FULL_KEY_FILE },
@@ -1081,7 +1076,6 @@ do_gen_all_hostkeys(struct passwd *pw)
 		{ "rsa3072_sphincssha256128frobust", "RSA3072_SPHINCS_SHA256_128F_ROBUST", _PATH_HOST_RSA3072_SPHINCS_SHA256_128F_ROBUST_KEY_FILE },
 		{ "rsa3072_sphincsshake256128frobust", "RSA3072_SPHINCS_SHAKE256_128F_ROBUST", _PATH_HOST_RSA3072_SPHINCS_SHAKE256_128F_ROBUST_KEY_FILE },
 #ifdef OPENSSL_HAS_ECC
-		{ "p256_oqsdefault", "P256_OQSDEFAULT", _PATH_HOST_P256_OQSDEFAULT_KEY_FILE },
 		{ "p256_dilithium2", "P256_DILITHIUM_2", _PATH_HOST_P256_DILITHIUM_2_KEY_FILE },
 		{ "p256_falcon512", "P256_FALCON_512", _PATH_HOST_P256_FALCON_512_KEY_FILE },
 		{ "p256_picnicl1full", "P256_PICNIC_L1FULL", _PATH_HOST_P256_PICNIC_L1FULL_KEY_FILE },
@@ -2852,8 +2846,6 @@ main(int argc, char **argv)
 			n += do_print_resource_record(pw,
 			    _PATH_HOST_XMSS_KEY_FILE, rr_hostname);
 ///// OQS_TEMPLATE_FRAGMENT_PRINT_PQ_RR_START
-			n += do_print_resource_record(pw,
-                 _PATH_HOST_OQSDEFAULT_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
                  _PATH_HOST_DILITHIUM_2_KEY_FILE, rr_hostname);
 			n += do_print_resource_record(pw,
