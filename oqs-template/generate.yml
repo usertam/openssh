@@ -355,6 +355,9 @@ kems:
     family: 'BIKE'
     variants:
       -
+        name: 'BIKE_L1'
+        oqs_meth: 'OQS_KEM_alg_bike_l1'
+      -
         name: 'BIKE_L3'
         oqs_meth: 'OQS_KEM_alg_bike_l3'
   -
