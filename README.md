@@ -55,7 +55,6 @@ If an algorithm is provided by liboqs but is not listed below, it can still be u
 
 The following quantum-safe algorithms from liboqs are supported (assuming they have been enabled in liboqs):
 
-- `oqsdefault` (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
 <!--- OQS_TEMPLATE_FRAGMENT_LIST_KEXS_START -->
 - **BIKE**: `bike-l1`, `bike-l3`
 - **CLASSIC-MCELIECE**: `classic-mceliece-348864`, `classic-mceliece-348864f`, `classic-mceliece-460896`, `classic-mceliece-460896f`, `classic-mceliece-6688128`, `classic-mceliece-6688128f`, `classic-mceliece-6960119`, `classic-mceliece-6960119f`, `classic-mceliece-8192128`, `classic-mceliece-8192128f`
@@ -79,7 +78,6 @@ Note that algorithms marked with a dagger (†) have large stack usage and may c
 
 The following digital signature algorithms from liboqs are supported (assuming they have been enabled in liboqs). **Note that not all variants of all algorithms are enabled by default; algorithms that are enabled by default are marked with an asterisk; should you wish to enable additional variants, consult [the "Code Generation" section of the documentation in the wiki](https://github.com/open-quantum-safe/openssh/wiki/Using-liboqs-supported-algorithms-in-the-fork#code-generation)**.
 
-- `oqsdefault`* (see [here](https://github.com/open-quantum-safe/openssh-portable/wiki/Using-liboqs-supported-algorithms-in-the-fork) for what this denotes)
 <!--- OQS_TEMPLATE_FRAGMENT_LIST_SIGS_START -->
 - **DILITHIUM**:`dilithium2`*, `dilithium3`, `dilithium4`
 - **FALCON**:`falcon512`*, `falcon1024`
