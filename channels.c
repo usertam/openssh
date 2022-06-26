@@ -1993,7 +1993,6 @@ channel_handle_rfd(struct ssh *ssh, Channel *c)
 			fatal_fr(r, "channel %i: put datagram", c->self);
 	} else if ((r = sshbuf_put(c->input, buf, len)) != 0)
 		fatal_fr(r, "channel %i: put data", c->self);
-
 	return 1;
 }
 

@@ -33,8 +33,13 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
+<<<<<<< HEAD
+.\" $OpenBSD: ssh_config.5,v 1.353 2021/04/04 11:36:56 jmc Exp $
+.Dd $Mdocdate: April 4 2021 $
+=======
 .\" $OpenBSD: ssh_config.5,v 1.369 2022/02/15 05:13:36 djm Exp $
 .Dd $Mdocdate: February 15 2022 $
+>>>>>>> V_8_9_P1
 .Dt SSH_CONFIG 5
 .Os
 .Sh NAME
@@ -382,10 +387,15 @@ Specifies which algorithms are allowed for signing of certificates
 by certificate authorities (CAs).
 The default is:
 .Bd -literal -offset indent
+<<<<<<< HEAD
+ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,
+sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,
+=======
 ssh-ed25519,ecdsa-sha2-nistp256,
 ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,
 sk-ssh-ed25519@openssh.com,
 sk-ecdsa-sha2-nistp256@openssh.com,
+>>>>>>> V_8_9_P1
 rsa-sha2-512,rsa-sha2-256
 .Ed
 .Pp
@@ -879,11 +889,19 @@ sk-ssh-ed25519-cert-v01@openssh.com,
 sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,
 rsa-sha2-512-cert-v01@openssh.com,
 rsa-sha2-256-cert-v01@openssh.com,
+<<<<<<< HEAD
+ssh-rsa-cert-v01@openssh.com,
+=======
+>>>>>>> V_8_9_P1
 ssh-ed25519,
 ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,
 sk-ssh-ed25519@openssh.com,
 sk-ecdsa-sha2-nistp256@openssh.com,
+<<<<<<< HEAD
+rsa-sha2-512,rsa-sha2-256,ssh-rsa
+=======
 rsa-sha2-512,rsa-sha2-256
+>>>>>>> V_8_9_P1
 .Ed
 .Pp
 The
@@ -925,11 +943,19 @@ sk-ssh-ed25519-cert-v01@openssh.com,
 sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,
 rsa-sha2-512-cert-v01@openssh.com,
 rsa-sha2-256-cert-v01@openssh.com,
+<<<<<<< HEAD
+ssh-rsa-cert-v01@openssh.com,
+=======
+>>>>>>> V_8_9_P1
 ssh-ed25519,
 ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,
 sk-ecdsa-sha2-nistp256@openssh.com,
 sk-ssh-ed25519@openssh.com,
+<<<<<<< HEAD
+rsa-sha2-512,rsa-sha2-256,ssh-rsa
+=======
 rsa-sha2-512,rsa-sha2-256
+>>>>>>> V_8_9_P1
 .Ed
 .Pp
 If hostkeys are known for the destination host then this default is modified
@@ -1508,11 +1534,19 @@ sk-ssh-ed25519-cert-v01@openssh.com,
 sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,
 rsa-sha2-512-cert-v01@openssh.com,
 rsa-sha2-256-cert-v01@openssh.com,
+<<<<<<< HEAD
+ssh-rsa-cert-v01@openssh.com,
+=======
+>>>>>>> V_8_9_P1
 ssh-ed25519,
 ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,
 sk-ssh-ed25519@openssh.com,
 sk-ecdsa-sha2-nistp256@openssh.com,
+<<<<<<< HEAD
+rsa-sha2-512,rsa-sha2-256,ssh-rsa
+=======
 rsa-sha2-512,rsa-sha2-256
+>>>>>>> V_8_9_P1
 .Ed
 .Pp
 The list of available signature algorithms may also be obtained using
@@ -2095,7 +2129,11 @@ tunnel forwarding was requested, or
 otherwise.
 .It %t
 The type of the server host key, e.g.
+<<<<<<< HEAD
+.Cm ssh-ed25519
+=======
 .Cm ssh-ed25519 .
+>>>>>>> V_8_9_P1
 .It %u
 The local username.
 .El
