@@ -9,6 +9,13 @@ case "`./config.guess`" in
 	;;
 esac
 
+case $(./config.guess) in
+*-darwin*)
+	brew install automake
+	exit 0
+	;;
+esac
+
 TARGETS=$@
 
 PACKAGES=""

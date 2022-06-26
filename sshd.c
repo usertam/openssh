@@ -129,6 +129,9 @@
 #include "srclimit.h"
 #include "dh.h"
 
+#include "oqs/oqs.h"
+#include "oqs-utils.h"
+
 /* Re-exec fds */
 #define REEXEC_DEVCRYPTO_RESERVED_FD	(STDERR_FILENO + 1)
 #define REEXEC_STARTUP_PIPE_FD		(STDERR_FILENO + 2)
@@ -631,6 +634,8 @@ list_hostkey_types(void)
 		case KEY_ECDSA_SK:
 		case KEY_ED25519_SK:
 		case KEY_XMSS:
+		CASE_KEY_OQS:
+		CASE_KEY_HYBRID:
 			append_hostkey_type(b, sshkey_ssh_name(key));
 			break;
 		}
@@ -1270,6 +1275,14 @@ server_accept_loop(int *sock_in, int *sock_out, int *newsock, int *config_s)
 			if (unset_nonblock(*newsock) == -1 ||
 			    pipe(startup_p) == -1) {
 				close(*newsock);
+				close(startup_p[0]);
+				close(startup_p[1]);
+				continue;
+			}
+			if (drop_connection(*newsock, startups, startup_p[0])) {
+				close(*newsock);
+				close(startup_p[0]);
+				close(startup_p[1]);
 				continue;
 			}
 			if (drop_connection(*newsock, startups, startup_p[0])) {
@@ -1892,6 +1905,8 @@ main(int ac, char **av)
 		case KEY_ECDSA_SK:
 		case KEY_ED25519_SK:
 		case KEY_XMSS:
+		CASE_KEY_OQS:
+		CASE_KEY_HYBRID:
 			if (have_agent || key != NULL)
 				sensitive_data.have_ssh2_key = 1;
 			break;
@@ -2404,6 +2419,124 @@ do_ssh2_kex(struct ssh *ssh)
 # endif
 #endif
 	kex->kex[KEX_C25519_SHA256] = kex_gen_server;
+///// OQS_TEMPLATE_FRAGMENT_POINT_TO_KEX_GEN_START
+		kex->kex[KEX_KEM_FRODOKEM_640_AES_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_FRODOKEM_976_AES_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_FRODOKEM_1344_AES_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_FRODOKEM_640_SHAKE_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_FRODOKEM_976_SHAKE_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_FRODOKEM_1344_SHAKE_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_SIDH_P434_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIDH_P434_COMPRESSED_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIDH_P610_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIDH_P610_COMPRESSED_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIDH_P751_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIDH_P751_COMPRESSED_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIKE_P434_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIKE_P434_COMPRESSED_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIKE_P610_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIKE_P610_COMPRESSED_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIKE_P751_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIKE_P751_COMPRESSED_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SABER_LIGHTSABER_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SABER_SABER_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_SABER_FIRESABER_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_KYBER_512_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_KYBER_768_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_KYBER_1024_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_KYBER_512_90S_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_KYBER_768_90S_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_KYBER_1024_90S_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_BIKE_L1_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_BIKE_L3_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRU_HPS2048509_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRU_HPS2048677_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRU_HPS4096821_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRU_HPS40961229_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRU_HRSS701_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRU_HRSS1373_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_348864_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_348864F_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_460896_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_460896F_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_6688128_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_6688128F_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_6960119_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_6960119F_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_8192128_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_8192128F_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_HQC_128_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_HQC_192_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_HQC_256_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_NTRULPR653_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_SNTRUP653_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_NTRULPR761_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_SNTRUP761_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_NTRULPR857_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_SNTRUP857_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_NTRULPR1277_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_SNTRUP1277_SHA512] = kex_gen_server;
+#ifdef WITH_OPENSSL
+#ifdef OPENSSL_HAS_ECC
+		kex->kex[KEX_KEM_FRODOKEM_640_AES_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_FRODOKEM_976_AES_ECDH_NISTP384_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_FRODOKEM_1344_AES_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_FRODOKEM_640_SHAKE_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_FRODOKEM_976_SHAKE_ECDH_NISTP384_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_FRODOKEM_1344_SHAKE_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_SIDH_P434_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIDH_P434_COMPRESSED_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIDH_P610_ECDH_NISTP384_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIDH_P610_COMPRESSED_ECDH_NISTP384_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIDH_P751_ECDH_NISTP521_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIDH_P751_COMPRESSED_ECDH_NISTP521_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIKE_P434_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIKE_P434_COMPRESSED_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIKE_P610_ECDH_NISTP384_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIKE_P610_COMPRESSED_ECDH_NISTP384_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIKE_P751_ECDH_NISTP521_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SIKE_P751_COMPRESSED_ECDH_NISTP521_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SABER_LIGHTSABER_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_SABER_SABER_ECDH_NISTP384_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_SABER_FIRESABER_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_KYBER_512_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_KYBER_768_ECDH_NISTP384_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_KYBER_1024_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_KYBER_512_90S_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_KYBER_768_90S_ECDH_NISTP384_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_KYBER_1024_90S_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_BIKE_L1_ECDH_NISTP256_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_BIKE_L3_ECDH_NISTP384_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRU_HPS2048509_ECDH_NISTP256_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRU_HPS2048677_ECDH_NISTP384_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRU_HPS4096821_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRU_HPS40961229_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRU_HRSS701_ECDH_NISTP384_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRU_HRSS1373_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_348864_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_348864F_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_460896_ECDH_NISTP384_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_460896F_ECDH_NISTP384_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_6688128_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_6688128F_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_6960119_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_6960119F_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_8192128_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_CLASSIC_MCELIECE_8192128F_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_HQC_128_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_HQC_192_ECDH_NISTP384_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_HQC_256_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_NTRULPR653_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_SNTRUP653_ECDH_NISTP256_SHA256] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_NTRULPR761_ECDH_NISTP384_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_SNTRUP761_ECDH_NISTP384_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_NTRULPR857_ECDH_NISTP384_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_SNTRUP857_ECDH_NISTP384_SHA384] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_NTRULPR1277_ECDH_NISTP521_SHA512] = kex_gen_server;
+		kex->kex[KEX_KEM_NTRUPRIME_SNTRUP1277_ECDH_NISTP521_SHA512] = kex_gen_server;
+#endif /* OPENSSL_HAS_ECC */
+#endif /* WITH_OPENSSL */
+///// OQS_TEMPLATE_FRAGMENT_POINT_TO_KEX_GEN_END
 	kex->kex[KEX_KEM_SNTRUP761X25519_SHA512] = kex_gen_server;
 	kex->load_host_public_key=&get_hostkey_public_by_type;
 	kex->load_host_private_key=&get_hostkey_private_by_type;
